@@ -1,0 +1,42 @@
+package org.oife.passport
+
+import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
+import org.intellij.markdown.html.HtmlGenerator
+import org.intellij.markdown.parser.MarkdownParser
+import com.openhtmltopdf.extend.FSSupplier
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+
+fun markdownToHtml(markdown: String): String {
+    val flavour = CommonMarkFlavourDescriptor()
+    val tree = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
+    return HtmlGenerator(markdown, tree, flavour).generateHtml()
+}
+
+fun fillHtmlTemplate(
+    template: String,
+    metadata: Metadata,
+    bodyHtml: String
+): String = template
+    .replace("{{lang}}", metadata.lang)
+    .replace("{{title}}", metadata.title)
+    .replace("{{body}}", bodyHtml)
+
+fun renderPdfToFile(
+    html: String,
+    fontSupplier: FSSupplier<InputStream>,
+    outputFile: File,
+    fontFamily: String = "NotoSansLight"
+): Result<File> = runCatching {
+    outputFile.parentFile?.mkdirs()
+    FileOutputStream(outputFile).use { out ->
+        PdfRendererBuilder()
+            .useFont(fontSupplier, fontFamily)
+            .withHtmlContent(html, null)
+            .toStream(out)
+            .run()
+    }
+    outputFile
+}

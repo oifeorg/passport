@@ -1,36 +1,35 @@
-# qarTuli (georgian)
+# ქართული (Georgian)
 
-me maqvs arasrulyofili osteogenezi. (OI, msxvrevadi Zvlebi)
-es gulisxmobs, rom Cemi Zvlebi advilad msxrevadia. 
-OI-s dros ziandeba aramarto ConCxi, aramed zogadad SemaerTebeli qsovili. 
-gTxovT, miiRoT konsultacia Cemgan \Cemi mSoblebisgan an Tanmxleb pirisagan\ transportirebis, gadaadgilebis, gamokvlevebis an mkurnalobis dawyebis win. gaiTvaliswineT rCevebi, raTa uzrunvelyoT Cemi usafrTxoeba. 
+მე მაქვს არასრულფასოვანი ოსტეოგენეზი. (OI, მსხვრევადი ძვლები)  
+ეს გულისხმობს, რომ ჩემი ძვლები ადვილად მსხვრევადია.  
+OI-ს დროს ზიანდება არამარტო ძვლები, არამედ ზოგადად შემაერთებელი ქსოვილი.  
+გთხოვთ, მიიღოთ კონსულტაცია ჩემგან \ჩემი მშობლებისგან ან თანმხლები პირისგან\ ტრანსპორტირების, გადაყვანის, გამოკვლევების ან მკურნალობის დაწყების წინ. გაითვალისწინეთ რჩევები, რათა უზრუნველყოთ ჩემი უსაფრთხოება.
 
+## გვსურს შეგახსენოთ შემდეგი
+- არასრულფასოვანი ოსტეოგენეზის დროს მოტეხილობები ადვილად ვითარდება, ზოგჯერ სპონტანურადაც კი.
+- მოტეხილობის სიმპტომები ყოველთვის არ არის თვალსაჩინო, ხშირად მხოლოდ ტკივილი მიანიშნებს მოტეხილობის არსებობაზე.
+- მოტეხილობის სიმპტომების ძიებისას, მაგალითად არასწორმა მოძრაობამ ან პალპაციამ შეიძლება გამოავლინოს მოტეხილობა.
+- რენტგენოლოგიური კვლევა მოტეხილობის დადასტურების ან გამორიცხვის ყველაზე უსაფრთხო მეთოდია.
+- როგორც წესი, მოტეხილობები მტკივნეულია.
+- ტკივილის დროს, მაშინაც კი, როცა მოტეხილობა არ არის დიაგნოსტირებული, მკურნალობა უნდა ჩატარდეს ისე, როგორც მოტეხილობის დროს.
+- ადეკვატური ანალგეზია სასურველია როგორც ბავშვებში, ასევე მოზრდილებში.
+- მედიკამენტების და საანესთეზიო საშუალებების დოზირების განსაზღვრისთვის გასათვალისწინებელია უფრო მეტად პაციენტის წონა და არა ასაკი.
+- ანალგეტიკები და/ან სედატიური საშუალებები რეკომენდირებულია მოტეხილობიდან ხუთი დღის განმავლობაში.
+- იმობილიზაციისთვის სასურველია მსუბუქი მასალები.
+- OI-ს მქონე პაციენტების იმობილიზაცია რაც შეიძლება სწრაფად უნდა მოხდეს.
+- გთხოვთ, დაუკავშირდეთ მკურნალ ექიმ-სპეციალისტს, თუ არის ჰოსპიტალიზაციის ან ქირურგიული ჩარევის აუცილებლობა.
+- OI-ს მქონე პაციენტებს ხშირად აღენიშნებათ სმენის პრობლემა.
 
-## gvsurs SegaxsenoT Semdegi
-- arasrulyofili osteogenezis dros motexilobebi advilad viTardeba, xandaxan spontanuradac ki.
-- motexilobebis simptomebi yovelTvis ar aris TvalsaCino, xSirad mxolod tkivili miuTiTebs motexilobis arsebobaze.
-- motexilobebis simptomebis Ziebisas, magaliTad arasworma moZraobam an palpaciam SeiZleba gamoiwvios motexiloba.
-- rentgenologiuri kvleva motexilobis dadasturebis an gamoricxvis yvelaze usafrTxo meTodia..
-- rogorc wesi motexilobebi mtkivneulia.
-- tkivilis dros, maSinac ki, rodesac motexiloba ar aris diagnostirebuli, mkurnaloba unda Catardes iseve, rogorc motexilobebis dros.
-- adeqvaturi analgezia sasurvelia rogorc bavSvebSi, aseve mozrdilebSi.
-- medikamentebis da saanestezio saSualebebis dozirebis gansazRvrisTvis gasaTvaliswinebelia ufro metad pacientis wona da ara asaki
-- analgetikebi da\an sedatiuri saSualebebi rekomendirebulia motexilobidan xuTi dRis ganmavlobaSi.
-- imobilizaciisaTvis sasurvelia msubuqi masalebi.
-- 0I-s mqone pacientebis imobilizacia rac SeiZleba swrafad unda moxdes
-- gTxovT, daukavSirdeT mkurnal eqim-specialists, Tu aris hospitalizaciis an qirurgiuli Carevis aucilebloba.
-- 0I-s mqone pacientebs xSirad aReniSnebaT smenis problema.
+## რენტგენოლოგიური კვლევა
+- არასრულფასოვანი ოსტეოგენეზის დროს ძვლები შეიძლება დემინერალიზებული იყოს.
+  დაბალი ძვლის ინტენსივობა ზოგჯერ დამახასიათებელია და არ საჭიროებს...
+- ზედმეტ მოძრაობებს და არასაჭირო გადაყვანებს უნდა მოვერიდოთ.
+- პაციენტებს ან მათ მშობლებს/თანმხლებ პირებს ხშირად აქვთ უკვე გამოცდილება მსგავსი გამოკვლევებისას.
+- უნდა გამოვიყენოთ რეპროდუქციული ორგანოების დამცავი ფირფიტა.
+- bly-ს გამოყენება რეკომენდირებულია გენიტალიების დასაცავად.
 
-## rentgenologiuri kvleva
-- arasrulyofili osteogenezis dros Zvlebi SeiZleba demineralizebuli iyos.
-	dabali sxivuri intensivoba zogjer damaxasiaTebelia da ar saWiroebs rÄÌÒÂÄÌoლoÂÈÓr ÂÀËoÎÅლÄÅÀs. 
-- zedmet moZraobebs da arasaWiro gadaadgilebebs unda moveridoT.
-- pacientebs an maT mSoblebs\kompanionebs xSirad aqvT ukve gamocdileba msgavsi gamokvlevebisa.
-- unda gamoiyenoT reproduqtiuli organoebis damcavi firfita.
-- vskärmning med bly b r användas f r att skydda genetalia.
-
-## operacia da anesTezia
-- frTxilad gadaiyvaneT pacienti saoperacio magidaze da piriqiT.
-- gaecaniT arsebul deformaciebs da kontraqturebs, sanam gadaiyvanT pacients saoperacio magidaze.
-- Tavi frTxilad gadaawevineT ukan intubaciisaTvis, kisris malebis motexilobebis riskis Semcirebis mizniT. gaiTvaliswineT traqeis lorwovani garsis mgrZnobeloba.
-	xSirad kbilebic advilad msxvrevadia. 
+## ოპერაცია და ანესთეზია
+- ფრთხილად გადააწვინეთ პაციენტი საოპერაციო მაგიდაზე და პირქით.
+- გაითვალისწინეთ არსებული დეფორმაციები და კონტრაქტურები, სანამ გადააწვენთ პაციენტს მაგიდაზე.
+- თავი ფრთხილად გადააწვინეთ უკან ინტუბაციისთვის, კისრის მალების მოტეხილობის რისკის შემცირების მიზნით. გაითვალისწინეთ ტრაქეის ლორწოვანი გარსის მგრძნობელობა.
+  ხშირად კბილებიც ადვილად მსხვრევადია.

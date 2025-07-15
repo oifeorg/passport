@@ -12,12 +12,12 @@ fun main() {
     val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
     val fontSupplierMap = buildFontSupplierMap()
 
-    passportFiles.forEach { (markdownFilename, metadata) ->
+    passportMap.forEach { (markdownFilename, metadata) ->
         val replacements = mapOf(
             "{{lang}}" to metadata.languageCode,
             "{{title}}" to metadata.documentTitle,
             "{{font-family}}" to metadata.font.familyName,
-            "{{body}}" to loadResourceText("/data/$markdownFilename").fromMarkdownToHtml(),
+            "{{body}}" to metadata.markdownContent.fromMarkdownToHtml(),
             "{{rtl}}" to if (metadata.font.rtl) "rtl" else "ltr"
         )
         renderPdfToFile(

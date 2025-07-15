@@ -1,10 +1,15 @@
 package org.oife.passport
 
 data class PassportMetaData(
+    val markdownFilename: String,
     val languageCode: String,
     val documentTitle: String,
     val font: FontMeta = FontMeta(),
-)
+) {
+    val markdownContent: String by lazy {
+        loadResourceText("/data/$markdownFilename")
+    }
+}
 
 data class FontMeta(
     val fileName: String = "NotoSans-Regular.ttf",
@@ -33,28 +38,31 @@ val georgianFont = FontMeta(
     familyName = "NotoSansGeorgian",
 )
 
-val passportFiles: Map<String, PassportMetaData> = mapOf(
-    "ar-arabic.md" to PassportMetaData("ar", "جواز سفر OIFE", font = arabicFont),
-    "da-danish.md" to PassportMetaData("da", "OIFE Passport"),
-    "de-german.md" to PassportMetaData("de", "OIFE-Passport"),
-    "el-greek.md" to PassportMetaData("el", "OIFE Passport"),
-    "en-english.md" to PassportMetaData("en", "OIFE Passport"),
-    "es-spanish.md" to PassportMetaData("es", "OIFE Passport"),
-    "fl-finnish.md" to PassportMetaData("fl", "OIFE Passport"),
-    "fr-french.md" to PassportMetaData("fr", "Passeport OIFE"),
-    "gu-indian-gujarati.md" to PassportMetaData("gu", "Passeport OIFE", font = indianFont),
-    "hr-croatian.md" to PassportMetaData("hr", "Passeport OIFE"),
-    "it-italian.md" to PassportMetaData("it", "Passeport OIFE"),
-    "ka-georgian.md" to PassportMetaData("ka", "Passeport OIFE", font = georgianFont),
-    "nb-norwegian-bokmal.md" to PassportMetaData("nb", "Passeport OIFE"),
-    "nl-dutch.md" to PassportMetaData("nl", "Passeport OIFE"),
-    "pl-polish.md" to PassportMetaData("pl", "Passeport OIFE"),
-    "pt-portugues.md" to PassportMetaData("pt", "Passeport OIFE"),
-    "ro-romanian.md" to PassportMetaData("ro", "Passeport OIFE"),
-    "ru-russian.md" to PassportMetaData("ru", "Passeport OIFE"),
-    "sl-slovenian.md" to PassportMetaData("sl", "Passeport OIFE"),
-    "sv-swedish.md" to PassportMetaData("sv", "Passeport OIFE"),
-    "tr-turkish.md" to PassportMetaData("tr", "Passeport OIFE"),
-    "uk-ukrainian.md" to PassportMetaData("uk", "Passeport OIFE"),
-    "zh-chinese.md" to PassportMetaData("zh", "Passeport OIFE", font = chineseFont),
+
+private val passportList = listOf(
+    PassportMetaData("ar-arabic.md", "ar", "جواز سفر OIFE", font = arabicFont),
+    PassportMetaData("da-danish.md", "da", "OIFE Passport"),
+    PassportMetaData("de-german.md", "de", "OIFE-Passport"),
+    PassportMetaData("el-greek.md", "el", "OIFE Passport"),
+    PassportMetaData("en-english.md", "en", "OIFE Passport"),
+    PassportMetaData("es-spanish.md", "es", "OIFE Passport"),
+    PassportMetaData("fl-finnish.md", "fl", "OIFE Passport"),
+    PassportMetaData("fr-french.md", "fr", "Passeport OIFE"),
+    PassportMetaData("gu-indian-gujarati.md", "gu", "Passeport OIFE", font = indianFont),
+    PassportMetaData("hr-croatian.md", "hr", "Passeport OIFE"),
+    PassportMetaData("it-italian.md", "it", "Passeport OIFE"),
+    PassportMetaData("ka-georgian.md", "ka", "Passeport OIFE", font = georgianFont),
+    PassportMetaData("nb-norwegian-bokmal.md", "nb", "Passeport OIFE"),
+    PassportMetaData("nl-dutch.md", "nl", "Passeport OIFE"),
+    PassportMetaData("pl-polish.md", "pl", "Passeport OIFE"),
+    PassportMetaData("pt-portugues.md", "pt", "Passeport OIFE"),
+    PassportMetaData("ro-romanian.md", "ro", "Passeport OIFE"),
+    PassportMetaData("ru-russian.md", "ru", "Passeport OIFE"),
+    PassportMetaData("sl-slovenian.md", "sl", "Passeport OIFE"),
+    PassportMetaData("sv-swedish.md", "sv", "Passeport OIFE"),
+    PassportMetaData("tr-turkish.md", "tr", "Passeport OIFE"),
+    PassportMetaData("uk-ukrainian.md", "uk", "Passeport OIFE"),
+    PassportMetaData("zh-chinese.md", "zh", "Passeport OIFE", font = chineseFont),
 )
+
+val passportMap: Map<String, PassportMetaData> = passportList.associateBy { it.markdownFilename }

@@ -23,7 +23,7 @@ fun loadResourceText(path: String): String {
 
 
 fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
-    passportFiles
+    passportMap
         .values
         .map { it.font }
         .distinctBy { it.fileName }

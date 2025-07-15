@@ -19,16 +19,16 @@ val arabicFont = FontMeta(
 )
 
 val indianFont = FontMeta(
-    fileName = "NotoSansGujarati-Thin.ttf",
-    familyName = "NotoSansGujaratiThin"
+    fileName = "NotoSansGujarati-Regular.ttf",
+    familyName = "NotoSansGujarati"
 )
 
 val chineseFont = FontMeta(
-    "NotoSansSC-Thin.ttf",
-    familyName = "NotoSansSCThin"
+    "NotoSansSC-Regular.ttf",
+    familyName = "NotoSansSC"
 )
 
 val georgianFont = FontMeta(
-    fileName = "NotoSansGeorgian-Thin.ttf",
-    familyName = "NotoSansGeorgianThin",
+    fileName = "NotoSansGeorgian-Regular.ttf",
+    familyName = "NotoSansGeorgian",
 )

@@ -20,6 +20,8 @@ dependencies {
     implementation(libs.openhtmltopdf.slf4j)
     implementation(libs.openhtmltopdf.svg)
 
+    implementation(libs.markdown)
+
     implementation(libs.logback.classic)
     implementation(libs.logback.encoder)
     implementation(libs.janino)

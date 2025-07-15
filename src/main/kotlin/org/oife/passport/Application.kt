@@ -1,6 +1,9 @@
 package org.oife.passport
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
+import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
+import org.intellij.markdown.html.HtmlGenerator
+import org.intellij.markdown.parser.MarkdownParser
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -16,21 +19,22 @@ fun main() {
     val header = "Welcome"
 
     val html = loadResourceText("/templates/passport-content.html") ?: return
-    val body = loadResourceText("/data/en-english.txt") ?: return
+    val markdown = loadResourceText("/data/en-english.md") ?: return
+    val bodyHtml = markdown.toHtmlFromMarkdown()
 
     val filledHtml = html
         .replace("{{lang}}", lang)
         .replace("{{title}}", title)
         .replace("{{header}}", header)
-        .replace("{{body}}", body)
+        .replace("{{body}}", bodyHtml)
 
-    val fontFile = extractResourceToTempFile("/fonts/NotoSans-Regular.ttf", "font-", ".ttf") ?: return
+    val fontFile = extractResourceToTempFile("/fonts/NotoSans-Light.ttf", "font-", ".ttf")
     val outputFile = File("output.pdf")
 
     runCatching {
         FileOutputStream(outputFile).use { out ->
             PdfRendererBuilder()
-                .useFont(fontFile, "NotoSans")
+                .useFont(fontFile, "NotoSansLight")
                 .withHtmlContent(filledHtml, null)
                 .toStream(out)
                 .run()
@@ -39,8 +43,6 @@ fun main() {
     }.onFailure {
         logger.error("❌ PDF generation failed", it)
     }
-
-    logger.info("✅ PDF generated at: ${outputFile.absolutePath}")
 }
 
 fun getResourceStream(path: String): java.io.InputStream? {
@@ -55,14 +57,22 @@ fun loadResourceText(path: String): String? =
         ?.bufferedReader()
         ?.use { it.readText() }
 
-fun extractResourceToTempFile(path: String, prefix: String, suffix: String): File? {
-    val stream = getResourceStream(path) ?: return null
+fun extractResourceToTempFile(path: String, prefix: String, suffix: String): File {
+    val stream = getResourceStream(path)
+        ?: throw IllegalArgumentException("❌ Resource not found: $path")
 
-    return runCatching {
+    return try {
         val tempFile = Files.createTempFile(prefix, suffix).toFile().apply { deleteOnExit() }
         stream.use { input -> tempFile.outputStream().use { output -> input.copyTo(output) } }
         tempFile
-    }.onFailure {
-        logger.error("❌ Failed to extract resource: $path", it)
-    }.getOrNull()
+    } catch (ex: Exception) {
+        logger.error("❌ Failed to extract resource: $path", ex)
+        throw ex
+    }
+}
+
+fun String.toHtmlFromMarkdown(): String {
+    val flavour = CommonMarkFlavourDescriptor()
+    val parsed = MarkdownParser(flavour).buildMarkdownTreeFromString(this)
+    return HtmlGenerator(this, parsed, flavour).generateHtml()
 }

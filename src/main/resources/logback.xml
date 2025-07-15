@@ -1,6 +1,6 @@
 <configuration>
     <!-- Root logger: WARN and above -->
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 

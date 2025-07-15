@@ -1,0 +1,19 @@
+<configuration>
+    <!-- Root logger: WARN and above -->
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- Console appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Silence noisy libraries -->
+    <logger name="com.openhtmltopdf" level="WARN"/>
+    <logger name="org.apache.pdfbox" level="WARN"/>
+    <logger name="org.apache.fontbox" level="WARN"/>
+    <logger name="org.apache.fontbox.ttf" level="WARN"/>
+</configuration>

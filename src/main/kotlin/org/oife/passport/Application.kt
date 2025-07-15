@@ -2,15 +2,12 @@ package org.oife.passport
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.File
 
 private val logger: Logger = LoggerFactory.getLogger("PassportGenerator")
 
 fun main() {
 
-    val outputDir = File("generated").apply { mkdirs() }
     val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
-    val fontSupplierMap = buildFontSupplierMap()
 
     passports.forEach {  metadata ->
         val replacements = mapOf(
@@ -22,10 +19,7 @@ fun main() {
         )
         renderPdfToFile(
             filledHtml = singleHtmlTemplateFile.toFilledHtml(replacements),
-            fontSupplier = fontSupplierMap[metadata.font.fileName]
-                ?: error("❌ No font supplier for ${metadata.font.fileName}"),
-            outputFile = File(outputDir, metadata.pdfFileName),
-            fontFamily = metadata.font.familyName
+            metadata = metadata
         ).fold(
             onSuccess = { logger.info("✅ PDF generated at: ${it.absolutePath}") },
             onFailure = { logger.error("❌ PDF generation failed", it) }

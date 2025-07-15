@@ -2,9 +2,14 @@ package org.oife.passport
 
 import com.openhtmltopdf.extend.FSSupplier
 import org.slf4j.LoggerFactory
+import java.io.File
 import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
+
+const val OUTPUT_DIR_NAME = "generated"
+val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
+
 
 private fun getResourceStream(path: String): InputStream? =
     object {}.javaClass.getResourceAsStream(path)?.also {
@@ -32,3 +37,5 @@ fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
                 ?: error("❌ Font not found: ${font.fileName}")
             font.fileName to FSSupplier { bytes.inputStream() }
         }
+
+val fontSupplierMap = buildFontSupplierMap()

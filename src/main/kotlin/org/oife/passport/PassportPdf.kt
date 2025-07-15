@@ -1,20 +1,17 @@
 package org.oife.passport
 
-import com.openhtmltopdf.extend.FSSupplier
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 
 fun renderPdfToFile(
     filledHtml: String,
-    fontSupplier: FSSupplier<InputStream>,
-    outputFile: File,
-    fontFamily: String
+    metadata: PassportMetaData
 ): Result<File> = runCatching {
+    val outputFile = File(outputDir, metadata.pdfFileName)
     FileOutputStream(outputFile).use { out ->
         PdfRendererBuilder()
-            .useFont(fontSupplier, fontFamily)
+            .useFont(fontSupplierMap[metadata.font.fileName], metadata.font.familyName)
             .withHtmlContent(filledHtml, null)
             .toStream(out)
             .run()

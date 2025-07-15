@@ -37,12 +37,3 @@ fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
                 ?: error("❌ Font not found: ${font.fileName}")
             font.fileName to FSSupplier { bytes.inputStream() }
         }
-
-
-fun PassportMetaData.toHtmlReplacements(): Map<String, String> = mapOf(
-    "lang" to languageCode,
-    "title" to documentTitle,
-    "font-family" to font.familyName,
-    "body" to markdownContent.fromMarkdownToHtml(),
-    "rtl" to direction
-)

@@ -19,6 +19,14 @@ data class PassportMetaData(
         get() = if (font.rtl) "rtl" else "ltr"
 }
 
+fun PassportMetaData.toHtmlReplacements(): Map<String, String> = mapOf(
+    "lang" to languageCode,
+    "title" to documentTitle,
+    "font-family" to font.familyName,
+    "body" to markdownContent.fromMarkdownToHtml(),
+    "rtl" to direction
+)
+
 fun PassportMetaData.renderToPdf(template: String): Result<File> =
     renderPdfToFile(
         filledHtml = template.toFilledHtml(toHtmlReplacements()),

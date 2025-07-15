@@ -9,7 +9,7 @@ private val logger: Logger = LoggerFactory.getLogger("PassportGenerator")
 fun main() {
 
     val outputDir = File("generated").apply { mkdirs() }
-    val htmlTemplate = loadResourceText("/templates/passport-content.html")
+    val htmlTemplate = loadResourceText("/templates/passport-single.html")
     val passportFiles: Map<String, PassportMetaData> = mapOf(
         "ar-arabic.md" to PassportMetaData("ar", "جواز سفر OIFE", font = arabicFont),
         "da-danish.md" to PassportMetaData("en", "OIFE Passport"),

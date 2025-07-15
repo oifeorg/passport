@@ -9,6 +9,9 @@ data class PassportMetaData(
     val markdownContent: String by lazy {
         loadResourceText("/data/$markdownFilename")
     }
+
+    val pdfFileName: String
+        get() = markdownFilename.removeSuffix(".md") + ".pdf"
 }
 
 data class FontMeta(
@@ -29,7 +32,7 @@ val indianFont = FontMeta(
 )
 
 val chineseFont = FontMeta(
-    "NotoSansSC-Regular.ttf",
+    fileName = "NotoSansSC-Regular.ttf",
     familyName = "NotoSansSC"
 )
 
@@ -38,8 +41,7 @@ val georgianFont = FontMeta(
     familyName = "NotoSansGeorgian",
 )
 
-
-private val passportList = listOf(
+val passports = listOf(
     PassportMetaData("ar-arabic.md", "ar", "جواز سفر OIFE", font = arabicFont),
     PassportMetaData("da-danish.md", "da", "OIFE Passport"),
     PassportMetaData("de-german.md", "de", "OIFE-Passport"),
@@ -64,5 +66,3 @@ private val passportList = listOf(
     PassportMetaData("uk-ukrainian.md", "uk", "Passeport OIFE"),
     PassportMetaData("zh-chinese.md", "zh", "Passeport OIFE", font = chineseFont),
 )
-
-val passportMap: Map<String, PassportMetaData> = passportList.associateBy { it.markdownFilename }

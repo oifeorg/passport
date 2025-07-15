@@ -12,7 +12,7 @@ fun main() {
     val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
     val fontSupplierMap = buildFontSupplierMap()
 
-    passportMap.forEach { (markdownFilename, metadata) ->
+    passports.forEach {  metadata ->
         val replacements = mapOf(
             "{{lang}}" to metadata.languageCode,
             "{{title}}" to metadata.documentTitle,
@@ -24,7 +24,7 @@ fun main() {
             filledHtml = singleHtmlTemplateFile.toFilledHtml(replacements),
             fontSupplier = fontSupplierMap[metadata.font.fileName]
                 ?: error("❌ No font supplier for ${metadata.font.fileName}"),
-            outputFile = File(outputDir, markdownFilename.removeSuffix(".md") + ".pdf"),
+            outputFile = File(outputDir, metadata.pdfFileName),
             fontFamily = metadata.font.familyName
         ).fold(
             onSuccess = { logger.info("✅ PDF generated at: ${it.absolutePath}") },

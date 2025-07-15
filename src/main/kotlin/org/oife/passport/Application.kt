@@ -16,20 +16,21 @@ fun main() {
 
     val lang = "en"
     val title = "OIFE Passport"
-    val header = "Welcome"
 
     val html = loadResourceText("/templates/passport-content.html") ?: return
-    val markdown = loadResourceText("/data/en-english.md") ?: return
+    val markdownFileName = "en-english.md"
+    val markdown = loadResourceText("/data/$markdownFileName") ?: return
     val bodyHtml = markdown.toHtmlFromMarkdown()
 
     val filledHtml = html
         .replace("{{lang}}", lang)
         .replace("{{title}}", title)
-        .replace("{{header}}", header)
         .replace("{{body}}", bodyHtml)
 
     val fontFile = extractResourceToTempFile("/fonts/NotoSans-Light.ttf", "font-", ".ttf")
-    val outputFile = File("output.pdf")
+    val outputDir = File("generated").apply { mkdirs() }
+    val outputFilename = markdownFileName.removeSuffix(".md") + ".pdf"
+    val outputFile = File(outputDir, outputFilename)
 
     runCatching {
         FileOutputStream(outputFile).use { out ->

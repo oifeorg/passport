@@ -7,61 +7,57 @@
     <style>
         html {
           font-size: 10pt;
+          margin: 0;
+          padding: 0;
         }
 
         body {
           font-family: {{font-family}}, "Noto Sans", sans-serif;
-          font-size: 1rem; /* 10pt */
-          margin-bottom: 2cm;
-        }
-
-        h1, h2, h3 {
-          color: #2c3e50;
-        }
-
-        .markdown {
+          font-size: 1rem;
           line-height: 1.6;
+          color: #000;
         }
 
-        .markdown p {
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+
+        p {
           margin-bottom: 0.8em;
-          line-height: 1.6;
         }
 
-        .markdown h2 {
-          margin-top: 2em;
-        }
-
-        .markdown ul,
-        .markdown ol {
+        ul, ol {
           padding-left: 1.5em;
           margin-bottom: 1em;
         }
 
-        .markdown ul {
+        ul {
           list-style-type: disc;
         }
 
-        .markdown ol {
+        ol {
           list-style-type: decimal;
         }
 
-        .markdown li {
+        li {
           margin-bottom: 0.5em;
         }
 
         @page {
-        @bottom-center {
+          margin: 1cm;
+          @bottom-center {
             content: "OIFE Passport – page " counter(page) " of " counter(pages);
             font-family: {{font-family}}, "Noto Sans", sans-serif;
             font-size: 0.8em;
+            border-top: 0.5pt solid #ccc;
+            padding-top: 0.3em;
+          }
         }
-    }
     </style>
 </head>
 
 <body>
-<div class="markdown">
+<div>
     {{body}}
 </div>
 </body>

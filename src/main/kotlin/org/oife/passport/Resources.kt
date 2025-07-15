@@ -21,7 +21,15 @@ fun loadResourceText(path: String): String {
     }
 }
 
-fun fontSupplier(path: String): FSSupplier<InputStream> = FSSupplier {
-    getResourceStream(path)
-        ?: error("Font not found in resources: $path")
-}
+
+fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
+    passportFiles
+        .values
+        .map { it.font }
+        .distinctBy { it.fileName }
+        .associate { font ->
+            val bytes = getResourceStream("/fonts/${font.fileName}")
+                ?.readBytes()
+                ?: error("❌ Font not found: ${font.fileName}")
+            font.fileName to FSSupplier { bytes.inputStream() }
+        }

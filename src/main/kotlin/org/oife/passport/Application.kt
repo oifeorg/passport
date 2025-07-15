@@ -9,6 +9,8 @@ private val logger: Logger = LoggerFactory.getLogger("PassportGenerator")
 fun main() {
 
     val outputDir = File("generated").apply { mkdirs() }
+    val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
+    val fontSupplierMap = buildFontSupplierMap()
 
     passportFiles.forEach { (markdownFilename, metadata) ->
         val replacements = mapOf(
@@ -19,8 +21,9 @@ fun main() {
             "{{rtl}}" to if (metadata.font.rtl) "rtl" else "ltr"
         )
         renderPdfToFile(
-            filledHtml = loadResourceText("/templates/passport-single.html").toFilledHtml(replacements),
-            fontSupplier = fontSupplier("/fonts/${metadata.font.fileName}"),
+            filledHtml = singleHtmlTemplateFile.toFilledHtml(replacements),
+            fontSupplier = fontSupplierMap[metadata.font.fileName]
+                ?: error("❌ No font supplier for ${metadata.font.fileName}"),
             outputFile = File(outputDir, markdownFilename.removeSuffix(".md") + ".pdf"),
             fontFamily = metadata.font.familyName
         ).fold(

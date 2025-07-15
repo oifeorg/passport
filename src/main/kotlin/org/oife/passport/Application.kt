@@ -1,16 +1,44 @@
 package org.oife.passport
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
+import java.io.File
+import java.io.FileOutputStream
+import java.nio.file.Files
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun main() {
+
+    val lang = "en"
+    val title = "OIFE Passport"
+    val header = "Welcome"
+    val body = "This PDF uses the Noto Sans font."
+
+    val htmlTemplate = object {}.javaClass.getResourceAsStream("/templates/passport-content.html")
+        ?.bufferedReader()?.use { it.readText() }
+        ?: error("HTML template not found")
+
+    val html = htmlTemplate
+        .replace("{{lang}}", lang)
+        .replace("{{title}}", title)
+        .replace("{{header}}", header)
+        .replace("{{body}}", body)
+
+    val fontTempFile = Files.createTempFile("font-", ".ttf").toFile()
+    object {}.javaClass.getResourceAsStream("/fonts/NotoSans-Regular.ttf")
+        ?.use { input ->
+            fontTempFile.outputStream().use { output -> input.copyTo(output) }
+        }
+        ?: error("Font file not found")
+    val outputFile = File("output.pdf")
+
+    val out = FileOutputStream(outputFile)
+    try {
+        PdfRendererBuilder().useFont(fontTempFile, "NotoSans")
+            .withHtmlContent(html, null)
+            .toStream(out)
+            .run()
+    } finally {
+        out.close()
     }
+
+    println("✅ PDF generated at: ${outputFile.absolutePath}")
 }

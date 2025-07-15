@@ -12,5 +12,7 @@ fun String.fromMarkdownToHtml(): String {
 }
 private fun flavor(): CommonMarkFlavourDescriptor = CommonMarkFlavourDescriptor()
 
-fun String.toFilledHtml(placeholders: Map<String, String>): String =
-    placeholders.entries.fold(this) { acc, (key, value) -> acc.replace(key, value) }
+fun String.toFilledHtml(replacements: Map<String, String>): String =
+    replacements.entries.fold(this) { acc, (key, value) ->
+        acc.replace("{{${key}}}", value)
+    }

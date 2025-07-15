@@ -9,7 +9,8 @@ private val logger = LoggerFactory.getLogger("ResourceLoader")
 
 const val OUTPUT_DIR_NAME = "generated"
 val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
-
+val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
+val fontSupplierMap = buildFontSupplierMap()
 
 private fun getResourceStream(path: String): InputStream? =
     object {}.javaClass.getResourceAsStream(path)?.also {
@@ -26,7 +27,6 @@ fun loadResourceText(path: String): String {
     }
 }
 
-
 fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
     passports
         .map { it.font }
@@ -38,4 +38,11 @@ fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
             font.fileName to FSSupplier { bytes.inputStream() }
         }
 
-val fontSupplierMap = buildFontSupplierMap()
+
+fun PassportMetaData.toHtmlReplacements(): Map<String, String> = mapOf(
+    "lang" to languageCode,
+    "title" to documentTitle,
+    "font-family" to font.familyName,
+    "body" to markdownContent.fromMarkdownToHtml(),
+    "rtl" to direction
+)

@@ -6,7 +6,7 @@ import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
-fun getResourceStream(path: String): InputStream? =
+private fun getResourceStream(path: String): InputStream? =
     object {}.javaClass.getResourceAsStream(path)?.also {
         logger.info("✅ Loaded resource: $path")
     } ?: run {

@@ -20,7 +20,7 @@ fun fillHtmlTemplate(
     metadata: Metadata,
     bodyHtml: String
 ): String = template
-    .replace("{{lang}}", metadata.lang)
+    .replace("{{lang}}", metadata.languageCode)
     .replace("{{title}}", metadata.title)
     .replace("{{body}}", bodyHtml)
 
@@ -30,7 +30,6 @@ fun renderPdfToFile(
     outputFile: File,
     fontFamily: String = "NotoSansLight"
 ): Result<File> = runCatching {
-    outputFile.parentFile?.mkdirs()
     FileOutputStream(outputFile).use { out ->
         PdfRendererBuilder()
             .useFont(fontSupplier, fontFamily)

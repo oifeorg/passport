@@ -24,6 +24,8 @@ fun fillHtmlTemplate(
     .replace("{{title}}", metadata.documentTitle)
     .replace("{{font-family}}", metadata.font.familyName)
     .replace("{{body}}", bodyHtml)
+    .replace("{{rtl}}", if (metadata.font.rtl) "rtl" else "ltr")
+
 
 fun renderPdfToFile(
     html: String,

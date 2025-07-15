@@ -7,7 +7,7 @@ private val logger: Logger = LoggerFactory.getLogger("PassportGenerator")
 
 fun main() {
 
-    passports.forEach {
+    passports.forEach { it: PassportMetaData ->
         it.renderToPdf(singleHtmlTemplateFile)
             .onSuccess { file -> logger.info("✅ PDF generated at: ${file.absolutePath}") }
             .onFailure { logger.error("❌ PDF generation failed", it) }

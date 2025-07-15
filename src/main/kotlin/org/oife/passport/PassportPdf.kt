@@ -17,18 +17,19 @@ fun markdownToHtml(markdown: String): String {
 
 fun fillHtmlTemplate(
     template: String,
-    metadata: Metadata,
+    metadata: PassportMetaData,
     bodyHtml: String
 ): String = template
     .replace("{{lang}}", metadata.languageCode)
-    .replace("{{title}}", metadata.title)
+    .replace("{{title}}", metadata.documentTitle)
+    .replace("{{font-family}}", metadata.font.familyName)
     .replace("{{body}}", bodyHtml)
 
 fun renderPdfToFile(
     html: String,
     fontSupplier: FSSupplier<InputStream>,
     outputFile: File,
-    fontFamily: String = "NotoSansLight"
+    fontFamily: String
 ): Result<File> = runCatching {
     FileOutputStream(outputFile).use { out ->
         PdfRendererBuilder()

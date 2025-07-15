@@ -10,11 +10,11 @@ fun main() {
 
     val outputDir = File("generated").apply { mkdirs() }
     val htmlTemplate = loadResourceText("/templates/passport-content.html")
-    val passportFiles: Map<String, Metadata> = mapOf(
-        "en-english.md" to Metadata("en", "OIFE Passport"),
-        "fr-french.md" to Metadata("fr", "Passeport OIFE"),
-        "de-german.md" to Metadata("de", "OIFE-Passport"),
-        "ar-arabic.md" to Metadata("ar", "جواز سفر OIFE")
+    val passportFiles: Map<String, PassportMetaData> = mapOf(
+        "en-english.md" to PassportMetaData("en", "OIFE Passport"),
+        "fr-french.md" to PassportMetaData("fr", "Passeport OIFE"),
+        "de-german.md" to PassportMetaData("de", "OIFE-Passport"),
+        "ar-arabic.md" to PassportMetaData("ar", "جواز سفر OIFE", font = arabicFontMeta)
     )
     passportFiles.forEach { (markdownFilename, metadata) ->
         val outputFile = File(outputDir, markdownFilename.removeSuffix(".md") + ".pdf")
@@ -23,8 +23,9 @@ fun main() {
         val filledHtml = fillHtmlTemplate(htmlTemplate, metadata, bodyHtml)
         renderPdfToFile(
             html = filledHtml,
-            fontSupplier = fontSupplier("/fonts/NotoSans-Light.ttf"),
-            outputFile = outputFile
+            fontSupplier = fontSupplier("/fonts/${metadata.font.fileName}"),
+            outputFile = outputFile,
+            fontFamily = metadata.font.familyName
         ).fold(
             onSuccess = { logger.info("✅ PDF generated at: ${it.absolutePath}") },
             onFailure = { logger.error("❌ PDF generation failed", it) }

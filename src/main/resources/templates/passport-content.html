@@ -5,19 +5,30 @@
     <meta charset="utf-8"/>
     <title>{{title}}</title>
     <style>
-        body {
-          font-family: "NotoSansLight";
-          font-size: 12pt;
+        html {
+          font-size: 10pt;
         }
 
-        h1,
-        h2,
-        h3 {
+        body {
+          font-family: "NotoSansLight", "Noto Sans", sans-serif;
+          font-size: 1rem; /* 10pt */
+        }
+
+        h1, h2, h3 {
           color: #2c3e50;
         }
 
         .markdown {
           line-height: 1.6;
+        }
+
+        .markdown p {
+          margin-bottom: 0.8em;
+          line-height: 1.6;
+        }
+
+        .markdown h2 {
+          margin-top: 2em;
         }
 
         .markdown ul,
@@ -36,15 +47,6 @@
 
         .markdown li {
           margin-bottom: 0.5em;
-        }
-
-        .markdown p {
-          margin-bottom: 0.8em;
-          line-height: 1.6;
-        }
-
-        .markdown h2 {
-          margin-top: 2em;
         }
     </style>
 </head>

@@ -9,26 +9,19 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 
-fun markdownToHtml(markdown: String): String {
-    val flavour = CommonMarkFlavourDescriptor()
-    val tree = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
-    return HtmlGenerator(markdown, tree, flavour).generateHtml()
+fun String.fromMarkdownToHtml(): String {
+    val flavour = flavor()
+    val tree = MarkdownParser(flavour).buildMarkdownTreeFromString(this)
+    return HtmlGenerator(this, tree, flavour).generateHtml()
 }
 
-fun fillHtmlTemplate(
-    template: String,
-    metadata: PassportMetaData,
-    bodyHtml: String
-): String = template
-    .replace("{{lang}}", metadata.languageCode)
-    .replace("{{title}}", metadata.documentTitle)
-    .replace("{{font-family}}", metadata.font.familyName)
-    .replace("{{body}}", bodyHtml)
-    .replace("{{rtl}}", if (metadata.font.rtl) "rtl" else "ltr")
+private fun flavor(): CommonMarkFlavourDescriptor = CommonMarkFlavourDescriptor()
 
+fun String.toFilledHtml(placeholders: Map<String, String>): String =
+    placeholders.entries.fold(this) { acc, (key, value) -> acc.replace(key, value) }
 
 fun renderPdfToFile(
-    html: String,
+    filledHtml: String,
     fontSupplier: FSSupplier<InputStream>,
     outputFile: File,
     fontFamily: String
@@ -36,7 +29,7 @@ fun renderPdfToFile(
     FileOutputStream(outputFile).use { out ->
         PdfRendererBuilder()
             .useFont(fontSupplier, fontFamily)
-            .withHtmlContent(html, null)
+            .withHtmlContent(filledHtml, null)
             .toStream(out)
             .run()
     }

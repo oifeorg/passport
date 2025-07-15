@@ -17,14 +17,17 @@ fun main() {
         "ar-arabic.md" to PassportMetaData("ar", "جواز سفر OIFE", font = arabicFontMeta)
     )
     passportFiles.forEach { (markdownFilename, metadata) ->
-        val outputFile = File(outputDir, markdownFilename.removeSuffix(".md") + ".pdf")
-        val markdown = loadResourceText("/data/$markdownFilename")
-        val bodyHtml = markdownToHtml(markdown)
-        val filledHtml = fillHtmlTemplate(htmlTemplate, metadata, bodyHtml)
+        val replacements = mapOf(
+            "{{lang}}" to metadata.languageCode,
+            "{{title}}" to metadata.documentTitle,
+            "{{font-family}}" to metadata.font.familyName,
+            "{{body}}" to loadResourceText("/data/$markdownFilename").fromMarkdownToHtml(),
+            "{{rtl}}" to if (metadata.font.rtl) "rtl" else "ltr"
+        )
         renderPdfToFile(
-            html = filledHtml,
+            filledHtml = htmlTemplate.toFilledHtml(replacements),
             fontSupplier = fontSupplier("/fonts/${metadata.font.fileName}"),
-            outputFile = outputFile,
+            outputFile = File(outputDir, markdownFilename.removeSuffix(".md") + ".pdf"),
             fontFamily = metadata.font.familyName
         ).fold(
             onSuccess = { logger.info("✅ PDF generated at: ${it.absolutePath}") },

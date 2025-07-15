@@ -7,7 +7,7 @@ Please, consult me/my parents/my companion before you move, transport, examine o
 - In osteogenesis imperfecta fractures can occur easily, or even spontaneously.
 - Symptoms of fractures are not always obvious; pain often indicates a fracture.
 - Just looking for signs of fractures, e.g. abnormal mobility or crepitation, can cause a fracture. 
-- The safest way to determine or exclude a fracture is by X-ray examination (see below).Œ
+- The safest way to determine or exclude a fracture is by X-ray examination (see below).
 - As a rule fractures are painful.
 - In case of pain, even without a diagnosed fracture, treatment should, sometimes, be the same as for a fracture.
 - Adequate analgesia is advisable, in children as well as adults.

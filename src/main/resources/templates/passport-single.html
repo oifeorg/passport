@@ -12,6 +12,7 @@
         body {
           font-family: {{font-family}}, "Noto Sans", sans-serif;
           font-size: 1rem; /* 10pt */
+          margin-bottom: 2cm;
         }
 
         h1, h2, h3 {
@@ -48,6 +49,14 @@
         .markdown li {
           margin-bottom: 0.5em;
         }
+
+        @page {
+        @bottom-center {
+            content: "OIFE Passport – page " counter(page) " of " counter(pages);
+            font-family: {{font-family}}, "Noto Sans", sans-serif;
+            font-size: 0.8em;
+        }
+    }
     </style>
 </head>
 

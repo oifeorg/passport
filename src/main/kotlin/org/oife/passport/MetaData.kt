@@ -13,7 +13,7 @@ data class FontMeta(
 )
 
 val arabicFontMeta = FontMeta(
-    fileName = "NotoSansArabic-Thin.ttf",
-    familyName = "NotoSansArabicLight",
+    fileName = "NotoNaskhArabic-Regular.ttf",
+    familyName = "NotoNaskhArabicRegular",
     rtl = true
 )

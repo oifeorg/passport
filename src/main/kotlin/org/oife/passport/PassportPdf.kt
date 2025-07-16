@@ -27,7 +27,7 @@ fun renderPdfToFile(
 
 fun generateAllSinglePassports() {
     passports.forEach { it: PassportMetaData ->
-        renderPdfToFile(singleHtmlTemplateFile, it)
+        renderPdfToFile(singleHtmlTemplateFile.toFilledHtml(it.toHtmlReplacements()), it)
             .onSuccess { file -> logger.info("✅ PDF generated at: ${file.absolutePath}") }
             .onFailure { logger.error("❌ PDF generation failed", it) }
     }

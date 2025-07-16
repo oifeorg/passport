@@ -1,0 +1,22 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/github",
+    "@semantic-release/git",
+    "@semantic-release/exec"
+  ],
+  "exec": {
+    "publishCmd": "./gradlew run && zip -r generated-passports.zip generated"
+  },
+  "@semantic-release/github": {
+    "assets": [
+      {
+        "path": "generated-passports.zip",
+        "label": "PDF Passports"
+      }
+    ]
+  }
+}

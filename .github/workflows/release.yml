@@ -1,0 +1,63 @@
+name: Generate and Release PDFs
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '**/*Test.kt'
+      - '.github/**'
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '**/*Test.kt'
+      - '.github/**'
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  release:
+    if: github.event_name != 'pull_request' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    name: Build and Release PDFs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build project
+        run: ./gradlew build
+
+      - name: Run PDF generator
+        run: ./gradlew run
+
+      - name: Archive generated PDFs
+        run: |
+          mkdir -p output
+          cp -r generated/* output/
+          zip -r generated-passports.zip output
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release ${{ github.sha }}"
+          tag_name: "release-${{ github.sha }}"
+          files: generated-passports.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

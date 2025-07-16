@@ -1,6 +1,7 @@
 name: Generate and upload PDFs on Release
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 

@@ -27,7 +27,7 @@ jobs:
       - name: Zip PDFs
         run: zip -r generated-passports.zip generated
 
-      - name: Upload zipped PDFs to GitHub Release
+      - name: Upload PDF ZIP to Release
         run: gh release upload ${{ github.event.release.tag_name }} generated-passports.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

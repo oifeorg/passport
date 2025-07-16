@@ -1,7 +1,7 @@
 # Deutsch
 
 Ich habe Osteogenesis imperfecta (OI, Glasknochen). Das bedeutet, dass meine Knochen leicht brechen. OI betrifft aber nicht nur die Knochen, sondern das gesamte Bindegewebe.
-Bitte, fragen Sie mich/meine Eltern/meine Begleiter, bevor Sie mich bewegen, transportieren, untersuchen oder behandeln; folgen Sie meinen/deren Hinweisen, wie man mich sicher anfassen und bewegen kann.
+Bitte, fragen Sie mich / meine Eltern / meine Begleiter, bevor Sie mich bewegen, transportieren, untersuchen oder behandeln. Folgen Sie meinen / deren Hinweisen, wie man mich sicher anfassen und bewegen kann.
 
 ## Wir möchten Sie an folgendes erinnern
 - Bei Osteogenesis imperfecta können Frakturen leicht oder sogar spontan entstehen.
@@ -20,7 +20,7 @@ Bitte, fragen Sie mich/meine Eltern/meine Begleiter, bevor Sie mich bewegen, tra
 ## Röntgenuntersuchung
 - Bei Osteogenesis imperfecta können die Knochen entmineralisiert sein. Eine geringere Strahlungsintensität ist gewöhnlich (wie bei Osteoporose) angemessen, um unnötige Wiederholungen zu vermeiden.
 - Große Bewegungen oder unnötiges Anheben sollten vermieden werden.
-- Die Patienten oder ihre Eltern/Begleiter haben oft Erfahrung mit vorhergehenden Untersuchungen. Sie können beim Herausfinden der besten Lagerung für die Röntgenaufnahme hilfreich sein.
+- Die Patienten oder ihre Eltern / Begleiter haben oft Erfahrung mit vorhergehenden Untersuchungen. Sie können beim Herausfinden der besten Lagerung für die Röntgenaufnahme hilfreich sein.
 - Ein Bleischutz für die Fortpflanzungsorgane sollte verwendet werden.
 
 ## Eingriffe und Betäubung

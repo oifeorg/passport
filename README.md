@@ -14,7 +14,7 @@ This repository contains a Kotlin project that generates individual OIFE Passpor
 
 - [ ] Generation of a combined PDF with all OIFE Passports, including a clickable index.
 - [ ] Automatic PDF generation triggered by a pull request (PR) merge using GitHub Actions or a similar CI tool.
-- [ ] GitHub workflow for building and executing tests.
+- [x] GitHub workflow for building and executing tests.
 - [x] Language-based styling and font loading.
 - [x] Basic support for RTL (right-to-left) languages such as Arabic.
 - [X] Dependabot configuration

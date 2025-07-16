@@ -1,20 +1,14 @@
 name: Versioning and Release
 
 on:
-  workflow_dispatch:
-
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'README.md'
-      - 'docs/**'
-      - '**/*Test.kt'
-      - '.github/**'
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
 
 jobs:
   release:
-    if: github.actor != 'dependabot[bot]'
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -1,7 +1,5 @@
 package org.oife.passport
 
-import java.io.File
-
 data class PassportMetaData(
     val markdownFilename: String,
     val languageCode: String,
@@ -26,12 +24,6 @@ fun PassportMetaData.toHtmlReplacements(): Map<String, String> = mapOf(
     "body" to markdownContent.fromMarkdownToHtml(),
     "rtl" to direction
 )
-
-fun PassportMetaData.renderToPdf(template: String): Result<File> =
-    renderPdfToFile(
-        filledHtml = template.toFilledHtml(toHtmlReplacements()),
-        metadata = this
-    )
 
 data class FontMeta(
     val fileName: String = "NotoSans-Regular.ttf",

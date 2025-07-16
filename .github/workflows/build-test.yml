@@ -1,6 +1,8 @@
 name: Build and Test
 
 on:
+  workflow_dispatch:
+
   push:
     branches: [ 'main' ]
     paths-ignore:
@@ -18,7 +20,8 @@ jobs:
     name: Build and Run Tests
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4

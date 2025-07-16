@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{lang}}" dir="{{rtl}}">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>{{title}}</title>
+    <style>
+        html {
+          font-size: 10pt;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: {{font-family}}, "Noto Sans", sans-serif;
+          font-size: 1rem;
+          line-height: 1.6;
+          color: #000;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.3em; }
+        h3 { font-size: 1.2em; }
+        h4 { font-size: 1.1em; }
+        h5 { font-size: 1em; }
+        h6 { font-size: 0.9em; }
+
+        p {
+          margin-bottom: 0.8em;
+        }
+
+        ul, ol {
+          padding-left: 1.5em;
+          margin-bottom: 1em;
+        }
+
+        ul {
+          list-style-type: disc;
+        }
+
+        ol {
+          list-style-type: decimal;
+        }
+
+        li {
+          margin-bottom: 0.5em;
+        }
+
+        @page {
+          margin: 1cm;
+          @bottom-center {
+            content: "OIFE Passport – page " counter(page) " of " counter(pages);
+            font-family: {{font-family}}, "Noto Sans", sans-serif;
+            font-size: 0.8em;
+            border-top: 0.5pt solid #ccc;
+            padding-top: 0.3em;
+            padding-bottom: 0.3em;
+          }
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    {{body}}
+</div>
+</body>
+
+</html>

@@ -8,7 +8,7 @@ This repository contains a Kotlin project that generates individual OIFE Passpor
 
 1. Each Markdown file is converted to HTML using the [intellij-markdown](https://github.com/JetBrains/markdown) library.
 2. The HTML template file [passport-single.html](src/main/resources/templates) is loaded, and template variables like `{{body}}` are replaced using simple string substitution.
-3. A PDF is generated using [OpenHTMLtoPDF](https://github.com/danfickle/openhtmltopdf) and saved in the [generated](generated) folder.
+3. A PDF is generated using [OpenHTMLtoPDF](https://github.com/danfickle/openhtmltopdf) and saved in the root folder `generated`.
 
 ## 🚀 Planned Features
 

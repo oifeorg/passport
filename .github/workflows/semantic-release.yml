@@ -1,10 +1,9 @@
-name: Versioning and Release
+name: Tag and Version
 
 on:
   workflow_run:
     workflows: ["Build and Test"]
-    types:
-      - completed
+    types: [completed]
 
 jobs:
   release:
@@ -15,9 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,27 +23,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: 21
-          distribution: temurin
-
-      - name: Setup Gradle cache
-        uses: gradle/actions/setup-gradle@v4
+          node-version: 'lts/*'
 
       - name: Install semantic-release and plugins
         run: |
           npm install --no-audit --no-fund --no-save semantic-release \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
-            @semantic-release/github \
-            @semantic-release/git \
-            @semantic-release/exec
+            @semantic-release/github
 
       - name: Run semantic-release
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release

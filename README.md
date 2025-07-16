@@ -20,7 +20,7 @@ This repository contains a Kotlin project that generates individual OIFE Passpor
 
 ## 🧪 Requirements
 
-- JDK 17 or higher
+- JDK 21 or higher
 - Gradle (if not using the wrapper)
 
 ## ▶️ Run the generator

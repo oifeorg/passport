@@ -39,9 +39,10 @@ jobs:
         run: |
           npm install --no-audit --no-fund --no-save semantic-release \
             @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
             @semantic-release/github \
             @semantic-release/git \
-            @semantic-release/release-notes-generator
+            @semantic-release/exec
 
       - name: Run semantic-release
         env:

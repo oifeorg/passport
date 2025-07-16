@@ -1,0 +1,32 @@
+name: Generate and upload PDFs on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload-pdfs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Generate PDFs
+        run: ./gradlew run
+
+      - name: Zip PDFs
+        run: zip -r generated-passports.zip generated
+
+      - name: Upload zipped PDFs to GitHub Release
+        run: gh release upload ${{ github.event.release.tag_name }} generated-passports.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

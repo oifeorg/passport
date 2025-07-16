@@ -1,6 +1,8 @@
 # OIFE Passports
 
+[![Build & Test](https://github.com/oifeorg/passport/actions/workflows/build-test.yml/badge.svg)](https://github.com/oifeorg/passport/actions/workflows/build-test.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
+[![Kotest](https://img.shields.io/badge/Kotest-purple.svg?style=flat)](https://kotest.io)
 
 This repository contains a Kotlin project that generates individual OIFE Passports as PDF files. The core content is written in Markdown and stored in the [data](src/main/resources/data) folder.
 

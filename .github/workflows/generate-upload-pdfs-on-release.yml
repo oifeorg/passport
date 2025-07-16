@@ -30,4 +30,4 @@ jobs:
       - name: Upload PDF ZIP to Release
         run: gh release upload ${{ github.event.release.tag_name }} generated-passports.zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}

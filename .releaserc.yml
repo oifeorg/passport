@@ -3,14 +3,14 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
+    "@semantic-release/exec",
     "@semantic-release/github",
-    "@semantic-release/git",
-    "@semantic-release/exec"
+    "@semantic-release/git"
   ],
   "exec": {
-    "publishCmd": "./gradlew run && zip -r generated-passports.zip generated"
+    "prepareCmd": "echo '🧪 Preparing PDFs...' && ./gradlew run && zip -r generated-passports.zip generated"
   },
-  "@semantic-release/github": {
+  "github": {
     "assets": [
       {
         "path": "generated-passports.zip",

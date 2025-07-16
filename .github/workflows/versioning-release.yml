@@ -35,13 +35,18 @@ jobs:
       - name: Setup Gradle cache
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Generate PDFs
+        run: ./gradlew run
+
+      - name: Zip generated PDFs
+        run: zip -r generated-passports.zip generated
+
       - name: Install semantic-release and plugins
         run: |
           npm install --no-audit --no-fund --no-save semantic-release \
             @semantic-release/commit-analyzer \
-            @semantic-release/exec \
-            @semantic-release/git \
             @semantic-release/github \
+            @semantic-release/git \
             @semantic-release/release-notes-generator
 
       - name: Run semantic-release

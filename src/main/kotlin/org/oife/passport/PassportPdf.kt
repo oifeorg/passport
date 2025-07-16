@@ -4,6 +4,9 @@ import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import java.io.File
 import java.io.FileOutputStream
 
+const val OUTPUT_DIR_NAME = "generated"
+private val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
+
 fun renderPdfToFile(
     filledHtml: String,
     metadata: PassportMetaData

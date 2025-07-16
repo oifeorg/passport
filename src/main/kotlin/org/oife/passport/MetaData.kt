@@ -6,7 +6,7 @@ data class PassportMetaData(
     val markdownFilename: String,
     val languageCode: String,
     val documentTitle: String,
-    val font: FontMeta = FontMeta(),
+    val font: FontMeta = defaultFont,
 ) {
     val markdownContent: String by lazy {
         loadResourceText("/data/$markdownFilename")
@@ -38,6 +38,8 @@ data class FontMeta(
     val familyName: String = "NotoSans",
     val rtl: Boolean = false,
 )
+
+val defaultFont = FontMeta()
 
 val arabicFont = FontMeta(
     fileName = "NotoNaskhArabic-Regular.ttf",

@@ -2,13 +2,10 @@ package org.oife.passport
 
 import com.openhtmltopdf.extend.FSSupplier
 import org.slf4j.LoggerFactory
-import java.io.File
 import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
-const val OUTPUT_DIR_NAME = "generated"
-val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
 val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
 val fontSupplierMap = buildFontSupplierMap()
 

@@ -6,13 +6,14 @@ import java.io.File
 
 class PassportMetaDataTest : StringSpec({
 
+    val meta = PassportMetaData(
+        markdownFilename = testMarkdownFile,
+        languageCode = "en",
+        documentTitle = "OIFE Passport"
+    )
+
     "returns correct pdf file name" {
-        val meta = PassportMetaData(
-            markdownFilename = "passport-en.md",
-            languageCode = "en",
-            documentTitle = "OIFE Passport"
-        )
-        meta.pdfFileName shouldBe "passport-en.pdf"
+        meta.pdfFileName shouldBe "test.pdf"
     }
 
     "uses correct direction based on rtl flag" {
@@ -21,31 +22,19 @@ class PassportMetaDataTest : StringSpec({
     }
 
     "generates correct html replacements" {
-        val fakeMeta = PassportMetaData(
-            markdownFilename = "test.md",
-            languageCode = "en",
-            documentTitle = "Test Title",
-            font = FontMeta(familyName = "FakeFont", rtl = false)
-        )
-
-        val replacements = fakeMeta.toHtmlReplacements()
-
-        replacements["lang"] shouldBe "en"
-        replacements["title"] shouldBe "Test Title"
-        replacements["font-family"] shouldBe "FakeFont"
-        replacements["rtl"] shouldBe "ltr"
-        replacements["body"] shouldBe fakeMeta.markdownContent.fromMarkdownToHtml()
+        meta.toHtmlReplacements().apply {
+            this["lang"] shouldBe "en"
+            this["title"] shouldBe "OIFE Passport"
+            this["font-family"] shouldBe "NotoSans"
+            this["rtl"] shouldBe "ltr"
+            this["body"] shouldBe meta.markdownContent.fromMarkdownToHtml()
+        }
     }
 
     "renderToPdf delegates correctly" {
         val fakeTemplate = "<html><body>{{body}}</body></html>"
-        val fakeMeta = PassportMetaData(
-            markdownFilename = "test.md",
-            languageCode = "en",
-            documentTitle = "Test",
-        )
-        val expectedFile = File("$OUTPUT_DIR_NAME/${fakeMeta.pdfFileName}")
-        val result = fakeMeta.renderToPdf(fakeTemplate)
+        val expectedFile = File("$OUTPUT_DIR_NAME/${meta.pdfFileName}")
+        val result = meta.renderToPdf(fakeTemplate)
         result.getOrThrow() shouldBe expectedFile
     }
 })

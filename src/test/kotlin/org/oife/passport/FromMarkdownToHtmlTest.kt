@@ -16,9 +16,10 @@ class FromMarkdownToHtmlTest : StringSpec({
     }
 
     "converts unordered list to HTML list" {
-        val html = "- One\n- Two".fromMarkdownToHtml()
-        html.contains("<ul>") shouldBe true
-        html.contains("<li>One</li>") shouldBe true
-        html.contains("<li>Two</li>") shouldBe true
+        with("- One\n- Two".fromMarkdownToHtml()) {
+            contains("<ul>") shouldBe true
+            contains("<li>One</li>") shouldBe true
+            contains("<li>Two</li>") shouldBe true
+        }
     }
 })

@@ -9,9 +9,9 @@ private val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
 
 fun renderPdfToFile(
     filledHtml: String,
-    metadata: PassportMetaData
+    metadata: PassportMetaData,
+    outputFile: File = File(outputDir, metadata.pdfFileName)
 ): Result<File> = runCatching {
-    val outputFile = File(outputDir, metadata.pdfFileName)
     FileOutputStream(outputFile).use { out ->
         PdfRendererBuilder()
             .useFont(fontSupplierMap[metadata.font.fileName], metadata.font.familyName)

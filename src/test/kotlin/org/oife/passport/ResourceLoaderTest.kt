@@ -3,38 +3,35 @@ package org.oife.passport
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import java.io.InputStream
 
 class ResourceLoaderTest : StringSpec({
 
     "loadResourceText returns file content from test resources" {
-        val text = loadResourceText("/data/$testMarkdownFile")
-        text.trim().startsWith("#") shouldBe true // assuming it's a markdown heading
+        loadResourceText("/data/$testMarkdownFile")
+            .trim()
+            .startsWith("# Hello") shouldBe true // assuming markdown heading
     }
 
     "loadResourceText throws error on missing file" {
-        val exception = kotlin.runCatching {
+        runCatching {
             loadResourceText("/nonexistent/file.txt")
-        }.exceptionOrNull()
-
-        exception shouldNotBe null
-        exception?.message shouldBe "Resource not found or unreadable: /nonexistent/file.txt"
+        }.exceptionOrNull().let {
+            it shouldNotBe null
+            it?.message shouldBe "Resource not found or unreadable: /nonexistent/file.txt"
+        }
     }
 
     "buildFontSupplierMap includes test font file" {
-        val map = buildFontSupplierMap()
-        val keys = map.keys
+        buildFontSupplierMap().apply {
+            containsKey(defaultFont.fileName) shouldBe true
 
-        // Adjust this to match your actual test font file name
-        val expectedFontFile = defaultFont.fileName
-
-        keys.contains(expectedFontFile) shouldBe true
-
-        val supplier = map[expectedFontFile]
-        supplier shouldNotBe null
-
-        val inputStream: InputStream? = supplier?.supply()
-        inputStream shouldNotBe null
-        inputStream?.readBytes()?.isNotEmpty() shouldBe true
+            get(defaultFont.fileName).also { supplier ->
+                supplier shouldNotBe null
+                supplier?.supply().also { stream ->
+                    stream shouldNotBe null
+                    stream?.readBytes()?.isNotEmpty() shouldBe true
+                }
+            }
+        }
     }
 })

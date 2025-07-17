@@ -49,7 +49,7 @@ private suspend fun <T> loadResource(path: String, description: String, reader: 
         val stream = object {}.javaClass.getResourceAsStream(path)
             ?: throw IllegalStateException("Resource not found: $path")
 
-        logger.info("$description Loaded resource: $path")
+        logger.debug("$description Loaded resource: $path")
 
         reader(stream)
     }

@@ -22,7 +22,7 @@ class ResourceLoaderTest : StringSpec({
     }
 
     "buildFontSupplierMap includes test font file" {
-        buildFontSupplierMap().apply {
+        fontMap().apply {
             containsKey(defaultFont.fileName) shouldBe true
 
             get(defaultFont.fileName).also { supplier ->

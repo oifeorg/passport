@@ -54,7 +54,7 @@ val georgianFont = FontMeta(
     familyName = "NotoSansGeorgian",
 )
 
-val passports = listOf(
+fun passportMetaConfigs() = listOf(
     PassportMetaData("ar-arabic.md", "ar", "جواز سفر OIFE", font = arabicFont),
     PassportMetaData("da-danish.md", "da", "OIFE Passport"),
     PassportMetaData("de-german.md", "de", "OIFE-Passport"),
@@ -79,3 +79,5 @@ val passports = listOf(
     PassportMetaData("uk-ukrainian.md", "uk", "Passeport OIFE"),
     PassportMetaData("zh-chinese.md", "zh", "Passeport OIFE", font = chineseFont),
 )
+
+val passports = passportMetaConfigs()

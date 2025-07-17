@@ -2,6 +2,7 @@ package org.oife.passport
 
 import com.openhtmltopdf.extend.FSSupplier
 import java.io.InputStream
+import java.time.Year
 
 data class PdfDocument(
     val version: String,
@@ -20,7 +21,9 @@ data class PdfDocument(
 }
 
 fun PdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "body" to bodyHtml
+    "body" to bodyHtml,
+    "version" to version,
+    "year" to Year.now().toString()
 ) + metaInfo.toHtmlReplacements()
 
 

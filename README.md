@@ -12,15 +12,19 @@ This repository contains a Kotlin project that generates individual OIFE Passpor
 2. The HTML template file [passport-single.html](src/main/resources/templates) is loaded, and template variables like `{{body}}` are replaced using simple string substitution.
 3. A PDF is generated using [OpenHTMLtoPDF](https://github.com/danfickle/openhtmltopdf) and saved in the root folder `generated`.
 
-## 🚀 Planned Features
+## 🎯 Implemented features
 
-- [ ] Generation of a combined PDF with all OIFE Passports, including a clickable index.
-- [ ] Automatic PDF generation triggered by a pull request (PR) merge using GitHub Actions or a similar CI tool.
+- [x] Automatic PDF generation triggered by a pull request (PR) merge using GitHub Actions or a similar CI tool.
 - [x] GitHub workflow for building and executing tests.
 - [x] Language-based styling and font loading.
 - [x] Basic support for RTL (right-to-left) languages such as Arabic.
-- [X] Dependabot configuration
+- [x] Dependabot configuration
+
+## 🚀 Planned Features
+
+- [ ] Generation of a combined PDF with all OIFE Passports, including a clickable index.
 - [ ] Add screenshot of sample PDF in the README.
+- [ ] Support for more languages
 
 ## 🧪 Requirements
 

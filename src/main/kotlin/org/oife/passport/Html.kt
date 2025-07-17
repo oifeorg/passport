@@ -7,7 +7,7 @@ import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 
 
-fun String.fromMarkdownToHtml(): String {
+fun String.toHtml(): String {
     val flavour = flavor()
     val tree = MarkdownParser(flavour).parse(IElementType("ROOT"), this)
     return HtmlGenerator(this, tree, flavour).generateHtml()

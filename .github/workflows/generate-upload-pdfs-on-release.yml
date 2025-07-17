@@ -22,7 +22,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Generate PDFs
-        run: ./gradlew run
+        run: ./gradlew run --args="${{ github.event.release.tag_name }}"
 
       - name: Zip PDFs
         run: zip -r generated-passports.zip generated

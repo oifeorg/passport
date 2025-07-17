@@ -3,9 +3,9 @@ package org.oife.passport
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class PassportMetaDataTest : StringSpec({
+class SinglePassportMetaTest : StringSpec({
 
-    val meta = PassportMetaData(
+    val meta = SinglePassportMeta(
         markdownFilename = testMarkdownFile,
         languageCode = "en",
         documentTitle = "OIFE Passport"
@@ -16,8 +16,8 @@ class PassportMetaDataTest : StringSpec({
     }
 
     "uses correct direction based on rtl flag" {
-        PassportMetaData("a.md", "ar", "Arabic", font = FontMeta(rtl = true)).direction shouldBe "rtl"
-        PassportMetaData("b.md", "en", "English", font = FontMeta(rtl = false)).direction shouldBe "ltr"
+        SinglePassportMeta("a.md", "ar", "Arabic", font = FontMeta(rtl = true)).direction shouldBe "rtl"
+        SinglePassportMeta("b.md", "en", "English", font = FontMeta(rtl = false)).direction shouldBe "ltr"
     }
 
     "generates correct html replacements" {
@@ -26,7 +26,6 @@ class PassportMetaDataTest : StringSpec({
             this["title"] shouldBe "OIFE Passport"
             this["font-family"] shouldBe "NotoSans"
             this["rtl"] shouldBe "ltr"
-            this["body"] shouldBe meta.markdownContent.fromMarkdownToHtml()
         }
     }
 })

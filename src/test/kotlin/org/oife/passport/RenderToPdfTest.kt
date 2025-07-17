@@ -14,7 +14,7 @@ import kotlin.io.path.fileSize
 class RenderToPdfTest : StringSpec({
 
     "should render a valid PDF file for a document" {
-        val font = loadTestFont(fontForType(FontType.DEFAULT))
+        val font = loadTestFont(FontType.DEFAULT.toFontMeta())
         val document = PdfDocument(
             version = "test-version",
             contentMarkdown = "# Hello PDF",

@@ -38,13 +38,13 @@ data class SinglePassportMeta(
         get() = markdownFilename.removeSuffix(".md") + ".pdf"
 
     val direction: String
-        get() = if (fontForType(font).rtl) "rtl" else "ltr"
+        get() = if (font.toFontMeta().rtl) "rtl" else "ltr"
 }
 
 fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
     "lang" to languageCode,
     "title" to documentTitle,
-    "font-family" to fontForType(font).familyName,
+    "font-family" to font.toFontMeta().familyName,
     "rtl" to direction
 )
 
@@ -64,7 +64,7 @@ enum class FontType {
     CHINESE
 }
 
-fun fontForType(type: FontType): FontMeta = when (type) {
+fun FontType.toFontMeta(): FontMeta = when (this) {
     FontType.DEFAULT -> FontMeta()
     FontType.ARABIC -> FontMeta(
         fileName = "NotoNaskhArabic-Regular.ttf",

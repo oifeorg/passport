@@ -15,9 +15,9 @@ private val logger = LoggerFactory.getLogger("ResourceLoader")
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
-        .distinctBy { fontForType(it).fileName }
+        .distinctBy { it.toFontMeta().fileName }
         .map { fontType ->
-            val fontMeta = fontForType(fontType)
+            val fontMeta = fontType.toFontMeta()
             async {
                 val path = "/fonts/${fontMeta.fileName}"
                 val bytes = loadResourceBytes(path)

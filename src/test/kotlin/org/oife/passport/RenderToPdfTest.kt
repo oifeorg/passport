@@ -1,13 +1,15 @@
 package org.oife.passport
 
+
 import com.openhtmltopdf.extend.FSSupplier
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.file.shouldExist
 import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.matchers.paths.shouldExist
 import io.kotest.matchers.shouldBe
 import java.io.InputStream
 import kotlin.io.path.createTempFile
-
+import kotlin.io.path.extension
+import kotlin.io.path.fileSize
 
 class RenderToPdfTest : StringSpec({
 
@@ -26,12 +28,12 @@ class RenderToPdfTest : StringSpec({
             font = font
         )
 
-        val tempFile = createTempFile("test-passport-", ".pdf").toFile().apply { deleteOnExit() }
+        val outputPath = createTempFile("test-passport-", ".pdf").apply { toFile().deleteOnExit() }
 
-        renderToPdf(document, tempFile).also {
-            it.shouldExist()
-            it.length() shouldBeGreaterThan 100L
-            it.extension shouldBe "pdf"
+        with(renderToPdf(document, outputPath)) {
+            shouldExist()
+            fileSize() shouldBeGreaterThan 100L
+            extension shouldBe "pdf"
         }
     }
 })

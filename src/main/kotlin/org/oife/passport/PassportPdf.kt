@@ -6,30 +6,30 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
-import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.io.path.pathString
 
 const val OUTPUT_DIR_NAME = "generated"
-val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
-
+val outputDir: Path = Paths.get(OUTPUT_DIR_NAME).also { Files.createDirectories(it) }
 private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
+
 
 
 suspend fun renderToPdf(
     document: PdfDocument,
-    outputFile: File = File(outputDir, document.metaInfo.pdfFileName)
-): File = withContext(Dispatchers.IO) {
-    outputFile.outputStream().use { out ->
+    outputPath: Path = outputDir.resolve(document.metaInfo.pdfFileName)
+): Path = withContext(Dispatchers.IO) {
+    Files.newOutputStream(outputPath).use { out ->
         PdfRendererBuilder().apply {
             useFont(document.font, document.metaInfo.font.familyName)
-            withHtmlContent(
-                document.filledHtml,
-                null
-            )
+            withHtmlContent(document.filledHtml, null)
             toStream(out)
         }.run()
     }
 
-    outputFile
+    outputPath
 }
 
 suspend fun generatePassports(
@@ -55,7 +55,7 @@ suspend fun generatePassports(
         }
         .onEach { doc ->
             renderToPdf(doc).also {
-                logger.info("✅ PDF generated: ${it.absolutePath}")
+                logger.info("✅ PDF generated: ${it.pathString}")
             }
         }
 }

@@ -13,8 +13,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
-                documentTitle = "My Passport",
-                font = defaultFont.copy(familyName = "NotoSans")
+                documentTitle = "My Passport"
             ),
             htmlTemplate = loadResourceContent("/templates/passport-single.html"),
             font = { ByteArray(0).inputStream() }

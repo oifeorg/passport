@@ -14,15 +14,14 @@ import kotlin.io.path.fileSize
 class RenderToPdfTest : StringSpec({
 
     "should render a valid PDF file for a document" {
-        val font = loadTestFont(defaultFont)
+        val font = loadTestFont(FontType.DEFAULT.toFontMeta())
         val document = PdfDocument(
             version = "test-version",
             contentMarkdown = "# Hello PDF",
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
-                documentTitle = "Test Document",
-                font = defaultFont
+                documentTitle = "Test Document"
             ),
             htmlTemplate = "<html><body>{{body}}</body></html>",
             font = font

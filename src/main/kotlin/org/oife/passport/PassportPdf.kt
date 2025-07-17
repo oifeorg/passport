@@ -23,7 +23,7 @@ suspend fun renderToPdf(
 ): Path = withContext(Dispatchers.IO) {
     Files.newOutputStream(outputPath).use { out ->
         PdfRendererBuilder().apply {
-            useFont(document.font, document.metaInfo.font.familyName)
+            useFont(document.font, document.metaInfo.font.toFontMeta().familyName)
             withHtmlContent(document.filledHtml, null)
             toStream(out)
         }.run()
@@ -50,7 +50,7 @@ suspend fun generatePassports(
                 contentMarkdown = contentMap.getValue(meta.markdownFilename),
                 metaInfo = meta,
                 htmlTemplate = htmlTemplate,
-                font = fontMap.getValue(meta.font.fileName)
+                font = fontMap.getValue(meta.font.toFontMeta().fileName)
             )
         }
         .onEach { doc ->

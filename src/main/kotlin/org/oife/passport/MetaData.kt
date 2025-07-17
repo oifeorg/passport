@@ -68,23 +68,23 @@ fun fontForType(type: FontType): FontMeta = when (type) {
     FontType.DEFAULT -> FontMeta()
     FontType.ARABIC -> FontMeta(
         fileName = "NotoNaskhArabic-Regular.ttf",
-        familyName = "NotoNaskhArabic",
+        familyName = "Noto Naskh Arabic",
         rtl = true
     )
     FontType.INDIAN -> FontMeta(
         fileName = "NotoSansGujarati-Regular.ttf",
-        familyName = "NotoSansGujarati"
+        familyName = "Noto Sans Gujarati"
     )
     FontType.GEORGIAN -> FontMeta(
         fileName = "NotoSansGeorgian-Regular.ttf",
-        familyName = "NotoSansGeorgian",
+        familyName = "Noto Sans Georgian",
     )
     FontType.JAPANESE -> FontMeta(
         fileName = "NotoSansJP-Regular.ttf",
-        familyName = "NotoSansJP",
+        familyName = "Noto Sans JP",
     )
     FontType.CHINESE -> FontMeta(
         fileName = "NotoSansSC-Regular.ttf",
-        familyName = "NotoSansSC"
+        familyName = "Noto Sans SC"
     )
 }

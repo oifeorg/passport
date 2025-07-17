@@ -8,7 +8,7 @@ suspend fun main(args: Array<String>) {
 
     runCatching {
         val htmlTemplate = loadResourceContent("/templates/passport-single.html")
-        val metaConfigs = singlePassportConfigs()
+        val metaConfigs = loadPassportConfigs()
         generatePassports(version, htmlTemplate, metaConfigs)
     }.onFailure {
         logger.error("❌ Unexpected error", it)

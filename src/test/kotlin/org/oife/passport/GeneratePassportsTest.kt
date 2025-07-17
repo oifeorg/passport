@@ -12,7 +12,7 @@ class GeneratePassportsTest : StringSpec({
         val htmlTemplate = "<html><body>{{body}}</body></html>"
 
         val metaConfigs = listOf(
-            SinglePassportMeta("test.md", "en", "English", defaultFont),
+            SinglePassportMeta("test.md", "en", "English"),
         )
 
         runBlocking {

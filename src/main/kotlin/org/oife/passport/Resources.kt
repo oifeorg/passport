@@ -6,6 +6,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import java.io.InputStream
 
@@ -14,16 +15,24 @@ private val logger = LoggerFactory.getLogger("ResourceLoader")
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
-        .distinctBy { it.fileName }
-        .map { font ->
+        .distinctBy { fontForType(it).fileName }
+        .map { fontType ->
+            val fontMeta = fontForType(fontType)
             async {
-                val path = "/fonts/${font.fileName}"
+                val path = "/fonts/${fontMeta.fileName}"
                 val bytes = loadResourceBytes(path)
-                font.fileName to FSSupplier<InputStream> { bytes.inputStream() }
+                fontMeta.fileName to FSSupplier<InputStream> { bytes.inputStream() }
             }
         }
         .awaitAll()
         .toMap()
+}
+
+private val jsonFormat = Json { ignoreUnknownKeys = true }
+suspend fun loadPassportConfigs(): List<SinglePassportMeta> {
+    val json = loadResourceContent("/passport-config.json")
+    return jsonFormat
+        .decodeFromString(json)
 }
 
 suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String, String> = coroutineScope {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{lang}}" dir="{{rtl}}">
+<html lang="{{lang}}">
 
 <head>
     <meta charset="utf-8"/>
@@ -50,10 +50,20 @@
           margin-bottom: 0.5em;
         }
 
+        .passport-content[dir="rtl"] {
+          direction: rtl;
+          text-align: right;
+        }
+
+        .passport-content[dir="ltr"] {
+          direction: ltr;
+          text-align: left;
+        }
+
         @page {
           margin: 1cm;
           @bottom-center {
-            content: "© OIFE {{year}}, {{version}} – page " counter(page) " / " counter(pages);
+            content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
             font-family: {{font-family}}, "Noto Sans", sans-serif;
             font-size: 0.8em;
             border-top: 0.5pt solid #ccc;
@@ -65,7 +75,7 @@
 </head>
 
 <body>
-<div>
+<div class="passport-content" dir="{{rtl}}">
     {{body}}
 </div>
 </body>

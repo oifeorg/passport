@@ -26,7 +26,7 @@ class PassportMetaDataTest : StringSpec({
             this["title"] shouldBe "OIFE Passport"
             this["font-family"] shouldBe "NotoSans"
             this["rtl"] shouldBe "ltr"
-            this["body"] shouldBe meta.markdownContent.fromMarkdownToHtml()
+            this["body"] shouldBe meta.markdownContent.toHtml()
         }
     }
 })

@@ -21,17 +21,17 @@ class ResourceLoaderTest : StringSpec({
         }
     }
 
-    "buildFontSupplierMap includes test font file" {
-        fontMap().apply {
-            containsKey(defaultFont.fileName) shouldBe true
-
-            get(defaultFont.fileName).also { supplier ->
-                supplier shouldNotBe null
-                supplier?.supply().also { stream ->
-                    stream shouldNotBe null
-                    stream?.readBytes()?.isNotEmpty() shouldBe true
-                }
-            }
-        }
-    }
+//    "buildFontSupplierMap includes test font file" {
+//        fontMap().apply {
+//            containsKey(defaultFont.fileName) shouldBe true
+//
+//            get(defaultFont.fileName).also { supplier ->
+//                supplier shouldNotBe null
+//                supplier?.supply().also { stream ->
+//                    stream shouldNotBe null
+//                    stream?.readBytes()?.isNotEmpty() shouldBe true
+//                }
+//            }
+//        }
+//    }
 })

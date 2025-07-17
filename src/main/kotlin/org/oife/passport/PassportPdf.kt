@@ -1,12 +1,11 @@
 package org.oife.passport
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
-private val logger: Logger = LoggerFactory.getLogger("PassportGenerator")
 const val OUTPUT_DIR_NAME = "generated"
 private val outputDir = File(OUTPUT_DIR_NAME).apply { mkdirs() }
 
@@ -25,10 +24,21 @@ fun renderPdfToFile(
     outputFile
 }
 
-fun generateAllSinglePassports() {
-    passports.forEach { it: PassportMetaData ->
-        renderPdfToFile(singleHtmlTemplateFile.toFilledHtml(it.toHtmlReplacements()), it)
-            .onSuccess { file -> logger.info("✅ PDF generated at: ${file.absolutePath}") }
-            .onFailure { logger.error("❌ PDF generation failed", it) }
+suspend fun renderToPdf(
+    document: PdfDocument,
+    outputFile: File = File(outputDir, document.metaInfo.pdfFileName)
+): File = withContext(Dispatchers.IO) {
+    outputFile.outputStream().use { out ->
+        PdfRendererBuilder().apply {
+            useFont(document.font, document.metaInfo.font.familyName)
+            withHtmlContent(
+                document.filledHtml,
+                null
+            )
+            toStream(out)
+        }.run()
     }
+
+    outputFile
 }
+

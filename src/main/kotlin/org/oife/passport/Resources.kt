@@ -11,7 +11,6 @@ import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
-val singleHtmlTemplateFile = loadResourceText("/templates/passport-single.html")
 val fontSupplierMap = buildFontSupplierMap()
 
 private fun getResourceStream(path: String): InputStream? =
@@ -29,15 +28,6 @@ fun loadResourceText(path: String): String {
     }
 }
 
-//suspend fun loadResourceContent(path: String): String = withContext(Dispatchers.IO) {
-//    val stream = object {}.javaClass.getResourceAsStream(path)
-//        ?: throw IllegalStateException("Resource not found: $path")
-//
-//    logger.info("📄 Loaded resource: $path")
-//
-//    stream.bufferedReader().use { it.readText() }
-//}
-
 fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
     passports
         .map { it.font }
@@ -49,7 +39,7 @@ fun buildFontSupplierMap(): Map<String, FSSupplier<InputStream>> =
             font.fileName to FSSupplier { bytes.inputStream() }
         }
 
-suspend fun fontMap(passports: List<PassportMetaData>): Map<String, FSSupplier<InputStream>> = coroutineScope {
+suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
         .distinctBy { it.fileName }
@@ -64,7 +54,7 @@ suspend fun fontMap(passports: List<PassportMetaData>): Map<String, FSSupplier<I
         .toMap()
 }
 
-suspend fun passportContentMap(passports: List<PassportMetaData>): Map<String, String> = coroutineScope {
+suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String, String> = coroutineScope {
     passports.map { metadata ->
         async {
             val path = "/data/${metadata.markdownFilename}"
@@ -72,15 +62,6 @@ suspend fun passportContentMap(passports: List<PassportMetaData>): Map<String, S
         }
     }.awaitAll().toMap()
 }
-
-//private suspend fun loadResourceBytes(path: String): ByteArray = withContext(Dispatchers.IO) {
-//    val stream = object {}.javaClass.getResourceAsStream(path)
-//        ?: throw IllegalStateException("Resource not found: $path")
-//
-//    logger.info("📦 Loaded binary resource: $path")
-//
-//    stream.readBytes()
-//}
 
 private suspend fun <T> loadResource(path: String, description: String, reader: (InputStream) -> T): T =
     withContext(Dispatchers.IO) {

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>{{title}}</title>
+    <style>
+        html {
+          font-size: 7pt;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: {{font-family}}, "Noto Sans", sans-serif;
+          font-size: 0.9rem;
+          line-height: 1.4;
+          color: #000;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+
+        h1 { font-size: 1.2em; }
+        h2 { font-size: 1.1em; }
+        h3 { font-size: 1em; }
+        h4 { font-size: 0.95em; }
+        h5 { font-size: 0.9em; }
+        h6 { font-size: 0.85em; }
+
+        p {
+          margin-bottom: 0.6em;
+        }
+
+        ul,
+        ol {
+          padding-left: 1em;     /* reduced from 1.5em */
+          margin-bottom: 0.6em;  /* reduced from 1em */
+        }
+
+        ul {
+          list-style-type: disc;
+        }
+
+        ol {
+          list-style-type: decimal;
+        }
+
+        li {
+          margin-bottom: 0.3em;  /* reduced from 0.5em */
+        }
+
+        .passport-content[dir="rtl"] {
+          direction: rtl;
+          text-align: right;
+        }
+
+        .passport-content[dir="ltr"] {
+          direction: ltr;
+          text-align: left;
+        }
+
+        @page {
+          size: 9cm 12.5cm;
+          margin: 0.7cm;
+          @bottom-center {
+            content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
+            font-family: {{font-family}}, "Noto Sans", sans-serif;
+            font-size: 0.5em;
+            border-top: 0.5pt solid #ccc;
+            padding-top: 0.1em;
+            padding-bottom: 0.1em;
+          }
+        }
+    </style>
+</head>
+
+<body>
+<div class="passport-content" dir="{{rtl}}">
+    {{body}}
+</div>
+</body>
+
+</html>

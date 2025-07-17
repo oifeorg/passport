@@ -25,7 +25,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>My Passport</title>")
             shouldContain("font-family: NotoSans")
-            shouldContain("© OIFE 2025, v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+            shouldContain("© OIFE 2025 v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
             shouldContain("<h1>Hello</h1>")
             shouldNotContain("{{")
             shouldNotContain("}}")

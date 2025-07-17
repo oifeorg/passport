@@ -89,6 +89,7 @@ fun singlePassportConfigs() = listOf(
     SinglePassportMeta("hr-croatian.md", "hr", "Passeport OIFE"),
     SinglePassportMeta("it-italian.md", "it", "Passeport OIFE"),
     SinglePassportMeta("ka-georgian.md", "ka", "Passeport OIFE", font = georgianFont),
+    SinglePassportMeta("ja-japanese.md", "ja", "Passeport OIFE", font = georgianFont),
     SinglePassportMeta("nb-norwegian-bokmal.md", "nb", "Passeport OIFE"),
     SinglePassportMeta("nl-dutch.md", "nl", "Passeport OIFE"),
     SinglePassportMeta("pl-polish.md", "pl", "Passeport OIFE"),

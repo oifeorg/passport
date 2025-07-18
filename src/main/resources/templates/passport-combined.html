@@ -12,6 +12,7 @@
         }
 
         body {
+
           font-family: {{font-family}}, "Noto Sans", sans-serif;
           font-size: 0.9rem;
           line-height: 1.4;
@@ -73,11 +74,70 @@
             padding-bottom: 0.1em;
           }
         }
+          .lang-ar {
+            font-family: "Noto Naskh Arabic", serif;
+            direction: rtl;
+          }
+
+          .lang-gu {
+            font-family: "Noto Sans Gujarati", sans-serif;
+          }
+
+          .lang-ja {
+            font-family: "Noto Sans JP", sans-serif;
+          }
+
+          .lang-ka {
+            font-family: "Noto Sans Georgian", sans-serif;
+          }
+
+          /* fallback/default */
+          .lang-default {
+            font-family: "Noto Sans", sans-serif;
+          }
+
+          .page-break-after {
+             page-break-after: always;
+          }
+
     </style>
 </head>
 
 <body>
-<div class="passport-content" dir="rtl">
+
+<div class="lang-default page-break-after">
+    <div style="
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-color: #007BFF
+    padding: 2rem;
+  ">
+        <h1 style="font-size: 2.5rem; margin: 0;">
+            OIFE<br />Osteogenesis Imperfecta Europe
+        </h1>
+    </div>
+</div>
+
+<div class="lang-default page-break-after" style="padding: 2rem;">
+    <h1 style="text-align: center; color: black; font-size: 2rem;">Index</h1>
+    <ul style="list-style: none; padding: 0; font-size: 1.2rem;">
+        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ccc;">
+            <a href="#ar" style="text-decoration: none; color: #000;">
+                <span class="lang-ar">العربية</span><span class="lang-default"> – Arabic 2</span>
+            </a>
+        </li>
+        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ccc;">
+            <a href="#da" style="text-decoration: none; color: #000;">
+                <span class="lang-da">Dansk</span><span class="lang-default"> – Danish 3</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="ar" class="passport-content lang-ar page-break-after" dir="rtl">
     العربية
 
     نصائح و توجيهات خاصة بهشاشة العظام عند الأطفال
@@ -104,13 +164,13 @@
     يجب دفع راس الشخص بلطف و ببطء عند التنبيب للتقليل من خطورة كسر فقرات العنق، ويجب أخذ بعين الاعتبار البنية الضعيفة للغشاء المخاطي للقصبة الهوائية.
     الاسنان غالبا ما تكون هشة ايضا.
 </div>
-<div class="passport-content" dir="ltr">
-    العربية# Dansk
+<div id="da" class="passport-content lang-default" dir="ltr">
+    Dansk
 
     Jeg har osteogenesis imperfecta (OI - medfødt knogleskørhed). Det medfører, at mine knogler er skøre. OI påvirker ikke kun knoglerne, men også bindevævet i almindelighed.
     Tal med mig/ mine forældre/ min ledsager før du flytter, transporterer, undersøger eller behandler mig; følg mine/deres anvisninger om hvordan jeg behandles mest sikkert.
 
-    ## Vær opmærksom på følgende
+    Vær opmærksom på følgende
     - Ved osteogenesis imperfecta kan der let opstå frakturer også spontant.
     - Symptomer på frakturer er ikke altid åbenbare; smerte vil ofte indikere brud.
     - Blot det at undersøge for tegn på brud-f.eks. unormal bevægelighed eller knitren/knirken-kan forårsage frakturer.
@@ -123,12 +183,12 @@
     - Egen speciallæge bør kontaktes såfremt indlæggelse eller operation er nødvendig.
     - Mange patienter med OI har nedsat hørelse.
 
-    ## Røntgen
+    Røntgen
     - Ved osteogenesis imperfecta kan knoglerne være de­­­mineraliserede. Lavere røntgendosis er normalt nok (ligesom ved osteoporose) for at undgå unødvendig gentagelse af røntgenfotografering.
     - Overdrevne bevægelser og unødvendige løft bør undgås.
     - Patienter og deres forældre/ledsagere har som regel erfaringer fra tidligere undersøgelser. De kan være behjælpelige med at finde den bedste måde at gennemføre røntgenundersøgelsen.
 
-    ## Operation og narkose
+    Operation og narkose
     - Vær forsigtig når personen/patienten flyttes til og fra operationslejet. Sørg for god understøttelse.
     - Vær opmærksom på eksisterende deformiteter eller sammenfald, når personen/patienten placeres på operationslejet.
     - Bøj hovedet forsigtigt bagud ved intubation for at minimere risikoen for fraktur på halshvirvel; vær opmærksom på den sårbare slimhinde i luftrøret. Tænderne er ofte skøre.

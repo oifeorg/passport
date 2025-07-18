@@ -31,18 +31,14 @@ suspend fun renderToPdf(
     outputPath
 }
 
-suspend fun generatePassports(
+suspend fun generateSinglePassports(
     documentResource: DocumentResource
 ) = coroutineScope {
 
     documentResource.passportConfigs
         .map { meta ->
             SinglePdfDocument(
-                version = documentResource.version,
-                contentMarkdown = documentResource.contentMap.getValue(meta.markdownFilename),
                 metaInfo = meta,
-                htmlTemplate = documentResource.htmlTemplate,
-                font = documentResource.fontMap.getValue(meta.font.toFontMeta().familyName),
                 documentResource = documentResource
             )
         }

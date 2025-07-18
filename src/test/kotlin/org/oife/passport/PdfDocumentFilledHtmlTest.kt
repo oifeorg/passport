@@ -8,21 +8,18 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in the HTML template" {
         val document = SinglePdfDocument(
-            version = "v1.0.0",
-            contentMarkdown = "# Hello",
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
                 documentTitle = "My Passport"
             ),
-            htmlTemplate = loadResourceContent("/templates/passport-single.html"),
             documentResource = DocumentResource(
-                "", emptyList(),
-                contentMap = emptyMap(),
-                fontMap = emptyMap(),
+                loadResourceContent("/templates/passport-single.html"),
+                emptyList(),
+                contentMap = mapOf("test.md" to "# Hello"),
+                fontMap = mapOf(FontType.DEFAULT.toFontMeta().familyName to loadTestFont(FontType.DEFAULT.toFontMeta())),
                 version = "v1.0.0",
             ),
-            font = { ByteArray(0).inputStream() }
         )
 
         with(document.filledHtml) {

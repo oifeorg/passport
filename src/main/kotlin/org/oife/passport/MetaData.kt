@@ -13,22 +13,18 @@ interface RenderableDocument {
 
 data class SinglePdfDocument(
     val documentResource: DocumentResource,
-    val version: String,
-    val contentMarkdown: String,
     val metaInfo: SinglePassportMeta,
-    val htmlTemplate: String,
-    val font: FSSupplier<InputStream>
 ): RenderableDocument {
     val bodyHtml: String by lazy {
-        contentMarkdown.toHtml()
+        documentResource.contentMap.getValue(metaInfo.markdownFilename).toHtml()
     }
 
     override val filledHtml: String by lazy {
-        htmlTemplate.toFilledHtml(toHtmlReplacements())
+        documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())
     }
 
     override val fontMap: Map<String, FSSupplier<InputStream>>
-        get() = mapOf(metaInfo.font.toFontMeta().familyName to font)
+        get() = mapOf(metaInfo.font.toFontMeta().familyName to documentResource.fontMap.getValue(metaInfo.font.toFontMeta().familyName))
 
     override val pdfFileName: String
         get() = metaInfo.pdfFileName
@@ -36,7 +32,7 @@ data class SinglePdfDocument(
 
 fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
     "body" to bodyHtml,
-    "version" to version,
+    "version" to documentResource.version,
     "year" to Year.now().toString()
 ) + metaInfo.toHtmlReplacements()
 

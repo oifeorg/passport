@@ -1,5 +1,3 @@
-# Română
-
 Eu am osteogeneză imperfectă (OI sau boala “oaselor de sticlă”). Acest lucru înseamnă că oasele mele sunt fragile. OI afectează nu numai sistemul osos, ci si ţesuturile conjunctive în general. Vă rog să vă sfătuiţi  cu mine, cu părinţii mei sau cu însoţitorul meu înainte de a mă mişca, transporta sau a-mi administra un tratament; urmaţi indicaţiile mele sau ale lor pentru a mă putea manevra în siguranţă.  
 
 ## Aş vrea să vă reamintesc următoarele

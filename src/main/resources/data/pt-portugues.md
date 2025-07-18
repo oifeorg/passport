@@ -1,5 +1,3 @@
-# Português
-
 Eu tenho Osteogénese Imperfeita (OI ou doença dos ossos de vidro). Isso significa que os meus ossos são frágeis. A OI não afecta só o esqueleto, mas também o tecido conjuntivo em geral. Por favor, consulte-me a mim / aos meus pais / ao meu companheiro antes de me movimentar, transportar, examinar ou tratar; siga os meus / seus conselhos acerca da forma como me tratar com segurança. 
 
 ## Gostaríamos de vos recordar o seguinte

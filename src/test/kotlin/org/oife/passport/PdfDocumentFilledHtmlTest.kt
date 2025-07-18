@@ -11,7 +11,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
-                documentTitle = "My Passport"
+                title = "My Passport"
             ),
             documentResource = DocumentResource(
                 loadResourceContent("/templates/passport-single.html"),

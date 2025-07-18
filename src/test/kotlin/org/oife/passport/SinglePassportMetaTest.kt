@@ -8,7 +8,7 @@ class SinglePassportMetaTest : StringSpec({
     val meta = SinglePassportMeta(
         markdownFilename = testMarkdownFile,
         languageCode = "en",
-        documentTitle = "OIFE Passport"
+        title = "OIFE Passport"
     )
 
     "returns correct pdf file name" {

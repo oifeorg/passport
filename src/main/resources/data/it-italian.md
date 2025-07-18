@@ -1,5 +1,3 @@
-# Italioano
-
 Ho l’Osteogenesi Imperfetta (OI). Ciò significa che le mie ossa sono fragili. L’OI non colpisce solo la parte scheletrica, ma anche il tessuto connettivo in generale.
 Per favore, consultate me/i miei genitori/il mio accompagnatore prima di muovermi, trasportarmi, visitarmi o sottopormi ad un trattamento; seguite le mie o le loro direttive sul come maneggiarmi cautamente.
 

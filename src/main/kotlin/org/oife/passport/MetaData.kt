@@ -15,7 +15,7 @@ data class SinglePdfDocument(
     val documentResource: DocumentResource,
     val metaInfo: SinglePassportMeta,
 ): RenderableDocument {
-    val bodyHtml: String by lazy {
+    val passportContent: String by lazy {
         documentResource.contentMap.getValue(metaInfo.markdownFilename).toHtml()
     }
 
@@ -40,13 +40,13 @@ data class CombinedPdfDocument(val documentResource: DocumentResource) : Rendera
 }
 
 fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "body" to bodyHtml,
+    "passport-content" to passportContent,
     "version" to documentResource.version,
     "year" to Year.now().toString()
 ) + metaInfo.toHtmlReplacements()
 
 fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "body" to "",
+    "passport-content" to "",
     "version" to documentResource.version,
     "year" to Year.now().toString()
 )
@@ -55,7 +55,8 @@ fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
 data class SinglePassportMeta(
     val markdownFilename: String,
     val languageCode: String,
-    val documentTitle: String,
+    val title: String,
+    val localizedTitle: String = "",
     val font: FontType = FontType.DEFAULT,
 ) {
     val pdfFileName: String
@@ -67,7 +68,7 @@ data class SinglePassportMeta(
 
 fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
     "lang" to languageCode,
-    "title" to documentTitle,
+    "headerTitle" to if(localizedTitle == title) title else "$localizedTitle - $title",
     "font-family" to font.toFontMeta().familyName,
     "rtl" to direction
 )

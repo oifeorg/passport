@@ -1,5 +1,3 @@
-# Español
-
 Tengo Osteogénesis Imperfecta (OI o huesos de cristal). Esto significa que mis huesos se rompen fácilmente. OI no sólo afecta al esqueleto, sino a todos los tejidos conjuntivos en general. Por favor, consulte a mis padres / a mí / a quien me acompañe antes de moverme, transportarme, examinarme o darme ningún tratamiento; siga mis / sus instrucciones acerca de cómo moverme y sujetarme de manera segura.
 
 ## Quisiera recordarle lo siguiente

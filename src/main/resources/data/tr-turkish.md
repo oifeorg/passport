@@ -1,5 +1,3 @@
-# Türkçe
-
 Benim hastalığım Osteogenesis Imperfecta (OI, cam kemik). Şu anlama gelir ben hassas ve nazik kemiklere sahibim. Bu sadece kemikler için değil bütün vücudun bağ dokusu içinde geçerlidir. 
 Lütfen beni muayene ve tedavi ederken, kaldırırken hareket ettirirken benim ve ailemin vereceği talimatlar doğrultusunda müdahale edin. 
 

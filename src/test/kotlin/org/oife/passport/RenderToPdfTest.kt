@@ -16,10 +16,10 @@ class RenderToPdfTest : StringSpec({
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
-                documentTitle = "Test Document"
+                title = "Test Document"
             ),
             documentResource = DocumentResource(
-                "<html><body>{{body}}</body></html>", emptyList(),
+                "<html><body>{{passport-content}}</body></html>", emptyList(),
                 contentMap = mapOf("test.md" to "# Hello"),
                 fontMap = mapOf(FontType.DEFAULT.toFontMeta().familyName to loadTestFont(FontType.DEFAULT.toFontMeta())),
                 version = "v1.0.0",

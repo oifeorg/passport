@@ -2,126 +2,149 @@
   {
     "markdownFilename": "ar-arabic.md",
     "languageCode": "ar",
-    "documentTitle": "جواز سفر OIFE",
+    "title": "Arabic",
+    "localizedTitle": "العربية",
     "font": "ARABIC"
   },
   {
     "markdownFilename": "da-danish.md",
     "languageCode": "da",
-    "documentTitle": "OIFE Passport"
+    "localizedTitle": "Dansk",
+    "title": "Danish"
   },
   {
     "markdownFilename": "de-german.md",
     "languageCode": "de",
-    "documentTitle": "OIFE-Passport"
+    "title": "German",
+    "localizedTitle": "Deutsch"
   },
   {
     "markdownFilename": "el-greek.md",
     "languageCode": "el",
-    "documentTitle": "OIFE Passport"
+    "title": "Greek",
+    "localizedTitle": "Ελληνικά"
   },
   {
     "markdownFilename": "en-english.md",
     "languageCode": "en",
-    "documentTitle": "OIFE Passport"
+    "title": "English",
+    "localizedTitle": "English"
   },
   {
     "markdownFilename": "es-spanish.md",
     "languageCode": "es",
-    "documentTitle": "OIFE Passport"
+    "title": "Spanish",
+    "localizedTitle": "Español"
   },
   {
     "markdownFilename": "fl-finnish.md",
     "languageCode": "fl",
-    "documentTitle": "OIFE Passport"
+    "title": "Finish",
+    "localizedTitle": "Suomi"
   },
   {
     "markdownFilename": "fr-french.md",
     "languageCode": "fr",
-    "documentTitle": "Passeport OIFE"
+    "title": "French",
+    "localizedTitle": "Français"
   },
   {
     "markdownFilename": "gu-indian-gujarati.md",
     "languageCode": "gu",
-    "documentTitle": "Passeport OIFE",
+    "title": "Indian Gujarati",
+    "localizedTitle": "ગુજરાતી",
     "font": "INDIAN"
   },
   {
     "markdownFilename": "hr-croatian.md",
     "languageCode": "hr",
-    "documentTitle": "Passeport OIFE"
+    "title": "Croatian",
+    "localizedTitle": "Hrvatski"
   },
   {
     "markdownFilename": "it-italian.md",
     "languageCode": "it",
-    "documentTitle": "Passeport OIFE"
+    "title": "Italian",
+    "localizedTitle": "Italiano"
   },
   {
     "markdownFilename": "ka-georgian.md",
     "languageCode": "ka",
-    "documentTitle": "Passeport OIFE",
+    "title": "Georgian",
+    "localizedTitle": "ქართული",
     "font": "GEORGIAN"
   },
   {
     "markdownFilename": "ja-japanese.md",
     "languageCode": "ja",
-    "documentTitle": "Passeport OIFE",
-    "font": "JAPANESE"
+    "title": "Japanese",
+    "font": "JAPANESE",
+    "localizedTitle": "日本語"
   },
   {
     "markdownFilename": "nb-norwegian-bokmal.md",
     "languageCode": "nb",
-    "documentTitle": "Passeport OIFE"
+    "title": "Norwegian",
+    "localizedTitle": "Norsk bokmål"
   },
   {
     "markdownFilename": "nl-dutch.md",
     "languageCode": "nl",
-    "documentTitle": "Passeport OIFE"
+    "title": "Dutch",
+    "localizedTitle": "Nederlands"
   },
   {
     "markdownFilename": "pl-polish.md",
     "languageCode": "pl",
-    "documentTitle": "Passeport OIFE"
+    "title": "Polish",
+    "localizedTitle": "Polsk"
   },
   {
     "markdownFilename": "pt-portugues.md",
     "languageCode": "pt",
-    "documentTitle": "Passeport OIFE"
+    "title": "Portuguese",
+    "localizedTitle": "Português"
   },
   {
     "markdownFilename": "ro-romanian.md",
     "languageCode": "ro",
-    "documentTitle": "Passeport OIFE"
+    "title": "Romanian",
+    "localizedTitle": "Română"
   },
   {
     "markdownFilename": "ru-russian.md",
     "languageCode": "ru",
-    "documentTitle": "Passeport OIFE"
+    "title": "Russian",
+    "localizedTitle": "Русский"
   },
   {
     "markdownFilename": "sl-slovenian.md",
-    "languageCode": "sl",
-    "documentTitle": "Passeport OIFE"
+    "languageCode": "Slovenian",
+    "title": "Slovensko"
   },
   {
     "markdownFilename": "sv-swedish.md",
     "languageCode": "sv",
-    "documentTitle": "Passeport OIFE"
+    "title": "Swedish",
+    "localizedTitle": "Svenska"
   },
   {
     "markdownFilename": "tr-turkish.md",
     "languageCode": "tr",
-    "documentTitle": "Passeport OIFE"
+    "title": "Turkish",
+    "localizedTitle": "Türkçe"
   },
   {
     "markdownFilename": "uk-ukrainian.md",
     "languageCode": "uk",
-    "documentTitle": "Passeport OIFE"
+    "title": "Ukrainian",
+    "localizedTitle": "Українська"
   },
   {
     "markdownFilename": "zh-chinese.md",
     "languageCode": "zh",
-    "documentTitle": "Passeport OIFE",
+    "title": "Chinese Mandarin",
+    "localizedTitle": "简体中文",
     "font": "CHINESE"
   }
 ]

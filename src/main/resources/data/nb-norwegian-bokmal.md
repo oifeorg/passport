@@ -1,5 +1,3 @@
-# Norsk (bokmål)
-
 Jeg har Osteogenesis Imperfecta (OI, medfødt beinskjørhet). Dette medfører at jeg har skjøre bein. OI påvirker ikke bare skjelettet men bindevevet generelt. Vennligst rådfør deg med meg/mine foreldre/min partner før du rører, flytter, undersøker eller behandler meg; følg min/deres instruksjoner om hvordan du skal håndtere meg trygt.
 
 ## Vi ønsker å minne om følgende

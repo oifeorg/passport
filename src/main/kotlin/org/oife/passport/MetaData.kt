@@ -5,23 +5,36 @@ import kotlinx.serialization.Serializable
 import java.io.InputStream
 import java.time.Year
 
-data class PdfDocument(
+interface RenderableDocument {
+    val filledHtml: String
+    val fontMap: Map<String, FSSupplier<InputStream>>
+    val pdfFileName: String
+}
+
+data class SinglePdfDocument(
+    val documentResource: DocumentResource,
     val version: String,
     val contentMarkdown: String,
     val metaInfo: SinglePassportMeta,
     val htmlTemplate: String,
     val font: FSSupplier<InputStream>
-) {
+): RenderableDocument {
     val bodyHtml: String by lazy {
         contentMarkdown.toHtml()
     }
 
-    val filledHtml: String by lazy {
+    override val filledHtml: String by lazy {
         htmlTemplate.toFilledHtml(toHtmlReplacements())
     }
+
+    override val fontMap: Map<String, FSSupplier<InputStream>>
+        get() = mapOf(metaInfo.font.toFontMeta().familyName to font)
+
+    override val pdfFileName: String
+        get() = metaInfo.pdfFileName
 }
 
-fun PdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
+fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
     "body" to bodyHtml,
     "version" to version,
     "year" to Year.now().toString()
@@ -50,7 +63,7 @@ fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
 
 data class FontMeta(
     val fileName: String = "NotoSans-Regular.ttf",
-    val familyName: String = "NotoSans",
+    val familyName: String = "Noto Sans",
     val rtl: Boolean = false,
 )
 

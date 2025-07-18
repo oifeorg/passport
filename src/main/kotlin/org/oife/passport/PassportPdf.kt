@@ -2,7 +2,6 @@ package org.oife.passport
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
@@ -15,15 +14,15 @@ const val OUTPUT_DIR_NAME = "generated"
 val outputDir: Path = Paths.get(OUTPUT_DIR_NAME).also { Files.createDirectories(it) }
 private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
 
-
-
 suspend fun renderToPdf(
-    document: PdfDocument,
-    outputPath: Path = outputDir.resolve(document.metaInfo.pdfFileName)
+    document: RenderableDocument,
+    outputPath: Path = outputDir.resolve(document.pdfFileName)
 ): Path = withContext(Dispatchers.IO) {
     Files.newOutputStream(outputPath).use { out ->
         PdfRendererBuilder().apply {
-            useFont(document.font, document.metaInfo.font.toFontMeta().familyName)
+            document.fontMap.forEach { (familyName, font) ->
+                useFont(font, familyName)
+            }
             withHtmlContent(document.filledHtml, null)
             toStream(out)
         }.run()
@@ -33,24 +32,18 @@ suspend fun renderToPdf(
 }
 
 suspend fun generatePassports(
-    version: String,
-    htmlTemplate: String,
-    metaConfigs: List<SinglePassportMeta>
+    documentResource: DocumentResource
 ) = coroutineScope {
-    val fontMapDeferred = async { fontMap(metaConfigs) }
-    val contentMapDeferred = async { passportContentMap(metaConfigs) }
 
-    val fontMap = fontMapDeferred.await()
-    val contentMap = contentMapDeferred.await()
-
-    metaConfigs
+    documentResource.passportConfigs
         .map { meta ->
-            PdfDocument(
-                version = version,
-                contentMarkdown = contentMap.getValue(meta.markdownFilename),
+            SinglePdfDocument(
+                version = documentResource.version,
+                contentMarkdown = documentResource.contentMap.getValue(meta.markdownFilename),
                 metaInfo = meta,
-                htmlTemplate = htmlTemplate,
-                font = fontMap.getValue(meta.font.toFontMeta().fileName)
+                htmlTemplate = documentResource.htmlTemplate,
+                font = documentResource.fontMap.getValue(meta.font.toFontMeta().familyName),
+                documentResource = documentResource
             )
         }
         .onEach { doc ->

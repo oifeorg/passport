@@ -15,7 +15,7 @@ class RenderToPdfTest : StringSpec({
 
     "should render a valid PDF file for a document" {
         val font = loadTestFont(FontType.DEFAULT.toFontMeta())
-        val document = PdfDocument(
+        val document = SinglePdfDocument(
             version = "test-version",
             contentMarkdown = "# Hello PDF",
             metaInfo = SinglePassportMeta(
@@ -24,6 +24,12 @@ class RenderToPdfTest : StringSpec({
                 documentTitle = "Test Document"
             ),
             htmlTemplate = "<html><body>{{body}}</body></html>",
+            documentResource = DocumentResource(
+                "", emptyList(),
+                contentMap = emptyMap(),
+                fontMap = emptyMap(),
+                version = "v1.0.0",
+            ),
             font = font
         )
 

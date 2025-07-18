@@ -7,7 +7,7 @@ import io.kotest.matchers.string.shouldNotContain
 class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in the HTML template" {
-        val document = PdfDocument(
+        val document = SinglePdfDocument(
             version = "v1.0.0",
             contentMarkdown = "# Hello",
             metaInfo = SinglePassportMeta(
@@ -16,6 +16,12 @@ class PdfDocumentFilledHtmlTest : StringSpec({
                 documentTitle = "My Passport"
             ),
             htmlTemplate = loadResourceContent("/templates/passport-single.html"),
+            documentResource = DocumentResource(
+                "", emptyList(),
+                contentMap = emptyMap(),
+                fontMap = emptyMap(),
+                version = "v1.0.0",
+            ),
             font = { ByteArray(0).inputStream() }
         )
 
@@ -23,7 +29,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>My Passport</title>")
-            shouldContain("font-family: NotoSans")
+            shouldContain("font-family: Noto Sans")
             shouldContain("© OIFE 2025 v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
             shouldContain("<h1>Hello</h1>")
             shouldNotContain("{{")

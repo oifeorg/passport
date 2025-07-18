@@ -24,7 +24,7 @@ class SinglePassportMetaTest : StringSpec({
         meta.toHtmlReplacements().apply {
             this["lang"] shouldBe "en"
             this["title"] shouldBe "OIFE Passport"
-            this["font-family"] shouldBe "NotoSans"
+            this["font-family"] shouldBe "Noto Sans"
             this["rtl"] shouldBe "ltr"
         }
     }

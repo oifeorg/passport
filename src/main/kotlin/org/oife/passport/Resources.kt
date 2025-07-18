@@ -12,16 +12,24 @@ import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
+data class DocumentResource(
+    val htmlTemplate: String,
+    val passportConfigs: List<SinglePassportMeta>,
+    val contentMap: Map<String, String>,
+    val fontMap: Map<String, FSSupplier<InputStream>>,
+    val version: String
+)
+
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
-        .distinctBy { it.toFontMeta().fileName }
+        .distinctBy { it.toFontMeta().familyName }
         .map { fontType ->
             val fontMeta = fontType.toFontMeta()
             async {
                 val path = "/fonts/${fontMeta.fileName}"
                 val bytes = loadResourceBytes(path)
-                fontMeta.fileName to FSSupplier<InputStream> { bytes.inputStream() }
+                fontMeta.familyName to FSSupplier<InputStream> { bytes.inputStream() }
             }
         }
         .awaitAll()
@@ -59,3 +67,21 @@ suspend fun loadResourceContent(path: String): String =
 
 suspend fun loadResourceBytes(path: String): ByteArray =
     loadResource(path, "📦") { it.readBytes() }
+
+suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
+    val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
+    val passportConfigs = loadPassportConfigs()
+    val fontMapDeferred = async { fontMap(passportConfigs) }
+    val contentMapDeferred = async { passportContentMap(passportConfigs) }
+
+    val fontMap = fontMapDeferred.await()
+    val contentMap = contentMapDeferred.await()
+    val htmlTemplate = htmlTemplateDeferred.await()
+    DocumentResource(
+        version = version,
+        htmlTemplate = htmlTemplate,
+        passportConfigs = passportConfigs,
+        contentMap = contentMap,
+        fontMap = fontMap
+    )
+}

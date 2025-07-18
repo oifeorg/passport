@@ -30,11 +30,26 @@ data class SinglePdfDocument(
         get() = metaInfo.pdfFileName
 }
 
+data class CombinedPdfDocument(val documentResource: DocumentResource) : RenderableDocument {
+    override val filledHtml: String
+        get() = documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())
+    override val fontMap: Map<String, FSSupplier<InputStream>>
+        get() = documentResource.fontMap
+    override val pdfFileName: String
+        get() = "all-passport-combined.pdf"
+}
+
 fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
     "body" to bodyHtml,
     "version" to documentResource.version,
     "year" to Year.now().toString()
 ) + metaInfo.toHtmlReplacements()
+
+fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
+    "body" to "",
+    "version" to documentResource.version,
+    "year" to Year.now().toString()
+)
 
 @Serializable
 data class SinglePassportMeta(

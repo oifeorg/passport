@@ -9,7 +9,10 @@ suspend fun main(args: Array<String>) {
     runCatching {
         val singleDocumentResource = getDocumentResource("/templates/passport-single.html", version)
         generateSinglePassports(singleDocumentResource)
+        val combinedDocumentResource = singleDocumentResource.copy(htmlTemplate = loadResourceContent("/templates/passport-combined.html"))
+        generateCombinedPassport(combinedDocumentResource)
     }.onFailure {
         logger.error("❌ Unexpected error", it)
     }
 }
+

@@ -2,7 +2,6 @@ package org.oife.passport
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
@@ -16,7 +15,7 @@ private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
 
 suspend fun renderToPdf(
     document: RenderableDocument,
-    outputPath: Path = outputDir.resolve(document.pdfFileName)
+    outputPath: Path = outputDir.resolve(document.pdfFileName),
 ): Path = withContext(Dispatchers.IO) {
     Files.newOutputStream(outputPath).use { out ->
         PdfRendererBuilder().apply {
@@ -31,10 +30,15 @@ suspend fun renderToPdf(
     outputPath
 }
 
-suspend fun generateSinglePassports(
-    documentResource: DocumentResource
-) = coroutineScope {
 
+suspend fun generateCombinedPassport(combinedDocumentResource: DocumentResource) {
+    val combinedPdfDocument = CombinedPdfDocument(combinedDocumentResource)
+    renderToPdf(combinedPdfDocument).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
+}
+
+suspend fun generateSinglePassports(
+    documentResource: DocumentResource,
+) {
     documentResource.passportConfigs
         .map { meta ->
             SinglePdfDocument(
@@ -42,10 +46,8 @@ suspend fun generateSinglePassports(
                 documentResource = documentResource
             )
         }
-        .onEach { doc ->
-            renderToPdf(doc).also {
-                logger.info("✅ PDF generated: ${it.pathString}")
-            }
+        .forEach { doc ->
+            renderToPdf(doc).also { logger.info(Messages.PdfGenerated(it.pathString)) }
         }
 }
 

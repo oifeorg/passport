@@ -52,36 +52,32 @@ suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String,
     }.awaitAll().toMap()
 }
 
-private suspend fun <T> loadResource(path: String, description: String, reader: (InputStream) -> T): T =
+private suspend fun <T> loadResource(path: String, reader: (InputStream) -> T): T =
     withContext(Dispatchers.IO) {
         val stream = object {}.javaClass.getResourceAsStream(path)
-            ?: throw IllegalStateException("Resource not found: $path")
+            ?: throw IllegalStateException(Messages.ResourceNotFound(path))
 
-        logger.debug("$description Loaded resource: $path")
+        logger.info(Messages.ResourceLoaded(path))
 
         reader(stream)
     }
 
 suspend fun loadResourceContent(path: String): String =
-    loadResource(path, "📄") { it.bufferedReader().use { reader -> reader.readText() } }
+    loadResource(path, ) { it.bufferedReader().use { reader -> reader.readText() } }
 
 suspend fun loadResourceBytes(path: String): ByteArray =
-    loadResource(path, "📦") { it.readBytes() }
+    loadResource(path, ) { it.readBytes() }
 
 suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
     val fontMapDeferred = async { fontMap(passportConfigs) }
     val contentMapDeferred = async { passportContentMap(passportConfigs) }
-
-    val fontMap = fontMapDeferred.await()
-    val contentMap = contentMapDeferred.await()
-    val htmlTemplate = htmlTemplateDeferred.await()
     DocumentResource(
         version = version,
-        htmlTemplate = htmlTemplate,
+        htmlTemplate = htmlTemplateDeferred.await(),
         passportConfigs = passportConfigs,
-        contentMap = contentMap,
-        fontMap = fontMap
+        contentMap = contentMapDeferred.await(),
+        fontMap = fontMapDeferred.await()
     )
 }

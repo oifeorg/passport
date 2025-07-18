@@ -12,7 +12,7 @@ suspend fun main(args: Array<String>) {
         val combinedDocumentResource = singleDocumentResource.copy(htmlTemplate = loadResourceContent("/templates/passport-combined.html"))
         generateCombinedPassport(combinedDocumentResource)
     }.onFailure {
-        logger.error("❌ Unexpected error", it)
+        logger.error(Messages.UnexpectedError.toString(), it)
     }
 }
 

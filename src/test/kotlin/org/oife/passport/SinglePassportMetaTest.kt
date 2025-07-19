@@ -8,7 +8,8 @@ class SinglePassportMetaTest : StringSpec({
     val meta = SinglePassportMeta(
         markdownFilename = testMarkdownFile,
         languageCode = "en",
-        title = "OIFE Passport"
+        title = "OIFE Passport",
+        localizedTitle = "My test"
     )
 
     "returns correct pdf file name" {
@@ -23,7 +24,7 @@ class SinglePassportMetaTest : StringSpec({
     "generates correct html replacements" {
         meta.toHtmlReplacements().apply {
             this["lang"] shouldBe "en"
-            this["title"] shouldBe "OIFE Passport"
+            this["headerTitle"] shouldBe "My test - OIFE Passport"
             this["font-family"] shouldBe "Noto Sans"
             this["rtl"] shouldBe "ltr"
         }

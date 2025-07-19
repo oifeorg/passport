@@ -11,7 +11,8 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
                 languageCode = "en",
-                title = "My Passport"
+                title = "My Passport",
+                localizedTitle = "My test"
             ),
             documentResource = DocumentResource(
                 loadResourceContent("/templates/passport-single.html"),
@@ -25,7 +26,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
         with(document.filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
-            shouldContain("<title>My Passport</title>")
+            shouldContain("<title>My test - My Passport</title>")
             shouldContain("font-family: Noto Sans")
             shouldContain("© OIFE 2025 v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
             shouldContain("<h1>Hello</h1>")

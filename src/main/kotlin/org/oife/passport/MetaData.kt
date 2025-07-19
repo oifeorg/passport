@@ -14,7 +14,7 @@ interface RenderableDocument {
 data class SinglePdfDocument(
     val documentResource: DocumentResource,
     val metaInfo: SinglePassportMeta,
-): RenderableDocument {
+) : RenderableDocument {
     val passportContent: String by lazy {
         documentResource.contentMap.getValue(metaInfo.markdownFilename).toHtml()
     }
@@ -30,7 +30,37 @@ data class SinglePdfDocument(
         get() = metaInfo.pdfFileName
 }
 
-data class CombinedPdfDocument(val documentResource: DocumentResource) : RenderableDocument {
+data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {
+    fun articleContents(): String = buildString {
+        documentResource.passportConfigs.forEach { config ->
+            appendLine(
+                documentResource.articleTemplate.toFilledHtml(
+                    mapOf<String, String>(
+                        "languageCode" to config.languageCode,
+                        "localizedTitle" to config.localizedTitle,
+                        "title" to config.title,
+                        "body" to documentResource.contentMap.getValue(config.markdownFilename).toHtml()
+                    )
+                )
+            )
+        }
+    }
+
+    fun indexItemsContent(): String = buildString {
+        documentResource.passportConfigs.forEach { config ->
+            appendLine(
+                documentResource.indexTemplate.toFilledHtml(
+                    mapOf<String, String>(
+                        "languageCode" to config.languageCode,
+                        "fontType" to config.font.toString().lowercase(),
+                        "localizedTitle" to config.localizedTitle,
+                        "title" to config.title
+                    )
+                )
+            )
+        }
+    }
+
     override val filledHtml: String
         get() = documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())
     override val fontMap: Map<String, FSSupplier<InputStream>>
@@ -46,7 +76,8 @@ fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
 ) + metaInfo.toHtmlReplacements()
 
 fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "passport-content" to "",
+    "passport-index-items" to indexItemsContent(),
+    "article-items" to articleContents(),
     "version" to documentResource.version,
     "year" to Year.now().toString()
 )
@@ -68,7 +99,7 @@ data class SinglePassportMeta(
 
 fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
     "lang" to languageCode,
-    "headerTitle" to if(localizedTitle == title) title else "$localizedTitle - $title",
+    "headerTitle" to if (localizedTitle == title) title else "$localizedTitle - $title",
     "font-family" to font.toFontMeta().familyName,
     "rtl" to direction
 )
@@ -82,33 +113,37 @@ data class FontMeta(
 @Serializable
 enum class FontType {
     DEFAULT,
-    ARABIC,
-    INDIAN,
-    GEORGIAN,
-    JAPANESE,
-    CHINESE
+    AR,
+    GU,
+    KA,
+    JA,
+    ZH
 }
 
 fun FontType.toFontMeta(): FontMeta = when (this) {
     FontType.DEFAULT -> FontMeta()
-    FontType.ARABIC -> FontMeta(
+    FontType.AR -> FontMeta(
         fileName = "NotoNaskhArabic-Regular.ttf",
         familyName = "Noto Naskh Arabic",
         rtl = true
     )
-    FontType.INDIAN -> FontMeta(
+
+    FontType.GU -> FontMeta(
         fileName = "NotoSansGujarati-Regular.ttf",
         familyName = "Noto Sans Gujarati"
     )
-    FontType.GEORGIAN -> FontMeta(
+
+    FontType.KA -> FontMeta(
         fileName = "NotoSansGeorgian-Regular.ttf",
         familyName = "Noto Sans Georgian",
     )
-    FontType.JAPANESE -> FontMeta(
+
+    FontType.JA -> FontMeta(
         fileName = "NotoSansJP-Regular.ttf",
         familyName = "Noto Sans JP",
     )
-    FontType.CHINESE -> FontMeta(
+
+    FontType.ZH -> FontMeta(
         fileName = "NotoSansSC-Regular.ttf",
         familyName = "Noto Sans SC"
     )

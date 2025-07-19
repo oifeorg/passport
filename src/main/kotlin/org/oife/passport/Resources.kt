@@ -20,6 +20,30 @@ data class DocumentResource(
     val version: String
 )
 
+data class CombinedDocumentResource(
+    val indexTemplate: String,
+    val articleTemplate: String,
+    val htmlTemplate: String,
+    val passportConfigs: List<SinglePassportMeta>,
+    val contentMap: Map<String, String>,
+    val fontMap: Map<String, FSSupplier<InputStream>>,
+    val version: String
+)
+
+fun DocumentResource.toCombined(
+    indexTemplate: String,
+    articleTemplate: String,
+    htmlTemplate: String,
+): CombinedDocumentResource = CombinedDocumentResource(
+    indexTemplate = indexTemplate,
+    articleTemplate = articleTemplate,
+    htmlTemplate = htmlTemplate,
+    passportConfigs = this.passportConfigs,
+    contentMap = this.contentMap,
+    fontMap = this.fontMap,
+    version = this.version
+)
+
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
@@ -79,5 +103,19 @@ suspend fun getDocumentResource(htmlTemplatePath: String, version: String): Docu
         passportConfigs = passportConfigs,
         contentMap = contentMapDeferred.await(),
         fontMap = fontMapDeferred.await()
+    )
+}
+
+suspend fun getCombinedDocumentResource(
+    singleDocumentResource: DocumentResource
+): CombinedDocumentResource = coroutineScope {
+    val indexDeferred = async { loadResourceContent("/templates/passport-index-item.html") }
+    val articleDeferred = async { loadResourceContent("/templates/passport-article-item.html") }
+    val htmlDeferred = async { loadResourceContent("/templates/passport-combined.html") }
+
+    singleDocumentResource.toCombined(
+        indexTemplate = indexDeferred.await(),
+        articleTemplate = articleDeferred.await(),
+        htmlTemplate = htmlDeferred.await()
     )
 }

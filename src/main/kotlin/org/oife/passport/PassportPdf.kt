@@ -31,7 +31,7 @@ suspend fun renderToPdf(
 }
 
 
-suspend fun generateCombinedPassport(combinedDocumentResource: DocumentResource) {
+suspend fun generateCombinedPassport(combinedDocumentResource: CombinedDocumentResource) {
     val combinedPdfDocument = CombinedPdfDocument(combinedDocumentResource)
     renderToPdf(combinedPdfDocument).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 }

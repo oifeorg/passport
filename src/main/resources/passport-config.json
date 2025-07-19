@@ -4,7 +4,7 @@
     "languageCode": "ar",
     "title": "Arabic",
     "localizedTitle": "العربية",
-    "font": "ARABIC"
+    "font": "AR"
   },
   {
     "markdownFilename": "da-danish.md",
@@ -53,7 +53,7 @@
     "languageCode": "gu",
     "title": "Indian Gujarati",
     "localizedTitle": "ગુજરાતી",
-    "font": "INDIAN"
+    "font": "GU"
   },
   {
     "markdownFilename": "hr-croatian.md",
@@ -72,13 +72,13 @@
     "languageCode": "ka",
     "title": "Georgian",
     "localizedTitle": "ქართული",
-    "font": "GEORGIAN"
+    "font": "KA"
   },
   {
     "markdownFilename": "ja-japanese.md",
     "languageCode": "ja",
     "title": "Japanese",
-    "font": "JAPANESE",
+    "font": "JA",
     "localizedTitle": "日本語"
   },
   {
@@ -119,8 +119,9 @@
   },
   {
     "markdownFilename": "sl-slovenian.md",
-    "languageCode": "Slovenian",
-    "title": "Slovensko"
+    "languageCode": "sl",
+    "title": "Slovensko",
+    "localizedTitle": "Slovenian"
   },
   {
     "markdownFilename": "sv-swedish.md",
@@ -145,6 +146,6 @@
     "languageCode": "zh",
     "title": "Chinese Mandarin",
     "localizedTitle": "简体中文",
-    "font": "CHINESE"
+    "font": "ZH"
   }
 ]

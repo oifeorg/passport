@@ -32,15 +32,17 @@ data class SinglePdfDocument(
 
 data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {
     fun articleContents(): String = buildString {
-        documentResource.passportConfigs.forEach { config ->
+        val sortedConfig = documentResource.passportConfigs.sortedBy { it.languageCode }
+        sortedConfig.forEachIndexed { index, config ->
             appendLine(
                 documentResource.articleTemplate.toFilledHtml(
-                    mapOf<String, String>(
+                    mapOf(
                         "languageCode" to config.languageCode,
                         "localizedTitle" to config.localizedTitle,
                         "title" to config.title,
                         "fontType" to config.font.toString().lowercase(),
-                        "body" to documentResource.contentMap.getValue(config.markdownFilename).toHtml()
+                        "body" to documentResource.contentMap.getValue(config.markdownFilename).toHtml(),
+                        "page-break-after" to if (index == sortedConfig.lastIndex) "" else "page-break-after"
                     )
                 )
             )
@@ -48,7 +50,9 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
     }
 
     fun indexItemsContent(): String = buildString {
-        documentResource.passportConfigs.forEach { config ->
+        documentResource.passportConfigs
+            .sortedBy { it.languageCode }
+            .forEach { config ->
             appendLine(
                 documentResource.indexTemplate.toFilledHtml(
                     mapOf<String, String>(

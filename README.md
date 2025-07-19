@@ -44,3 +44,6 @@ To generate the PDFs, run:
 
 ```bash
 ./gradlew run
+# or with a version number 
+./gradlew run --args=v1.10.0
+```

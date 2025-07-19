@@ -64,7 +64,7 @@
         }
 
         @page {
-          size: 9cm 12.5cm;
+          size: 9cm 12.51cm;
           margin: 0.7cm;
           @bottom-center {
             content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
@@ -101,6 +101,42 @@
              page-break-after: always;
           }
 
+          .title-with-line {
+              border-bottom: 1px solid #ccc; /* Soft gray line */
+              padding-bottom: 0.5rem;
+              margin-bottom: 1rem;
+            }
+        .index {
+          padding: 2rem;
+        }
+
+        .index h1 {
+          text-align: center;
+          color: black;
+          font-size: 2rem;
+          padding-bottom: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .index-list {
+          list-style: none;
+          padding: 0;
+          font-size: 1.2rem;
+          margin: 0;
+        }
+
+        .index-list li {
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #ccc;
+        }
+
+        .index-list a {
+          text-decoration: none;
+          color: #000;
+          display: flex;
+          justify-content: space-between;
+        }
+
     </style>
 </head>
 
@@ -122,25 +158,28 @@
     </div>
 </div>
 
-<div class="lang-default page-break-after" style="padding: 2rem;">
-    <h1 style="text-align: center; color: black; font-size: 2rem;">Index</h1>
-    <ul style="list-style: none; padding: 0; font-size: 1.2rem;">
-        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ccc;">
-            <a href="#ar" style="text-decoration: none; color: #000;">
-                <span class="lang-ar">العربية</span><span class="lang-default"> – Arabic 2</span>
+<section class="index lang-default page-break-after">
+    <h1>Index</h1>
+    <ul class="index-list">
+        <li>
+            <a href="#ar">
+                <span class="lang-ar">العربية</span><span class="lang-default"> – Arabic</span>
             </a>
         </li>
-        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ccc;">
-            <a href="#da" style="text-decoration: none; color: #000;">
-                <span class="lang-da">Dansk</span><span class="lang-default"> – Danish 3</span>
+        <li>
+            <a href="#da">
+                <span class="lang-da">Dansk</span><span class="lang-default"> – Danish</span>
             </a>
         </li>
     </ul>
-</div>
+</section>
 
 <div id="ar" class="passport-content lang-ar page-break-after" dir="rtl">
-    العربية
 
+    <h1 class="title-with-line lang-ar" lang="ar">
+        <span>العربية</span>
+        <span class="lang-default" lang="en"> – Arabic</span>
+    </h1>
     نصائح و توجيهات خاصة بهشاشة العظام عند الأطفال
 
 
@@ -166,11 +205,14 @@
     الاسنان غالبا ما تكون هشة ايضا.
 </div>
 <div id="da" class="passport-content lang-default" dir="ltr">
-    Dansk
-
+    <h1 class="title-with-line lang-default" lang="ar">
+        <span>Dansk</span>
+        <span class="lang-default" lang="en"> – Danish</span>
+    </h1>
+    <p>
     Jeg har osteogenesis imperfecta (OI - medfødt knogleskørhed). Det medfører, at mine knogler er skøre. OI påvirker ikke kun knoglerne, men også bindevævet i almindelighed.
     Tal med mig/ mine forældre/ min ledsager før du flytter, transporterer, undersøger eller behandler mig; følg mine/deres anvisninger om hvordan jeg behandles mest sikkert.
-
+    </p>
     Vær opmærksom på følgende
     - Ved osteogenesis imperfecta kan der let opstå frakturer også spontant.
     - Symptomer på frakturer er ikke altid åbenbare; smerte vil ofte indikere brud.

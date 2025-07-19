@@ -39,6 +39,7 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
                         "languageCode" to config.languageCode,
                         "localizedTitle" to config.localizedTitle,
                         "title" to config.title,
+                        "fontType" to config.font.toString().lowercase(),
                         "body" to documentResource.contentMap.getValue(config.markdownFilename).toHtml()
                     )
                 )

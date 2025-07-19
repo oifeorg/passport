@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{lang}}">
-
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>{{title}}</title>
     <style>
-
         html, body {
-          font-size: 7pt;
           margin: 0;
           padding: 0;
           border: 0;
+          font-size: 8pt;
         }
 
         body {
           font-family: "Noto Sans", sans-serif;
-          font-size: 0.9rem;
           line-height: 1.4;
           color: #000;
+          font-size: 0.8rem;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            color: #2c3e50;
+          color: #2c3e50;
         }
 
         h1 { font-size: 1.2em; }
@@ -35,8 +33,7 @@
           margin-bottom: 0.6em;
         }
 
-        ul,
-        ol {
+        ul, ol {
           padding-left: 1em;
           margin-bottom: 0.6em;
         }
@@ -50,7 +47,7 @@
         }
 
         li {
-          margin-bottom: 0.3em;  /* reduced from 0.5em */
+          margin-bottom: 0.3em;
         }
 
         .passport-content[dir="rtl"] {
@@ -66,6 +63,7 @@
         @page {
           size: 9cm 12.51cm;
           margin: 0.7cm;
+
           @bottom-center {
             content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
             font-family: "Noto Sans", sans-serif;
@@ -75,87 +73,88 @@
             padding-bottom: 0.1em;
           }
         }
-          .lang-ar {
-            font-family: "Noto Naskh Arabic", serif;
-            direction: rtl;
-          }
 
-          .lang-gu {
-            font-family: "Noto Sans Gujarati", sans-serif;
-          }
+        .lang-ar {
+          font-family: "Noto Naskh Arabic", serif;
+          direction: rtl;
+        }
 
-          .lang-ja {
-            font-family: "Noto Sans JP", sans-serif;
-          }
+        .lang-gu {
+          font-family: "Noto Sans Gujarati", sans-serif;
+        }
 
-          .lang-ka {
-            font-family: "Noto Sans Georgian", sans-serif;
-          }
+        .lang-ja {
+          font-family: "Noto Sans JP", sans-serif;
+        }
 
-          /* fallback/default */
-          .lang-default {
-            font-family: "Noto Sans", sans-serif;
-          }
+        .lang-ka {
+          font-family: "Noto Sans Georgian", sans-serif;
+        }
 
-          .page-break-after {
-             page-break-after: always;
-          }
+        .lang-default {
+          font-family: "Noto Sans", sans-serif;
+          direction: ltr;
+          text-align: left;
+        }
 
-          .title-with-line {
-              border-bottom: 1px solid #ccc; /* Soft gray line */
-              padding-bottom: 0.5rem;
-              margin-bottom: 1rem;
-            }
+        .page-break-after {
+          page-break-after: always;
+        }
+
+        .title-with-line {
+          border-bottom: 1px solid #ccc;
+          padding-bottom: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
         .index {
-          padding: 2rem;
+          padding: 1rem; /* reduced padding */
         }
 
         .index h1 {
+          font-size: 1.2rem; /* smaller heading */
+          margin-bottom: 0.5rem;
           text-align: center;
           color: black;
-          font-size: 2rem;
-          padding-bottom: 0.5rem;
-          margin-bottom: 1rem;
         }
 
         .index-list {
           list-style: none;
           padding: 0;
-          font-size: 1.2rem;
           margin: 0;
+          font-size: 0.9rem; /* smaller font */
+          line-height: 1.2;
         }
 
         .index-list li {
-          padding: 0.5rem 0;
+          padding: 0.25rem 0;
           border-bottom: 1px solid #ccc;
         }
 
         .index-list a {
+          display: block;
           text-decoration: none;
           color: #000;
-          display: flex;
-          justify-content: space-between;
         }
 
+        .cover {
+          text-align: center;
+          padding: 2cm 2cm;
+        }
+
+        .cover h1 {
+          font-size: 2rem;
+          margin: 0;
+          color: #000;
+        }
     </style>
 </head>
-
 <body>
 
-<section class="lang-default page-break-after">
-    <div style="
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-color: #007BFF
-    padding: 2rem;
-  ">
-        <h1 style="font-size: 2.5rem; margin: 0;">
-            OIFE<br />Osteogenesis Imperfecta Federation Europe
-        </h1>
-    </div>
+<section class="cover lang-default page-break-after">
+    <h1>
+        OIFE<br />Osteogenesis Imperfecta Federation Europe
+    </h1>
 </section>
 
 <section class="index lang-default page-break-after">
@@ -174,68 +173,66 @@
     </ul>
 </section>
 
-<section id="ar" class="passport-content lang-ar page-break-after" dir="rtl">
-
-    <h1 class="title-with-line lang-ar" lang="ar">
-        <span>العربية</span>
-        <span class="lang-default" lang="en"> – Arabic</span>
+<section id="ar" class="passport-content lang-ar page-break-after" lang="ar" dir="rtl">
+    <h1 class="title-with-line">
+        <span>العربية</span><span class="lang-default"> – Arabic</span>
     </h1>
-    نصائح و توجيهات خاصة بهشاشة العظام عند الأطفال
-
-
-    نصائح و توجيهات خاصة بهشاشة العظام عند الأطفال
-    أنا مصاب بما يعرف بهشاشة العظام و هذا يعني ان عظامي هشة، و هذا المرض لا يوثر فقط علي الهيكل العظمي بل يوثر أيضاً علي الأنسجة الداعمة.
-    الرجا استشارة والدي او المرافقين لي اذا اردت نقلي او فحصي او علاجي و اتباع إرشاداتهم اذا اردت سلامتي.
-    اود ان اذكر بما يلي:
-    في هذا المرض الكسور تحدث بس هولة واحيانا بشكل عفوي، و أعراضها ليست واضحة دائماً لكن الألم يدل عليها.
-    احيانا تحريك المريض اثنا الفحص بشكل سريع او غير مدروس قد يودي الي كسر، و طبعا التصوير الشعاعي افضل طريقة لتشخيصه.
-    كقاعدة:الكسور دائما مصحوبة بالألم، في حالة وجود الألم من دون تشخيص طبي للكسر ينبغي معاملة الحالة على انها كسر
-
-    ينصح باستعمال الادوية المسكنة بشكل ملائم عند الأطفال و الكبار،
-    يجب أن تكون جرعات أدوية التخدير مبنية على أساس وزن الشخص بدلا عن سنه.
-    ينصح بمسكن و/أو مهدئ ليلي في الأيام الأولى بعد تشخيص الكسر.
-    ويفضل اسثعمال مواد خفيفة الوزن لتثبيت الأطراف المكسورة، و ينبغي ان يتم تحريك الشخص المصاب في اسرع وقت ممكن. الرجا الاتصال بالطبيب المختص في حالة اجراء عملية جراحية او في حالة الدخول الى المسثشفى.
-    كثير من الاشخاص المصابين بهذا المرض يعانون من مشاكل في السمع.
-    التصوير الشعاعي:
-    لان العظام تعاني من نقص المعدن فيها، لذلك يجب أن تكون كثافة الاشعة منخفضة.
-    يجب تجنب الإفراط في التحريك و الرفع الغير اللازم، المرضى أو ذويهم لهم الخبرة في كثير من الأحيان من خلال تجاربهم السابقة ويمكن أن يكونو مصدرمفيد لثحديد المكان المناسب لاتخاذ الأشعة السينية، اضافة الي ذلك ينبغي استخدام درع من الرصاص لتغطية الجهاز التناسلي للمريض.التخدير:
-    يجب نقل المريض بعناية من وإلى طاولة العمليات
-    يجب الأخذ بعين الاعتبار وجود اعوجاج او تقلصات علي مستوى الاطراف،عند وضع المريض على طاولة العمليات.
-    يجب دفع راس الشخص بلطف و ببطء عند التنبيب للتقليل من خطورة كسر فقرات العنق، ويجب أخذ بعين الاعتبار البنية الضعيفة للغشاء المخاطي للقصبة الهوائية.
-    الاسنان غالبا ما تكون هشة ايضا.
+    <p>نصائح و توجيهات خاصة بهشاشة العظام عند الأطفال</p>
+    <p>أنا مصاب بما يعرف بهشاشة العظام و هذا يعني ان عظامي هشة، و هذا المرض لا يوثر فقط علي الهيكل العظمي بل يوثر أيضاً علي الأنسجة الداعمة.</p>
+    <p>الرجا استشارة والدي او المرافقين لي اذا اردت نقلي او فحصي او علاجي و اتباع إرشاداتهم اذا اردت سلامتي.</p>
+    <p>اود ان اذكر بما يلي:</p>
+    <ul>
+        <li>في هذا المرض الكسور تحدث بس هولة واحيانا بشكل عفوي، و أعراضها ليست واضحة دائماً لكن الألم يدل عليها.</li>
+        <li>احيانا تحريك المريض اثنا الفحص بشكل سريع او غير مدروس قد يودي الي كسر، و طبعا التصوير الشعاعي افضل طريقة لتشخيصه.</li>
+        <li>كقاعدة: الكسور دائما مصحوبة بالألم، في حالة وجود الألم من دون تشخيص طبي للكسر ينبغي معاملة الحالة على انها كسر.</li>
+    </ul>
+    <p>ينصح باستعمال الادوية المسكنة بشكل ملائم عند الأطفال و الكبار، ويجب أن تكون جرعات أدوية التخدير مبنية على أساس وزن الشخص بدلا عن سنه.</p>
+    <p>ينصح بمسكن و/أو مهدئ ليلي في الأيام الأولى بعد تشخيص الكسر.</p>
+    <p>ويفضل اسثعمال مواد خفيفة الوزن لتثبيت الأطراف المكسورة، و ينبغي ان يتم تحريك الشخص المصاب في اسرع وقت ممكن.</p>
+    <p>الرجا الاتصال بالطبيب المختص في حالة اجراء عملية جراحية او في حالة الدخول الى المستشفى.</p>
+    <p>كثير من الاشخاص المصابين بهذا المرض يعانون من مشاكل في السمع.</p>
+    <h2>التصوير الشعاعي</h2>
+    <p>لأن العظام تعاني من نقص المعدن فيها، لذلك يجب أن تكون كثافة الاشعة منخفضة.</p>
+    <p>يجب تجنب الإفراط في التحريك و الرفع الغير اللازم، المرضى أو ذويهم لهم الخبرة في كثير من الأحيان من خلال تجاربهم السابقة ويمكن أن يكونو مصدر مفيد لتحديد المكان المناسب لاتخاذ الأشعة السينية، اضافة الي ذلك ينبغي استخدام درع من الرصاص لتغطية الجهاز التناسلي للمريض.</p>
+    <h2>التخدير</h2>
+    <p>يجب نقل المريض بعناية من وإلى طاولة العمليات.</p>
+    <p>يجب الأخذ بعين الاعتبار وجود اعوجاج او تقلصات علي مستوى الاطراف، عند وضع المريض على طاولة العمليات.</p>
+    <p>يجب دفع رأس الشخص بلطف و ببطء عند التنبيب للتقليل من خطورة كسر فقرات العنق، ويجب أخذ بعين الاعتبار البنية الضعيفة للغشاء المخاطي للقصبة الهوائية.</p>
+    <p>الأسنان غالبا ما تكون هشة ايضا.</p>
 </section>
-<section id="da" class="passport-content lang-default" dir="ltr">
-    <h1 class="title-with-line lang-default" lang="ar">
-        <span>Dansk</span>
-        <span class="lang-default" lang="en"> – Danish</span>
+
+<section id="da" class="passport-content lang-default" lang="da" dir="ltr">
+    <h1 class="title-with-line">
+        <span>Dansk</span><span class="lang-default"> – Danish</span>
     </h1>
-    <p>
-    Jeg har osteogenesis imperfecta (OI - medfødt knogleskørhed). Det medfører, at mine knogler er skøre. OI påvirker ikke kun knoglerne, men også bindevævet i almindelighed.
-    Tal med mig/ mine forældre/ min ledsager før du flytter, transporterer, undersøger eller behandler mig; følg mine/deres anvisninger om hvordan jeg behandles mest sikkert.
-    </p>
-    Vær opmærksom på følgende
-    - Ved osteogenesis imperfecta kan der let opstå frakturer også spontant.
-    - Symptomer på frakturer er ikke altid åbenbare; smerte vil ofte indikere brud.
-    - Blot det at undersøge for tegn på brud-f.eks. unormal bevægelighed eller knitren/knirken-kan forårsage frakturer.
-    - Den sikreste måde at konstatere eller udelukke fraktur er ved røntgenundersøgelse (se nedenfor).
-    - Som hovedregel er frakturer smertefulde.
-    - I tilfælde af smerte- selv uden diagnosticeret fraktur- bør behandlingen være den samme som ved brud. Passende smertestillende midler anbefales såvel til børn som til voksne. Smertestillende midler eller sovemedicin anbefales de første dage efter fraktur.
-    - Dosering af medicin og anæstesi bør baseres på personens størrelse ikke alder.
-    - Letvægtsmateriale bør foretrækkes ved immobilisering.
-    - Patienter med OI bør være immobiliseret så kort tid som muligt.
-    - Egen speciallæge bør kontaktes såfremt indlæggelse eller operation er nødvendig.
-    - Mange patienter med OI har nedsat hørelse.
-
-    Røntgen
-    - Ved osteogenesis imperfecta kan knoglerne være de­­­mineraliserede. Lavere røntgendosis er normalt nok (ligesom ved osteoporose) for at undgå unødvendig gentagelse af røntgenfotografering.
-    - Overdrevne bevægelser og unødvendige løft bør undgås.
-    - Patienter og deres forældre/ledsagere har som regel erfaringer fra tidligere undersøgelser. De kan være behjælpelige med at finde den bedste måde at gennemføre røntgenundersøgelsen.
-
-    Operation og narkose
-    - Vær forsigtig når personen/patienten flyttes til og fra operationslejet. Sørg for god understøttelse.
-    - Vær opmærksom på eksisterende deformiteter eller sammenfald, når personen/patienten placeres på operationslejet.
-    - Bøj hovedet forsigtigt bagud ved intubation for at minimere risikoen for fraktur på halshvirvel; vær opmærksom på den sårbare slimhinde i luftrøret. Tænderne er ofte skøre.
+    <p>Jeg har osteogenesis imperfecta (OI - medfødt knogleskørhed). Det medfører, at mine knogler er skøre. OI påvirker ikke kun knoglerne, men også bindevævet i almindelighed.</p>
+    <p>Tal med mig/ mine forældre/ min ledsager før du flytter, transporterer, undersøger eller behandler mig; følg mine/deres anvisninger om hvordan jeg behandles mest sikkert.</p>
+    <h2>Vær opmærksom på følgende</h2>
+    <ul>
+        <li>Ved osteogenesis imperfecta kan der let opstå frakturer også spontant.</li>
+        <li>Symptomer på frakturer er ikke altid åbenbare; smerte vil ofte indikere brud.</li>
+        <li>Blot det at undersøge for tegn på brud–f.eks. unormal bevægelighed eller knitren/knirken–kan forårsage frakturer.</li>
+        <li>Den sikreste måde at konstatere eller udelukke fraktur er ved røntgenundersøgelse (se nedenfor).</li>
+        <li>Som hovedregel er frakturer smertefulde.</li>
+        <li>I tilfælde af smerte – selv uden diagnosticeret fraktur – bør behandlingen være den samme som ved brud.</li>
+    </ul>
+    <p>Passende smertestillende midler anbefales såvel til børn som til voksne. Smertestillende midler eller sovemedicin anbefales de første dage efter fraktur.</p>
+    <p>Dosering af medicin og anæstesi bør baseres på personens størrelse ikke alder.</p>
+    <p>Letvægtsmateriale bør foretrækkes ved immobilisering. Patienter med OI bør være immobiliseret så kort tid som muligt.</p>
+    <p>Egen speciallæge bør kontaktes såfremt indlæggelse eller operation er nødvendig. Mange patienter med OI har nedsat hørelse.</p>
+    <h2>Røntgen</h2>
+    <ul>
+        <li>Ved osteogenesis imperfecta kan knoglerne være demineraliserede. Lavere røntgendosis er normalt nok (ligesom ved osteoporose) for at undgå unødvendig gentagelse af røntgenfotografering.</li>
+        <li>Overdrevne bevægelser og unødvendige løft bør undgås.</li>
+        <li>Patienter og deres forældre/ledsagere har som regel erfaringer fra tidligere undersøgelser. De kan være behjælpelige med at finde den bedste måde at gennemføre røntgenundersøgelsen.</li>
+    </ul>
+    <h2>Operation og narkose</h2>
+    <ul>
+        <li>Vær forsigtig når personen/patienten flyttes til og fra operationslejet. Sørg for god understøttelse.</li>
+        <li>Vær opmærksom på eksisterende deformiteter eller sammenfald, når personen/patienten placeres på operationslejet.</li>
+        <li>Bøj hovedet forsigtigt bagud ved intubation for at minimere risikoen for fraktur på halshvirvel; vær opmærksom på den sårbare slimhinde i luftrøret. Tænderne er ofte skøre.</li>
+    </ul>
 </section>
+
 </body>
-
 </html>

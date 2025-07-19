@@ -1,6 +1,3 @@
-
-# HRVATSKI (Croatian)
-
 Imam osteogenesis imperfecta (OI, staklene kosti).  To znacˇi da su moje kosti krhke.  OI ne utjecˇe samo na kosti vec´ i na vezivno tkivo opc´enito.  Molim vas da se kon´zultirate sa mnom/mojim roditeljima ili pratiocem prije nego me premjesˇtate, transportirate, pregledate, ili lijecˇite, te da slijedite moje/njihove upute o tome kako postupati sa mnom.
 
 ## Zˇelimo vas podsjtetiti na slijedec´e

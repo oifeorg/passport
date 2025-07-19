@@ -1,5 +1,3 @@
-# English
-
 I have osteogenesis imperfecta (OI, brittle bones). This means that my bones are fragile. OI not only affects the skeleton but the connective tissue in general.
 Please, consult me/my parents/my companion before you move, transport, examine or treat me; follow my/their directions on how to handle me safely.
 

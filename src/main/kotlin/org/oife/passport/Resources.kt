@@ -12,16 +12,48 @@ import java.io.InputStream
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
+data class DocumentResource(
+    val htmlTemplate: String,
+    val passportConfigs: List<SinglePassportMeta>,
+    val contentMap: Map<String, String>,
+    val fontMap: Map<String, FSSupplier<InputStream>>,
+    val version: String
+)
+
+data class CombinedDocumentResource(
+    val indexTemplate: String,
+    val articleTemplate: String,
+    val htmlTemplate: String,
+    val passportConfigs: List<SinglePassportMeta>,
+    val contentMap: Map<String, String>,
+    val fontMap: Map<String, FSSupplier<InputStream>>,
+    val version: String
+)
+
+fun DocumentResource.toCombined(
+    indexTemplate: String,
+    articleTemplate: String,
+    htmlTemplate: String,
+): CombinedDocumentResource = CombinedDocumentResource(
+    indexTemplate = indexTemplate,
+    articleTemplate = articleTemplate,
+    htmlTemplate = htmlTemplate,
+    passportConfigs = this.passportConfigs,
+    contentMap = this.contentMap,
+    fontMap = this.fontMap,
+    version = this.version
+)
+
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
-        .distinctBy { it.toFontMeta().fileName }
+        .distinctBy { it.toFontMeta().familyName }
         .map { fontType ->
             val fontMeta = fontType.toFontMeta()
             async {
                 val path = "/fonts/${fontMeta.fileName}"
                 val bytes = loadResourceBytes(path)
-                fontMeta.fileName to FSSupplier<InputStream> { bytes.inputStream() }
+                fontMeta.familyName to FSSupplier<InputStream> { bytes.inputStream() }
             }
         }
         .awaitAll()
@@ -44,18 +76,46 @@ suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String,
     }.awaitAll().toMap()
 }
 
-private suspend fun <T> loadResource(path: String, description: String, reader: (InputStream) -> T): T =
+private suspend fun <T> loadResource(path: String, reader: (InputStream) -> T): T =
     withContext(Dispatchers.IO) {
         val stream = object {}.javaClass.getResourceAsStream(path)
-            ?: throw IllegalStateException("Resource not found: $path")
+            ?: throw IllegalStateException(Messages.ResourceNotFound(path))
 
-        logger.debug("$description Loaded resource: $path")
+        logger.info(Messages.ResourceLoaded(path))
 
         reader(stream)
     }
 
 suspend fun loadResourceContent(path: String): String =
-    loadResource(path, "📄") { it.bufferedReader().use { reader -> reader.readText() } }
+    loadResource(path, ) { it.bufferedReader().use { reader -> reader.readText() } }
 
 suspend fun loadResourceBytes(path: String): ByteArray =
-    loadResource(path, "📦") { it.readBytes() }
+    loadResource(path, ) { it.readBytes() }
+
+suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
+    val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
+    val passportConfigs = loadPassportConfigs()
+    val fontMapDeferred = async { fontMap(passportConfigs) }
+    val contentMapDeferred = async { passportContentMap(passportConfigs) }
+    DocumentResource(
+        version = version,
+        htmlTemplate = htmlTemplateDeferred.await(),
+        passportConfigs = passportConfigs,
+        contentMap = contentMapDeferred.await(),
+        fontMap = fontMapDeferred.await()
+    )
+}
+
+suspend fun getCombinedDocumentResource(
+    singleDocumentResource: DocumentResource
+): CombinedDocumentResource = coroutineScope {
+    val indexDeferred = async { loadResourceContent("/templates/passport-index-item.html") }
+    val articleDeferred = async { loadResourceContent("/templates/passport-article-item.html") }
+    val htmlDeferred = async { loadResourceContent("/templates/passport-combined.html") }
+
+    singleDocumentResource.toCombined(
+        indexTemplate = indexDeferred.await(),
+        articleTemplate = articleDeferred.await(),
+        htmlTemplate = htmlDeferred.await()
+    )
+}

@@ -12,7 +12,7 @@ class FontMapTest : StringSpec({
         )
 
         with(fontMap(fonts)) {
-            keys shouldContainExactly setOf("NotoSans-Regular.ttf")
+            keys shouldContainExactly setOf("Noto Sans")
         }
     }
 })

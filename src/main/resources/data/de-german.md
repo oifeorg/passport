@@ -1,5 +1,3 @@
-# Deutsch
-
 Ich habe Osteogenesis imperfecta (OI, Glasknochen). Das bedeutet, dass meine Knochen leicht brechen. OI betrifft aber nicht nur die Knochen, sondern das gesamte Bindegewebe.
 Bitte, fragen Sie mich / meine Eltern/meine Begleiter, bevor Sie mich bewegen, transportieren, untersuchen oder behandeln. Folgen Sie meinen/deren Hinweisen, wie man mich sicher anfassen und bewegen kann.
 

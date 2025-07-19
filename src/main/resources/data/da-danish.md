@@ -1,5 +1,3 @@
-# Dansk
-
 Jeg har osteogenesis imperfecta (OI - medfødt knogleskørhed). Det medfører, at mine knogler er skøre. OI påvirker ikke kun knoglerne, men også bindevævet i almindelighed.
 Tal med mig/ mine forældre/ min ledsager før du flytter, transporterer, undersøger eller behandler mig; følg mine/deres anvisninger om hvordan jeg behandles mest sikkert.
 

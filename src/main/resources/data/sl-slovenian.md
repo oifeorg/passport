@@ -1,5 +1,3 @@
-# Slovensko
-
 Imam bolezen krhkih kosti - osteogenesis imperfecta (OI).
 To pomeni, da so moje kosti zelo krhke.
 OI ne prizadene samo skeleta- kosti, ampak vezivna tkiva na splošno.

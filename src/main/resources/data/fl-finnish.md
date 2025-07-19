@@ -1,5 +1,3 @@
-# Suomi
-
 Minulla on osteogenesis imperfecta (OI, synnynnäinen luustonhauraus). Luuni ovat siksi hauraat. OI ei vaikuta ainoastaan luustoon vaan kaikkiin sidekudoksiin.
 Kysykää minulta/vanhemmiltani/saattajaltani neuvoa, ennen kuin liikutatte, siirrätte, tutkitte tai alatte hoitaa minua; noudattakaa minun neuvojani/heidän neuvojaan siitä, miten minua voi käsitellä turvallisesti.
 

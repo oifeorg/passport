@@ -1,5 +1,3 @@
-# Polsk
-
 Choruję na osteogenesis imperfecta (wrodzoną łamliwość kości, OI). To oznacza, że moje kości są kruche. OI to nie tylko choroba szkieletu, ale całej tkanki łącznej.
 Proszę skonsultować się mną/moimi rodzicami/osobą towarzyszącą przed przenoszeniem, transportowaniem, badaniem i leczeniem mnie; proszę postępować według moich/ich wskazówek jak się ze mną bezpiecznie obchodzić.
 

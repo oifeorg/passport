@@ -8,42 +8,42 @@ class FontMappingTest : StringSpec({
     "should return correct FontMeta for each FontType" {
         FontType.DEFAULT.toFontMeta() shouldBe FontMeta()
 
-        FontType.ARABIC.toFontMeta() shouldBe FontMeta(
+        FontType.AR.toFontMeta() shouldBe FontMeta(
             fileName = "NotoNaskhArabic-Regular.ttf",
             familyName = "Noto Naskh Arabic",
             rtl = true
         )
 
-        FontType.INDIAN.toFontMeta() shouldBe FontMeta(
+        FontType.GU.toFontMeta() shouldBe FontMeta(
             fileName = "NotoSansGujarati-Regular.ttf",
             familyName = "Noto Sans Gujarati"
         )
 
-        FontType.GEORGIAN.toFontMeta() shouldBe FontMeta(
+        FontType.KA.toFontMeta() shouldBe FontMeta(
             fileName = "NotoSansGeorgian-Regular.ttf",
             familyName = "Noto Sans Georgian"
         )
 
-        FontType.JAPANESE.toFontMeta() shouldBe FontMeta(
+        FontType.JA.toFontMeta() shouldBe FontMeta(
             fileName = "NotoSansJP-Regular.ttf",
             familyName = "Noto Sans JP"
         )
 
-        FontType.CHINESE.toFontMeta() shouldBe FontMeta(
+        FontType.ZH.toFontMeta() shouldBe FontMeta(
             fileName = "NotoSansSC-Regular.ttf",
             familyName = "Noto Sans SC"
         )
     }
 
     "should mark only ARABIC as RTL" {
-        FontType.ARABIC.toFontMeta().rtl shouldBe true
+        FontType.AR.toFontMeta().rtl shouldBe true
 
         listOf(
             FontType.DEFAULT,
-            FontType.INDIAN,
-            FontType.GEORGIAN,
-            FontType.JAPANESE,
-            FontType.CHINESE
+            FontType.GU,
+            FontType.KA,
+            FontType.JA,
+            FontType.ZH
         ).forEach {
             it.toFontMeta().rtl shouldBe false
         }

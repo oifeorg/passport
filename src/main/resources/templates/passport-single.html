@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>{{title}}</title>
+    <title>{{headerTitle}}</title>
     <style>
-        html {
+
+        html, body {
           font-size: 10pt;
           margin: 0;
           padding: 0;
+          border: 0;
         }
 
         body {
@@ -22,12 +24,11 @@
             color: #2c3e50;
         }
 
-        h1 { font-size: 1.5em; }
-        h2 { font-size: 1.3em; }
-        h3 { font-size: 1.2em; }
-        h4 { font-size: 1.1em; }
-        h5 { font-size: 1em; }
-        h6 { font-size: 0.9em; }
+        h2 { font-size: 1.2em; }
+        h3 { font-size: 1.0em; }
+        h4 { font-size: 1.0em; }
+        h5 { font-size: 0.9em; }
+        h6 { font-size: 0.8em; }
 
         p {
           margin-bottom: 0.8em;
@@ -62,9 +63,19 @@
 
         @page {
           margin: 1cm;
+          margin-top: 1.5cm;
+           @top-left {
+            content: "{{headerTitle}}";
+            font-family: "{{font-family}}", sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            border-bottom: 0.5pt solid #ccc;
+            padding-top: 1em;
+            padding-bottom: 0.5em;
+          }
           @bottom-center {
             content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
-            font-family: {{font-family}}, "Noto Sans", sans-serif;
+            font-family: "{{font-family}}", "Noto Sans", sans-serif;
             font-size: 0.8em;
             border-top: 0.5pt solid #ccc;
             padding-top: 0.3em;
@@ -75,9 +86,9 @@
 </head>
 
 <body>
-<div class="passport-content" dir="{{rtl}}">
-    {{body}}
-</div>
+<section class="passport-content" dir="{{rtl}}">
+    {{passport-content}}
+</section>
 </body>
 
 </html>

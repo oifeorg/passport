@@ -1,5 +1,3 @@
-# Svenska
-
 Jag har Osteogenesis Imperfecta (medfödd benskörhet). OI påverkar inte bara skelettet utan all bindväv. Kontakta mig/mina föräldrar/mina medresenärer innan du flyttar, transporterar eller behandlar mig; följ deras anvisningar för att behandla mig säkert.
 
 ## Vi vill göra dig/Er uppmärksam på följande

@@ -1,5 +1,3 @@
-# Français
-
 Je suis atteint(e) d’ostéogenèse imparfaite (fragilité des os). Pour cette raison, je peux facilement me fracturer.
 S’il vous plaît, tenez compte de mon avis (ou de ceux qui m’accompagnent) pour me mobiliser avec un maximum de précautions.
 

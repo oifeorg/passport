@@ -1,5 +1,3 @@
-# Nederlands
-
 Ik heb osteogenesis imperfecta (OI, broze botten). Dit betekent dat mijn botten breekbaar zijn. OI betreft niet alleen het skelet maar het steunweefsel in het algemeen.
 Wilt u met mij, mijn partner, mijn ouders/begeleiders overleggen voordat u mij gaat vervoeren, onderzoeken of behandelen; volgt u onze aanwijzingen voor een veilige aanpak.
 

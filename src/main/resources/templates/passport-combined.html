@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <style>
+        html, body {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font-size: 8pt;
+        }
+
+        body {
+          font-family: "Noto Sans", sans-serif;
+          line-height: 1.4;
+          color: #000;
+          font-size: 0.8rem;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          color: #2c3e50;
+        }
+
+        h1 { font-size: 1.2em; }
+        h2 { font-size: 1.1em; }
+        h3 { font-size: 1em; }
+        h4 { font-size: 0.95em; }
+        h5 { font-size: 0.9em; }
+        h6 { font-size: 0.85em; }
+
+        p {
+          margin-bottom: 0.6em;
+        }
+
+        ul, ol {
+          padding-left: 1em;
+          margin-bottom: 0.6em;
+        }
+
+        ul {
+          list-style-type: disc;
+        }
+
+        ol {
+          list-style-type: decimal;
+        }
+
+        li {
+          margin-bottom: 0.3em;
+        }
+
+        .passport-content[dir="rtl"] {
+          direction: rtl;
+          text-align: right;
+        }
+
+        .passport-content[dir="ltr"] {
+          direction: ltr;
+          text-align: left;
+        }
+
+        @page {
+          size: 9cm 12.51cm;
+          margin: 0.7cm;
+
+          @bottom-center {
+            content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
+            font-family: "Noto Sans", sans-serif;
+            font-size: 0.5em;
+            border-top: 0.5pt solid #ccc;
+            padding-top: 0.1em;
+            padding-bottom: 0.1em;
+          }
+        }
+
+        .lang-ar {
+          font-family: "Noto Naskh Arabic", serif;
+          direction: rtl;
+        }
+
+        .lang-gu {
+          font-family: "Noto Sans Gujarati", sans-serif;
+        }
+
+        .lang-ja {
+          font-family: "Noto Sans JP", sans-serif;
+        }
+
+        .lang-ka {
+          font-family: "Noto Sans Georgian", sans-serif;
+        }
+
+        .lang-zh {
+          font-family: "Noto Sans SC", sans-serif;
+        }
+
+        .lang-default {
+          font-family: "Noto Sans", sans-serif;
+          direction: ltr;
+          text-align: left;
+        }
+
+        .page-break-after {
+          page-break-after: always;
+        }
+
+        .title-with-line {
+          border-bottom: 1px solid #ccc;
+          padding-bottom: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .index {
+          padding: 1rem; /* reduced padding */
+        }
+
+        .index h1 {
+          font-size: 1.2rem; /* smaller heading */
+          margin-bottom: 0.5rem;
+          text-align: center;
+          color: black;
+        }
+
+        .index-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          font-size: 0.9rem; /* smaller font */
+          line-height: 1.2;
+        }
+
+        .index-list li {
+          padding: 0.25rem 0;
+          border-bottom: 1px solid #ccc;
+        }
+
+        .index-list a {
+          display: block;
+          text-decoration: none;
+          color: #000;
+        }
+
+        .cover {
+          text-align: center;
+          padding: 2cm 2cm;
+        }
+
+        .cover h1 {
+          font-size: 2rem;
+          margin: 0;
+          color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<section class="cover lang-default page-break-after">
+    <h1>
+        OIFE<br />Osteogenesis Imperfecta Federation Europe
+    </h1>
+</section>
+
+<section class="index lang-default page-break-after">
+    <h1>Index</h1>
+    <ul class="index-list">
+        {{passport-index-items}}
+    </ul>
+</section>
+{{article-items}}
+</body>
+</html>

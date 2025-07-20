@@ -14,7 +14,7 @@
         }
 
         body {
-          font-family: {{font-family}}, "Noto Sans", sans-serif;
+          font-family: {{fontFamily}}, "Noto Sans", sans-serif;
           font-size: 1rem;
           line-height: 1.6;
           color: #000;
@@ -66,7 +66,7 @@
           margin-top: 1.5cm;
            @top-left {
             content: "{{headerTitle}}";
-            font-family: "{{font-family}}", sans-serif;
+            font-family: "{{fontFamily}}", sans-serif;
             font-size: 1em;
             font-weight: bold;
             border-bottom: 0.5pt solid #ccc;
@@ -75,7 +75,7 @@
           }
           @bottom-center {
             content: "© OIFE {{year}} {{version}} – " counter(page) " / " counter(pages);
-            font-family: "{{font-family}}", "Noto Sans", sans-serif;
+            font-family: "{{fontFamily}}", "Noto Sans", sans-serif;
             font-size: 0.8em;
             border-top: 0.5pt solid #ccc;
             padding-top: 0.3em;
@@ -86,7 +86,7 @@
 </head>
 
 <body>
-<section class="passport-content" dir="{{rtl}}">
+<section class="passport-content" dir="{{direction}}">
     {{passport-content}}
 </section>
 </body>

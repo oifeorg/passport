@@ -15,5 +15,3 @@ suspend fun main(args: Array<String>) {
         logger.error(Messages.UnexpectedError.toString(), it)
     }
 }
-
-

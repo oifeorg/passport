@@ -37,12 +37,12 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
             appendLine(
                 documentResource.articleTemplate.toFilledHtml(
                     mapOf(
-                        "languageCode" to config.languageCode,
-                        "localizedTitle" to config.localizedTitle,
-                        "title" to config.title,
-                        "fontType" to config.font.toString().lowercase(),
-                        "body" to documentResource.contentMap.getValue(config.markdownFilename).toHtml(),
-                        "page-break-after" to if (index == sortedConfig.lastIndex) "" else "page-break-after"
+                        Placeholder.LANGUAGE_CODE to config.languageCode,
+                        Placeholder.LOCALIZED_TITLE to config.localizedTitle,
+                        Placeholder.TITLE to config.title,
+                        Placeholder.FONT_TYPE to config.font.toString().lowercase(),
+                        Placeholder.BODY to documentResource.contentMap.getValue(config.markdownFilename).toHtml(),
+                        Placeholder.PAGE_BREAK_AFTER to if (index == sortedConfig.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER
                     )
                 )
             )
@@ -55,11 +55,11 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
             .forEach { config ->
             appendLine(
                 documentResource.indexTemplate.toFilledHtml(
-                    mapOf<String, String>(
-                        "languageCode" to config.languageCode,
-                        "fontType" to config.font.toString().lowercase(),
-                        "localizedTitle" to config.localizedTitle,
-                        "title" to config.title
+                    mapOf(
+                        Placeholder.LANGUAGE_CODE to config.languageCode,
+                        Placeholder.FONT_TYPE to config.font.toString().lowercase(),
+                        Placeholder.LOCALIZED_TITLE to config.localizedTitle,
+                        Placeholder.TITLE to config.title
                     )
                 )
             )
@@ -75,16 +75,16 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
 }
 
 fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "passport-content" to passportContent,
-    "version" to documentResource.version,
-    "year" to Year.now().toString()
+    Placeholder.PASSPORT_CONTENT to passportContent,
+    Placeholder.VERSION to documentResource.version,
+    Placeholder.YEAR to Year.now().toString()
 ) + metaInfo.toHtmlReplacements()
 
 fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    "passport-index-items" to indexItemsContent(),
-    "article-items" to articleContents(),
-    "version" to documentResource.version,
-    "year" to Year.now().toString()
+    Placeholder.PASSPORT_INDEX_ITEMS to indexItemsContent(),
+    Placeholder.PASSPORT_ARTICLE_ITEMS to articleContents(),
+    Placeholder.VERSION to documentResource.version,
+    Placeholder.YEAR to Year.now().toString()
 )
 
 @Serializable
@@ -103,10 +103,10 @@ data class SinglePassportMeta(
 }
 
 fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
-    "lang" to languageCode,
-    "headerTitle" to if (localizedTitle == title) title else "$localizedTitle - $title",
-    "font-family" to font.toFontMeta().familyName,
-    "rtl" to direction
+    Placeholder.LANG to languageCode,
+    Placeholder.HEADER_TITLE to if (localizedTitle == title) title else "$localizedTitle - $title",
+    Placeholder.FONT_FAMILY to font.toFontMeta().familyName,
+    Placeholder.DIRECTION to direction
 )
 
 data class FontMeta(

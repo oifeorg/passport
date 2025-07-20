@@ -18,5 +18,23 @@ object Messages {
     val UnexpectedError = StatusMessage("❌ Unexpected error")
 }
 
+object Placeholder {
+    const val LANG = "lang"
+    const val HEADER_TITLE = "headerTitle"
+    const val FONT_FAMILY = "fontFamily"
+    const val DIRECTION = "direction"
+    const val VERSION = "version"
+    const val TITLE = "title"
+    const val FONT_TYPE = "fontType"
+    const val LOCALIZED_TITLE= "localizedTitle"
+    const val LANGUAGE_CODE = "languageCode"
+    const val BODY = "body"
+    const val PAGE_BREAK_AFTER = "page-break-after"
+    const val PASSPORT_CONTENT = "passport-content"
+    const val YEAR = "year"
+    const val PASSPORT_INDEX_ITEMS = "passport-index-items"
+    const val PASSPORT_ARTICLE_ITEMS = "passport-article-items"
+}
+
 
 

@@ -23,10 +23,10 @@ class SinglePassportMetaTest : StringSpec({
 
     "generates correct html replacements" {
         meta.toHtmlReplacements().apply {
-            this["lang"] shouldBe "en"
-            this["headerTitle"] shouldBe "My test - OIFE Passport"
-            this["font-family"] shouldBe "Noto Sans"
-            this["rtl"] shouldBe "ltr"
+            this[Placeholder.LANG] shouldBe "en"
+            this[Placeholder.HEADER_TITLE] shouldBe "My test - OIFE Passport"
+            this[Placeholder.FONT_FAMILY] shouldBe "Noto Sans"
+            this[Placeholder.DIRECTION] shouldBe "ltr"
         }
     }
 })

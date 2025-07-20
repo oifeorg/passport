@@ -42,7 +42,8 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
                         Placeholder.TITLE to config.title,
                         Placeholder.FONT_TYPE to config.font.toString().lowercase(),
                         Placeholder.BODY to documentResource.contentMap.getValue(config.markdownFilename).toHtml(),
-                        Placeholder.PAGE_BREAK_AFTER to if (index == sortedConfig.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER
+                        Placeholder.PAGE_BREAK_AFTER to if (index == sortedConfig.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER,
+                        Placeholder.DIRECTION to config.direction
                     )
                 )
             )

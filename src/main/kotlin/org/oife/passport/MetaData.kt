@@ -101,7 +101,9 @@ fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
     Placeholder.PASSPORT_ARTICLE_ITEMS to articleContents(),
     Placeholder.LANGUAGE_FONT_STYLES to languageFontStyles(),
     Placeholder.VERSION to documentResource.version,
-    Placeholder.YEAR to Year.now().toString()
+    Placeholder.YEAR to Year.now().toString(),
+    Placeholder.HEADER_TITLE to "OIFE Passport combined",
+    Placeholder.LANG to "en"
 )
 
 @Serializable

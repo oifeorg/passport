@@ -26,7 +26,7 @@ object Placeholder {
     const val VERSION = "version"
     const val TITLE = "title"
     const val FONT_TYPE = "fontType"
-    const val LOCALIZED_TITLE= "localizedTitle"
+    const val LOCALIZED_TITLE = "localizedTitle"
     const val LANGUAGE_CODE = "languageCode"
     const val BODY = "body"
     const val PAGE_BREAK_AFTER = "page-break-after"
@@ -34,7 +34,12 @@ object Placeholder {
     const val YEAR = "year"
     const val PASSPORT_INDEX_ITEMS = "passport-index-items"
     const val PASSPORT_ARTICLE_ITEMS = "passport-article-items"
+    const val LANGUAGE_FONT_STYLES = "languageFontStyles"
 }
 
-
-
+object Template {
+    const val PASSPORT_SINGLE = "/templates/passport-single.html"
+    const val PASSPORT_INDEX_ITEM = "/templates/passport-index-item.html"
+    const val PASSPORT_ARTICLE_ITEM = "/templates/passport-article-item.html"
+    const val PASSPORT_COMBINED = "/templates/passport-combined.html"
+}

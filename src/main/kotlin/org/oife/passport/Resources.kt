@@ -47,13 +47,12 @@ fun DocumentResource.toCombined(
 suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
-        .distinctBy { it.toFontMeta().familyName }
-        .map { fontType ->
-            val fontMeta = fontType.toFontMeta()
+        .distinctBy { it.familyName }
+        .map { font ->
             async {
-                val path = "/fonts/${fontMeta.fileName}"
+                val path = "/fonts/${font.fileName}"
                 val bytes = loadResourceBytes(path)
-                fontMeta.familyName to FSSupplier<InputStream> { bytes.inputStream() }
+                font.familyName to FSSupplier<InputStream> { bytes.inputStream() }
             }
         }
         .awaitAll()
@@ -87,10 +86,10 @@ private suspend fun <T> loadResource(path: String, reader: (InputStream) -> T): 
     }
 
 suspend fun loadResourceContent(path: String): String =
-    loadResource(path, ) { it.bufferedReader().use { reader -> reader.readText() } }
+    loadResource(path) { it.bufferedReader().use { reader -> reader.readText() } }
 
 suspend fun loadResourceBytes(path: String): ByteArray =
-    loadResource(path, ) { it.readBytes() }
+    loadResource(path) { it.readBytes() }
 
 suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
@@ -109,9 +108,9 @@ suspend fun getDocumentResource(htmlTemplatePath: String, version: String): Docu
 suspend fun getCombinedDocumentResource(
     singleDocumentResource: DocumentResource
 ): CombinedDocumentResource = coroutineScope {
-    val indexDeferred = async { loadResourceContent("/templates/passport-index-item.html") }
-    val articleDeferred = async { loadResourceContent("/templates/passport-article-item.html") }
-    val htmlDeferred = async { loadResourceContent("/templates/passport-combined.html") }
+    val indexDeferred = async { loadResourceContent(Template.PASSPORT_INDEX_ITEM) }
+    val articleDeferred = async { loadResourceContent(Template.PASSPORT_ARTICLE_ITEM) }
+    val htmlDeferred = async { loadResourceContent(Template.PASSPORT_COMBINED) }
 
     singleDocumentResource.toCombined(
         indexTemplate = indexDeferred.await(),

@@ -4,7 +4,11 @@
     "languageCode": "ar",
     "title": "Arabic",
     "localizedTitle": "العربية",
-    "font": "AR"
+    "font": {
+      "familyName": "Noto Sans Arabic",
+      "fileName": "NotoSansArabic-Regular.ttf",
+      "direction": "rtl"
+    }
   },
   {
     "markdownFilename": "da-danish.md",
@@ -53,7 +57,10 @@
     "languageCode": "gu",
     "title": "Indian Gujarati",
     "localizedTitle": "ગુજરાતી",
-    "font": "GU"
+    "font": {
+      "familyName": "Noto Sans Gujarati",
+      "fileName": "NotoSansGujarati-Regular.ttf"
+    }
   },
   {
     "markdownFilename": "hr-croatian.md",
@@ -72,14 +79,20 @@
     "languageCode": "ka",
     "title": "Georgian",
     "localizedTitle": "ქართული",
-    "font": "KA"
+    "font": {
+      "familyName": "Noto Sans Georgian",
+      "fileName": "NotoSansGeorgian-Regular.ttf"
+    }
   },
   {
     "markdownFilename": "ja-japanese.md",
     "languageCode": "ja",
     "title": "Japanese",
-    "font": "JA",
-    "localizedTitle": "日本語"
+    "localizedTitle": "日本語",
+    "font": {
+      "familyName": "Noto Sans JP",
+      "fileName": "NotoSansJP-Regular.ttf"
+    }
   },
   {
     "markdownFilename": "nb-norwegian-bokmal.md",
@@ -146,6 +159,9 @@
     "languageCode": "zh",
     "title": "Chinese Mandarin",
     "localizedTitle": "简体中文",
-    "font": "ZH"
+    "font": {
+      "familyName": "Noto Sans SC",
+      "fileName": "NotoSansSC-Regular.ttf"
+    }
   }
 ]

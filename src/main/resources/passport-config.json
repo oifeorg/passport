@@ -163,5 +163,15 @@
       "familyName": "Noto Sans SC",
       "fileName": "NotoSansSC-Regular.ttf"
     }
+  },
+  {
+    "markdownFilename": "ko-kr-korean.md",
+    "languageCode": "ko-KR",
+    "title": "South Korean",
+    "localizedTitle": "한국어",
+    "font": {
+      "familyName": "Noto Sans KR",
+      "fileName": "NotoSansKR-Regular.ttf"
+    }
   }
 ]

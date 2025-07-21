@@ -21,7 +21,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.openhtmltopdf.pdfbox)
     implementation(libs.openhtmltopdf.slf4j)
-    implementation(libs.openhtmltopdf.svg)
 
     implementation(libs.markdown)
 

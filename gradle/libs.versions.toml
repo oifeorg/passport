@@ -19,7 +19,6 @@ kotlinx-coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-version" }
 openhtmltopdf-pdfbox = { module = "io.github.openhtmltopdf:openhtmltopdf-pdfbox", version.ref = "openhtmltopdf-version" }
 openhtmltopdf-slf4j = { module = "io.github.openhtmltopdf:openhtmltopdf-slf4j", version.ref = "openhtmltopdf-version" }
-openhtmltopdf-svg = { module = "io.github.openhtmltopdf:openhtmltopdf-svg-support", version.ref = "openhtmltopdf-version" }
 markdown = { module = "org.jetbrains:markdown-jvm", version.ref = "jetbrains-markdown-version" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-version" }

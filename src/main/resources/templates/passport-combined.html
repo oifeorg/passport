@@ -42,12 +42,35 @@
           list-style-type: disc;
         }
 
+        article.passport-content ul {
+          list-style: none;
+          padding-left: 1em;
+          margin: 1em 0;
+        }
+
+        article.passport-content ul li {
+          position: relative;
+          padding-left: 0.5em;
+        }
+
+        article.passport-content ul li::before {
+          content: "-";
+          font-family: "Noto Sans", sans-serif;
+          font-size: 1em; /* adjust to 0.95em or 1.1em as needed */
+          position: absolute;
+          left: -1em;
+        }
+
         ol {
           list-style-type: decimal;
         }
 
         li {
           margin-bottom: 0.3em;
+        }
+
+        .passport-content {
+            margin-left: 0.3em;
         }
 
         .passport-content[dir="rtl"] {
@@ -125,6 +148,10 @@
           font-size: 2rem;
           margin: 0;
           color: #000;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>

@@ -40,7 +40,22 @@
         }
 
         ul {
-          list-style-type: disc;
+          list-style: none;
+          padding-left: 1em;
+          margin: 1em 0;
+        }
+
+        ul li {
+          position: relative;
+          padding-left: 0.5em;
+        }
+
+        ul li::before {
+          content: "-";
+          font-family: "Noto Sans", sans-serif;
+          font-size: 1em; /* adjust to 0.95em or 1.1em as needed */
+          position: absolute;
+          left: -1em;
         }
 
         ol {
@@ -59,6 +74,10 @@
         .passport-content[dir="ltr"] {
           direction: ltr;
           text-align: left;
+        }
+
+        .hidden {
+            display: none;
         }
 
         @page {

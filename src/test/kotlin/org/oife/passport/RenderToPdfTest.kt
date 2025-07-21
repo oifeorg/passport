@@ -12,6 +12,7 @@ import kotlin.io.path.fileSize
 class RenderToPdfTest : StringSpec({
 
     "should render a valid PDF file for a document" {
+        val defaultFont = FontMeta()
         val document = SinglePdfDocument(
             metaInfo = SinglePassportMeta(
                 markdownFilename = "test.md",
@@ -21,7 +22,7 @@ class RenderToPdfTest : StringSpec({
             documentResource = DocumentResource(
                 "<html><body>{{passport-content}}</body></html>", emptyList(),
                 contentMap = mapOf("test.md" to "# Hello"),
-                fontMap = mapOf(FontType.DEFAULT.toFontMeta().familyName to loadTestFont(FontType.DEFAULT.toFontMeta())),
+                fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
                 version = "v1.0.0",
             ),
         )

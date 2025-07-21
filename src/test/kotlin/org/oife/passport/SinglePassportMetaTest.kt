@@ -17,8 +17,8 @@ class SinglePassportMetaTest : StringSpec({
     }
 
     "uses correct direction based on rtl flag" {
-        SinglePassportMeta("a.md", "ar", "Arabic", font = FontType.AR).direction shouldBe "rtl"
-        SinglePassportMeta("b.md", "en", "English", font = FontType.DEFAULT).direction shouldBe "ltr"
+        SinglePassportMeta("a.md", "ar", "Arabic", font = FontMeta("SomethingElse", "Noto Something", direction = "rtl")).direction shouldBe "rtl"
+        SinglePassportMeta("b.md", "en", "English").direction shouldBe "ltr"
     }
 
     "generates correct html replacements" {

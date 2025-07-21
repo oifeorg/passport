@@ -16,11 +16,14 @@ data class SinglePassportMeta(
 
     val direction: String
         get() = font.direction
+
+    val isLocalizedTitleSame: Boolean
+        get() = title == localizedTitle
 }
 
 fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
     Placeholder.LANG to languageCode,
-    Placeholder.HEADER_TITLE to if (localizedTitle == title) title else "$localizedTitle - $title",
+    Placeholder.HEADER_TITLE to if (isLocalizedTitleSame) title else "$localizedTitle - $title",
     Placeholder.FONT_FAMILY to font.familyName,
     Placeholder.DIRECTION to direction
 )

@@ -44,7 +44,7 @@ class FontStyleRenderer(private val passportConfigs: List<SinglePassportMeta>) {
 class ArticleContentRenderer(
     private val configs: List<SinglePassportMeta>,
     private val contentMap: Map<String, String>,
-    private val articleTemplate: String
+    private val articleTemplate: String,
 ) {
     fun render(): String = buildString {
         val sorted = configs.sortedBy { it.languageCode }
@@ -58,7 +58,8 @@ class ArticleContentRenderer(
                         Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
                         Placeholder.BODY to contentMap.getValue(config.markdownFilename).toHtml(),
                         Placeholder.PAGE_BREAK_AFTER to if (index == sorted.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER,
-                        Placeholder.DIRECTION to config.direction
+                        Placeholder.DIRECTION to config.direction,
+                        Placeholder.HIDDEN to if (config.isLocalizedTitleSame) "hidden" else ""
                     )
                 )
             )
@@ -68,7 +69,7 @@ class ArticleContentRenderer(
 
 class IndexContentRenderer(
     private val configs: List<SinglePassportMeta>,
-    private val indexTemplate: String
+    private val indexTemplate: String,
 ) {
     fun render(): String = buildString {
         configs.sortedBy { it.languageCode }.forEach { config ->
@@ -78,7 +79,8 @@ class IndexContentRenderer(
                         Placeholder.LANGUAGE_CODE to config.languageCode,
                         Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
                         Placeholder.LOCALIZED_TITLE to config.localizedTitle,
-                        Placeholder.TITLE to config.title
+                        Placeholder.TITLE to config.title,
+                        Placeholder.HIDDEN to if (config.isLocalizedTitleSame) "hidden" else ""
                     )
                 )
             )

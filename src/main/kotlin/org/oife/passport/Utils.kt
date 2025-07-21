@@ -35,6 +35,7 @@ object Placeholder {
     const val PASSPORT_INDEX_ITEMS = "passport-index-items"
     const val PASSPORT_ARTICLE_ITEMS = "passport-article-items"
     const val LANGUAGE_FONT_STYLES = "languageFontStyles"
+    const val HIDDEN = "hidden"
 }
 
 object Template {

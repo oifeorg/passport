@@ -135,7 +135,7 @@ data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) :
     override val fontMap: Map<String, FSSupplier<InputStream>>
         get() = documentResource.fontMap
     override val pdfFileName: String
-        get() = "all-passport-combined.pdf"
+        get() = Pdf.TEMP_COMBINED
 }
 
 fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(

@@ -9,6 +9,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
@@ -90,6 +92,16 @@ suspend fun loadResourceContent(path: String): String =
 
 suspend fun loadResourceBytes(path: String): ByteArray =
     loadResource(path) { it.readBytes() }
+
+suspend fun loadResourceTempFile(path: String): Path =
+    loadResource(path) { inputStream ->
+        val fileName = Path.of(path).fileName.toString()
+        val suffix = if (fileName.contains('.')) fileName.substringAfterLast('.') else "tmp"
+        val tempFile = Files.createTempFile("resource-", ".$suffix")
+        tempFile.toFile().deleteOnExit()
+        inputStream.use { it.copyTo(tempFile.toFile().outputStream()) }
+        tempFile
+    }
 
 suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }

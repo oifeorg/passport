@@ -63,8 +63,7 @@ suspend fun CombinedPassport.generate(): Path {
 
 suspend fun SinglePassport.generateAll() {
     passportConfigs.forEach { meta ->
-        val path = toPdfInput(meta).renderToPdf()
-        logger.info(Messages.PdfGenerated(path.pathString))
+        toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
     }
 }
 

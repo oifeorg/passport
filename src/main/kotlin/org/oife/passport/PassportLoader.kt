@@ -19,7 +19,7 @@ data class SinglePassport(
     val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
-    val version: String
+    val version: String,
 )
 
 data class CombinedPassport(
@@ -29,79 +29,64 @@ data class CombinedPassport(
     val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
-    val version: String
+    val version: String,
 )
 
 suspend fun loadFontSuppliers(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
-    passports
-        .map { it.font }
-        .distinctBy { it.familyName }
-        .map { font ->
-            async {
-                val path = "/fonts/${font.fileName}"
-                val bytes = loadResourceBytes(path)
-                font.familyName to FSSupplier<InputStream> { bytes.inputStream() }
-            }
-        }
-        .awaitAll()
-        .toMap()
-}
-
-private val jsonFormat = Json { ignoreUnknownKeys = true }
-suspend fun loadPassportConfigs(): List<PassportMeta> {
-    val json = loadResourceContent("/passport-config.json")
-    return jsonFormat
-        .decodeFromString(json)
-}
-
-suspend fun loadPassportContents(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
-    passports.map { metadata ->
+    passports.map { it.font }.distinctBy { it.familyName }.map { font ->
         async {
-            val path = "/data/${metadata.markdownFilename}"
-            metadata.markdownFilename to loadResourceContent(path)
+            val path = "/fonts/${font.fileName}"
+            val bytes = loadResourceBytes(path)
+            font.familyName to FSSupplier<InputStream> { bytes.inputStream() }
         }
     }.awaitAll().toMap()
 }
 
-private suspend fun <T> loadResource(path: String, reader: (InputStream) -> T): T =
-    withContext(Dispatchers.IO) {
-        val stream = object {}.javaClass.getResourceAsStream(path)
-            ?: throw IllegalStateException(Messages.ResourceNotFound(path))
+private val jsonFormat = Json { ignoreUnknownKeys = true }
+suspend fun loadPassportConfigs(): List<PassportMeta> =
+    jsonFormat.decodeFromString(loadResourceContent("/passport-config.json"))
 
+suspend fun loadPassportContents(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
+    passports.map { metadata ->
+        async { metadata.markdownFilename to loadResourceContent("/data/${metadata.markdownFilename}") }
+    }.awaitAll().toMap()
+}
+
+private suspend fun <T> loadResource(path: String, reader: (InputStream) -> T): T = withContext(Dispatchers.IO) {
+    object {}.javaClass.getResourceAsStream(path)?.use { stream ->
         logger.info(Messages.ResourceLoaded(path))
-
         reader(stream)
-    }
+    } ?: throw IllegalStateException(Messages.ResourceNotFound(path))
+}
 
 suspend fun loadResourceContent(path: String): String =
     loadResource(path) { it.bufferedReader().use { reader -> reader.readText() } }
 
-suspend fun loadResourceBytes(path: String): ByteArray =
-    loadResource(path) { it.readBytes() }
+suspend fun loadResourceBytes(path: String): ByteArray = loadResource(path) { it.readBytes() }
 
-suspend fun loadResourceTempFile(path: String): Path =
-    loadResource(path) { inputStream ->
-        val fileName = Path.of(path).fileName.toString()
-        val suffix = if (fileName.contains('.')) fileName.substringAfterLast('.') else "tmp"
-        val tempFile = Files.createTempFile("resource-", ".$suffix")
-        tempFile.toFile().deleteOnExit()
-        inputStream.use { it.copyTo(tempFile.toFile().outputStream()) }
-        tempFile
-    }
-
-suspend fun loadSinglePassport(version: String, htmlTemplatePath: String = Template.PASSPORT_SINGLE): SinglePassport = coroutineScope {
-    val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
-    val passportConfigs = loadPassportConfigs()
-    val fontMapDeferred = async { loadFontSuppliers(passportConfigs) }
-    val contentMapDeferred = async { loadPassportContents(passportConfigs) }
-    SinglePassport(
-        version = version,
-        htmlTemplate = htmlTemplateDeferred.await(),
-        passportConfigs = passportConfigs,
-        contentMap = contentMapDeferred.await(),
-        fontMap = fontMapDeferred.await()
-    )
+suspend fun loadResourceTempFile(path: String): Path = loadResource(path) { inputStream ->
+    val fileName = Path.of(path).fileName.toString()
+    val suffix = if (fileName.contains('.')) fileName.substringAfterLast('.') else "tmp"
+    val tempFile = Files.createTempFile("resource-", ".$suffix")
+    tempFile.toFile().deleteOnExit()
+    inputStream.use { it.copyTo(tempFile.toFile().outputStream()) }
+    tempFile
 }
+
+suspend fun loadSinglePassport(version: String, htmlTemplatePath: String = Template.PASSPORT_SINGLE): SinglePassport =
+    coroutineScope {
+        val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
+        val passportConfigs = loadPassportConfigs()
+        val fontMapDeferred = async { loadFontSuppliers(passportConfigs) }
+        val contentMapDeferred = async { loadPassportContents(passportConfigs) }
+        SinglePassport(
+            version = version,
+            htmlTemplate = htmlTemplateDeferred.await(),
+            passportConfigs = passportConfigs,
+            contentMap = contentMapDeferred.await(),
+            fontMap = fontMapDeferred.await()
+        )
+    }
 
 suspend fun SinglePassport.toCombinedPassport(): CombinedPassport = coroutineScope {
     val indexDeferred = async { loadResourceContent(Template.PASSPORT_INDEX_ITEM) }

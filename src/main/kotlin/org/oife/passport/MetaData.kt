@@ -6,7 +6,7 @@ import java.io.InputStream
 
 
 @Serializable
-data class SinglePassportMeta(
+data class PassportMeta(
     val markdownFilename: String,
     val languageCode: String,
     val title: String,
@@ -27,16 +27,16 @@ data class PdfDocumentInput(
     val pdfFileName: String,
 )
 
-fun SinglePassportMeta.pdfFileName(): String =
+fun PassportMeta.pdfFileName(): String =
     markdownFilename.removeSuffix(".md") + ".pdf"
 
-fun SinglePassportMeta.direction(): String =
+fun PassportMeta.direction(): String =
     font.direction
 
-fun SinglePassportMeta.isLocalizedTitleSame(): Boolean =
+fun PassportMeta.isLocalizedTitleSame(): Boolean =
     title == localizedTitle
 
-fun SinglePassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
+fun PassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
     Placeholder.LANG to languageCode,
     Placeholder.HEADER_TITLE to if (isLocalizedTitleSame()) title else "$localizedTitle - $title",
     Placeholder.FONT_FAMILY to font.familyName,

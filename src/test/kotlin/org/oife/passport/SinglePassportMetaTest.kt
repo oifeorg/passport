@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 class SinglePassportMetaTest : StringSpec({
 
-    val meta = SinglePassportMeta(
+    val meta = PassportMeta(
         markdownFilename = testMarkdownFile,
         languageCode = "en",
         title = "OIFE Passport",
@@ -17,8 +17,8 @@ class SinglePassportMetaTest : StringSpec({
     }
 
     "uses correct direction based on rtl flag" {
-        SinglePassportMeta("a.md", "ar", "Arabic", font = FontMeta("SomethingElse", "Noto Something", direction = "rtl")).direction() shouldBe "rtl"
-        SinglePassportMeta("b.md", "en", "English").direction() shouldBe "ltr"
+        PassportMeta("a.md", "ar", "Arabic", font = FontMeta("SomethingElse", "Noto Something", direction = "rtl")).direction() shouldBe "rtl"
+        PassportMeta("b.md", "en", "English").direction() shouldBe "ltr"
     }
 
     "generates correct html replacements" {

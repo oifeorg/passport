@@ -21,7 +21,7 @@ fun String.toFilledHtml(replacements: Map<String, String>): String =
 
 private fun flavor(): CommonMarkFlavourDescriptor = GFMFlavourDescriptor()
 
-fun renderFontStyles(passportConfigs: List<SinglePassportMeta>): String = buildString {
+fun renderFontStyles(passportConfigs: List<PassportMeta>): String = buildString {
     passportConfigs
         .distinctBy { it.font }
         .forEach {
@@ -37,7 +37,7 @@ fun renderFontStyles(passportConfigs: List<SinglePassportMeta>): String = buildS
 }
 
 fun renderArticlesContents(
-    configs: List<SinglePassportMeta>,
+    configs: List<PassportMeta>,
     contentMap: Map<String, String>,
     articleTemplate: String,
 ): String = buildString {
@@ -60,7 +60,7 @@ fun renderArticlesContents(
     }
 }
 
-fun renderIndexItems(configs: List<SinglePassportMeta>, indexTemplate: String): String = buildString {
+fun renderIndexItems(configs: List<PassportMeta>, indexTemplate: String): String = buildString {
     configs.sortedBy { it.languageCode }.forEach { config ->
         appendLine(
             indexTemplate.toFilledHtml(
@@ -76,7 +76,7 @@ fun renderIndexItems(configs: List<SinglePassportMeta>, indexTemplate: String): 
     }
 }
 
-fun DocumentResource.toRenderable(meta: SinglePassportMeta) = PdfDocumentInput(
+fun SinglePassport.toRenderable(meta: PassportMeta) = PdfDocumentInput(
     filledHtml = htmlTemplate.toFilledHtml(
         mapOf(
             Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
@@ -88,7 +88,7 @@ fun DocumentResource.toRenderable(meta: SinglePassportMeta) = PdfDocumentInput(
     pdfFileName = meta.pdfFileName()
 )
 
-fun CombinedDocumentResource.toRenderable() = PdfDocumentInput(
+fun CombinedPassport.toRenderable() = PdfDocumentInput(
     filledHtml = htmlTemplate.toFilledHtml(
         mapOf(
             Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(

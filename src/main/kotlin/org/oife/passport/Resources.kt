@@ -14,29 +14,29 @@ import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
-data class DocumentResource(
+data class SinglePassport(
     val htmlTemplate: String,
-    val passportConfigs: List<SinglePassportMeta>,
+    val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
     val version: String
 )
 
-data class CombinedDocumentResource(
+data class CombinedPassport(
     val indexTemplate: String,
     val articleTemplate: String,
     val htmlTemplate: String,
-    val passportConfigs: List<SinglePassportMeta>,
+    val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
     val version: String
 )
 
-fun DocumentResource.toCombined(
+fun SinglePassport.toCombined(
     indexTemplate: String,
     articleTemplate: String,
     htmlTemplate: String,
-): CombinedDocumentResource = CombinedDocumentResource(
+): CombinedPassport = CombinedPassport(
     indexTemplate = indexTemplate,
     articleTemplate = articleTemplate,
     htmlTemplate = htmlTemplate,
@@ -46,7 +46,7 @@ fun DocumentResource.toCombined(
     version = this.version
 )
 
-suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
+suspend fun fontMap(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
         .distinctBy { it.familyName }
@@ -62,13 +62,13 @@ suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier
 }
 
 private val jsonFormat = Json { ignoreUnknownKeys = true }
-suspend fun loadPassportConfigs(): List<SinglePassportMeta> {
+suspend fun loadPassportConfigs(): List<PassportMeta> {
     val json = loadResourceContent("/passport-config.json")
     return jsonFormat
         .decodeFromString(json)
 }
 
-suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String, String> = coroutineScope {
+suspend fun passportContentMap(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
     passports.map { metadata ->
         async {
             val path = "/data/${metadata.markdownFilename}"
@@ -103,12 +103,12 @@ suspend fun loadResourceTempFile(path: String): Path =
         tempFile
     }
 
-suspend fun buildDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
+suspend fun loadSinglePassport(htmlTemplatePath: String, version: String): SinglePassport = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
     val fontMapDeferred = async { fontMap(passportConfigs) }
     val contentMapDeferred = async { passportContentMap(passportConfigs) }
-    DocumentResource(
+    SinglePassport(
         version = version,
         htmlTemplate = htmlTemplateDeferred.await(),
         passportConfigs = passportConfigs,
@@ -117,9 +117,9 @@ suspend fun buildDocumentResource(htmlTemplatePath: String, version: String): Do
     )
 }
 
-suspend fun getCombinedDocumentResource(
-    singleDocumentResource: DocumentResource
-): CombinedDocumentResource = coroutineScope {
+suspend fun loadCombinedPassport(
+    singleDocumentResource: SinglePassport
+): CombinedPassport = coroutineScope {
     val indexDeferred = async { loadResourceContent(Template.PASSPORT_INDEX_ITEM) }
     val articleDeferred = async { loadResourceContent(Template.PASSPORT_ARTICLE_ITEM) }
     val htmlDeferred = async { loadResourceContent(Template.PASSPORT_COMBINED) }

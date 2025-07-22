@@ -12,7 +12,7 @@ import kotlin.io.path.fileSize
 class GeneratePassportTest : StringSpec({
 
     "should load covers from resources and produce final combined file" {
-        val combinedResource = CombinedDocumentResource(
+        val combinedPassport = CombinedPassport(
             passportConfigs = emptyList(),
             articleTemplate = "<hello></hello>",
             contentMap = emptyMap(),
@@ -22,7 +22,7 @@ class GeneratePassportTest : StringSpec({
             version = ""
         )
 
-        generateCombinedPassport(combinedResource).toFile().apply {
+        combinedPassport.generate().toFile().apply {
             shouldExist()
             length() shouldBeGreaterThan 500 // small real PDFs can be very small
         }
@@ -30,12 +30,12 @@ class GeneratePassportTest : StringSpec({
 
     "should render a valid PDF file for a document" {
         val defaultFont = FontMeta()
-        val meta = SinglePassportMeta(
+        val meta = PassportMeta(
             markdownFilename = "test.md",
             languageCode = "en",
             title = "Test Document"
         )
-        val documentResource = DocumentResource(
+        val singlePassport = SinglePassport(
             "<html><body>{{passport-content}}</body></html>", emptyList(),
             contentMap = mapOf("test.md" to "# Hello"),
             fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
@@ -44,7 +44,7 @@ class GeneratePassportTest : StringSpec({
 
         val outputPath = createTempFile("test-passport-", ".pdf").apply { toFile().deleteOnExit() }
 
-        with(renderToPdf(documentResource.toRenderable(meta), outputPath)) {
+        with(renderToPdf(singlePassport.toRenderable(meta), outputPath)) {
             shouldExist()
             fileSize() shouldBeGreaterThan 100L
             extension shouldBe "pdf"

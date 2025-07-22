@@ -11,8 +11,8 @@ class PassportContentMapTest : StringSpec({
 
     "should load markdown content into map" {
         val passports = listOf(
-            SinglePassportMeta("en-english.md", "en", "English"),
-            SinglePassportMeta("da-danish.md", "da", "Danish")
+            PassportMeta("en-english.md", "en", "English"),
+            PassportMeta("da-danish.md", "da", "Danish")
         )
 
         with(passportContentMap(passports)) {
@@ -23,7 +23,7 @@ class PassportContentMapTest : StringSpec({
 
     "should fail if markdown file is missing" {
         val passports = listOf(
-            SinglePassportMeta("missing-file.md", "xx", "Missing")
+            PassportMeta("missing-file.md", "xx", "Missing")
         )
 
         shouldThrow<IllegalStateException> {

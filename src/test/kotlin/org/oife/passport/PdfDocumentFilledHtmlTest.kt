@@ -6,7 +6,7 @@ import io.kotest.matchers.string.shouldNotContain
 
 class PdfDocumentFilledHtmlTest : StringSpec({
 
-    val passport = SinglePassportMeta(
+    val passport = PassportMeta(
         markdownFilename = "test.md",
         languageCode = "en",
         title = "My Passport",
@@ -15,7 +15,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in single passport HTML template" {
         val defaultFont = FontMeta()
-        val documentResource = DocumentResource(
+        val documentResource = SinglePassport(
             loadResourceContent(Template.PASSPORT_SINGLE),
             emptyList(),
             contentMap = mapOf("test.md" to "# Hello"),
@@ -37,8 +37,8 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in combined passport HTML template" {
         val defaultFont = FontMeta()
-        val documentResource = getCombinedDocumentResource(
-            DocumentResource(
+        val documentResource = loadCombinedPassport(
+            SinglePassport(
                 loadResourceContent(Template.PASSPORT_COMBINED),
                 listOf(passport),
                 contentMap = mapOf("test.md" to "# Hello"),

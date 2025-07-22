@@ -31,9 +31,9 @@ suspend fun renderToPdf(
     outputPath
 }
 
-suspend fun generateCombinedPassport(combinedDocumentResource: CombinedDocumentResource): Path {
+suspend fun CombinedPassport.generate(): Path {
     val tempCombinedPath =
-        renderToPdf(combinedDocumentResource.toRenderable()).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
+        renderToPdf(this.toRenderable()).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
     val merged = mergePdfFilesToFile(
         parts = listOf(
             loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
@@ -46,11 +46,10 @@ suspend fun generateCombinedPassport(combinedDocumentResource: CombinedDocumentR
     return merged
 }
 
-suspend fun generateSinglePassports(
-    documentResource: DocumentResource
+suspend fun SinglePassport.generateAll(
 ) {
-    documentResource.passportConfigs.forEach {
-        renderToPdf(documentResource.toRenderable(it)).also { path ->
+    this.passportConfigs.forEach {
+        renderToPdf(this.toRenderable(it)).also { path ->
             logger.info(
                 Messages.PdfGenerated(path.pathString)
             )

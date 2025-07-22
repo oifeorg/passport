@@ -30,7 +30,6 @@ fun CombinedPassport.toPdfInput() = PdfDocumentInput(
     filledHtml = renderHtml(), fontMap = fontMap, pdfFileName = Pdf.TEMP_COMBINED
 )
 
-
 suspend fun PdfDocumentInput.renderToPdf(
     outputPath: Path = outputDir.resolve(pdfFileName),
 ): Path = withContext(Dispatchers.IO) {
@@ -48,23 +47,24 @@ suspend fun PdfDocumentInput.renderToPdf(
 
 suspend fun CombinedPassport.generate(): Path {
     val combined = toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
-    val merged = mergePdfFilesToFile(
-        parts = listOf(
-            loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
-            combined,
-            loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
-        ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
-    ).also { logger.info(Messages.PdfGenerated(it.pathString)) }
-    Files.delete(combined)
-    logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
-
-    return merged
+    return try {
+        mergePdfFilesToFile(
+            parts = listOf(
+                loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
+                combined,
+                loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
+            ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
+        ).also {
+            logger.info(Messages.PdfGenerated(it.pathString))
+        }
+    } finally {
+        Files.deleteIfExists(combined).also { logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED)) }
+    }
 }
 
 suspend fun SinglePassport.generateAll() {
     passportConfigs.forEach { meta ->
-        val path = toPdfInput(meta).renderToPdf()
-        logger.info(Messages.PdfGenerated(path.pathString))
+        toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
     }
 }
 

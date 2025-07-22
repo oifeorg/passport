@@ -7,11 +7,10 @@ suspend fun main(args: Array<String>) {
     val version = args.firstOrNull() ?: "v1.0.0"
 
     runCatching {
-        val singlePassport = loadSinglePassport(Template.PASSPORT_SINGLE, version)
-        singlePassport.generateAll()
-
-        val combinedPassport = singlePassport.toCombinedPassport()
-        combinedPassport.generate()
+        loadSinglePassport(Template.PASSPORT_SINGLE, version).apply {
+            generateAll()
+            toCombinedPassport().generate()
+        }
     }.onFailure {
         logger.error(Messages.UnexpectedError.toString(), it)
     }

@@ -15,18 +15,15 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in single passport HTML template" {
         val defaultFont = FontMeta()
-        val document = SinglePdfDocument(
-            metaInfo = passport,
-            documentResource = DocumentResource(
-                loadResourceContent(Template.PASSPORT_SINGLE),
-                emptyList(),
-                contentMap = mapOf("test.md" to "# Hello"),
-                fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
-                version = "v1.0.0",
-            ),
+        val documentResource = DocumentResource(
+            loadResourceContent(Template.PASSPORT_SINGLE),
+            emptyList(),
+            contentMap = mapOf("test.md" to "# Hello"),
+            fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
+            version = "v1.0.0",
         )
 
-        with(document.filledHtml) {
+        with(documentResource.toRenderable(passport).filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>My test - My Passport</title>")
@@ -40,17 +37,17 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in combined passport HTML template" {
         val defaultFont = FontMeta()
-        val document = CombinedPdfDocument(
-            documentResource = getCombinedDocumentResource(DocumentResource(
+        val documentResource = getCombinedDocumentResource(
+            DocumentResource(
                 loadResourceContent(Template.PASSPORT_COMBINED),
                 listOf(passport),
                 contentMap = mapOf("test.md" to "# Hello"),
                 fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
                 version = "v1.0.0",
-            ))
+            )
         )
 
-        with(document.filledHtml) {
+        with(documentResource.toRenderable().filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>OIFE Passport combined</title>")

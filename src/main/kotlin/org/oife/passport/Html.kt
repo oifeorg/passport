@@ -1,14 +1,11 @@
 package org.oife.passport
 
-import com.openhtmltopdf.extend.FSSupplier
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
-import java.io.InputStream
 import java.time.Year
-import kotlin.collections.Map
 
 
 fun String.toHtml(): String {
@@ -79,31 +76,6 @@ fun renderIndexItems(configs: List<SinglePassportMeta>, indexTemplate: String): 
     }
 }
 
-interface RenderableDocument {
-    val filledHtml: String
-    val fontMap: Map<String, FSSupplier<InputStream>>
-    val pdfFileName: String
-}
-
-data class SinglePdfDocument(
-    val documentResource: DocumentResource,
-    val metaInfo: SinglePassportMeta,
-) : RenderableDocument {
-    val passportContent: String by lazy {
-        documentResource.contentMap.getValue(metaInfo.markdownFilename).toHtml()
-    }
-
-    override val filledHtml: String by lazy {
-        documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())
-    }
-
-    override val fontMap: Map<String, FSSupplier<InputStream>>
-        get() = documentResource.fontMap
-
-    override val pdfFileName: String
-        get() = metaInfo.pdfFileName()
-}
-
 fun DocumentResource.toRenderable(meta: SinglePassportMeta) = RenderableData(
     filledHtml = htmlTemplate.toFilledHtml(
         mapOf(
@@ -137,45 +109,4 @@ fun CombinedDocumentResource.toRenderable() = RenderableData(
     ),
     fontMap = fontMap,
     pdfFileName = Pdf.TEMP_COMBINED
-)
-
-data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {
-    fun languageFontStyles(): String =
-        renderFontStyles(documentResource.passportConfigs)
-
-    fun articleContents(): String =
-        renderArticlesContents(
-            configs = documentResource.passportConfigs,
-            contentMap = documentResource.contentMap,
-            articleTemplate = documentResource.articleTemplate
-        )
-
-    fun indexItemsContent(): String =
-        renderIndexItems(
-            configs = documentResource.passportConfigs,
-            indexTemplate = documentResource.indexTemplate
-        )
-
-    override val filledHtml: String
-        get() = documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())
-    override val fontMap: Map<String, FSSupplier<InputStream>>
-        get() = documentResource.fontMap
-    override val pdfFileName: String
-        get() = Pdf.TEMP_COMBINED
-}
-
-fun SinglePdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    Placeholder.PASSPORT_CONTENT to passportContent,
-    Placeholder.VERSION to documentResource.version,
-    Placeholder.YEAR to Year.now().toString()
-) + metaInfo.toHtmlReplacements()
-
-fun CombinedPdfDocument.toHtmlReplacements(): Map<String, String> = mapOf(
-    Placeholder.PASSPORT_INDEX_ITEMS to indexItemsContent(),
-    Placeholder.PASSPORT_ARTICLE_ITEMS to articleContents(),
-    Placeholder.LANGUAGE_FONT_STYLES to languageFontStyles(),
-    Placeholder.VERSION to documentResource.version,
-    Placeholder.YEAR to Year.now().toString(),
-    Placeholder.HEADER_TITLE to "OIFE Passport combined",
-    Placeholder.LANG to "en"
 )

@@ -31,7 +31,6 @@ suspend fun renderToPdf(
     outputPath
 }
 
-
 suspend fun generateCombinedPassport(combinedDocumentResource: CombinedDocumentResource): Path {
     val combinedPdfDocument = CombinedPdfDocument(combinedDocumentResource)
     val tempCombinedPath =

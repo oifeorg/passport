@@ -103,7 +103,7 @@ suspend fun loadResourceTempFile(path: String): Path =
         tempFile
     }
 
-suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
+suspend fun buildDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
     val fontMapDeferred = async { fontMap(passportConfigs) }

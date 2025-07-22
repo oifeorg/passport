@@ -7,7 +7,7 @@ suspend fun main(args: Array<String>) {
     val version = args.firstOrNull() ?: "v1.0.0"
 
     runCatching {
-        val singleDocumentResource = getDocumentResource(Template.PASSPORT_SINGLE, version)
+        val singleDocumentResource = buildDocumentResource(Template.PASSPORT_SINGLE, version)
         generateSinglePassports(singleDocumentResource)
 
         generateCombinedPassport(getCombinedDocumentResource(singleDocumentResource))

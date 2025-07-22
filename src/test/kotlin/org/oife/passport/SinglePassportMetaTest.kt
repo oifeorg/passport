@@ -13,12 +13,12 @@ class SinglePassportMetaTest : StringSpec({
     )
 
     "returns correct pdf file name" {
-        meta.pdfFileName shouldBe "test.pdf"
+        meta.pdfFileName() shouldBe "test.pdf"
     }
 
     "uses correct direction based on rtl flag" {
-        SinglePassportMeta("a.md", "ar", "Arabic", font = FontMeta("SomethingElse", "Noto Something", direction = "rtl")).direction shouldBe "rtl"
-        SinglePassportMeta("b.md", "en", "English").direction shouldBe "ltr"
+        SinglePassportMeta("a.md", "ar", "Arabic", font = FontMeta("SomethingElse", "Noto Something", direction = "rtl")).direction() shouldBe "rtl"
+        SinglePassportMeta("b.md", "en", "English").direction() shouldBe "ltr"
     }
 
     "generates correct html replacements" {

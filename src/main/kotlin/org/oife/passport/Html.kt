@@ -23,68 +23,58 @@ fun String.toFilledHtml(replacements: Map<String, String>): String =
 
 private fun flavor(): CommonMarkFlavourDescriptor = GFMFlavourDescriptor()
 
-
-class FontStyleRenderer(private val passportConfigs: List<SinglePassportMeta>) {
-    fun render(): String = buildString {
-        passportConfigs
-            .distinctBy { it.font }
-            .forEach {
-                val langCss = """
+fun renderFontStyles(passportConfigs: List<SinglePassportMeta>): String = buildString {
+    passportConfigs
+        .distinctBy { it.font }
+        .forEach {
+            val langCss = """
                     .lang-${it.font.toCssClass(it.languageCode)} {
                         font-family: "${it.font.familyName}", sans-serif;
                         direction: ${it.font.direction};
                         text-align: ${it.font.toTextAlign()};
                     }
                 """.trimIndent()
-                appendLine(langCss)
-            }
+            appendLine(langCss)
+        }
+}
+
+fun renderArticlesContents(
+    configs: List<SinglePassportMeta>,
+    contentMap: Map<String, String>,
+    articleTemplate: String,
+): String = buildString {
+    val sorted = configs.sortedBy { it.languageCode }
+    sorted.forEachIndexed { index, config ->
+        appendLine(
+            articleTemplate.toFilledHtml(
+                mapOf(
+                    Placeholder.LANGUAGE_CODE to config.languageCode,
+                    Placeholder.LOCALIZED_TITLE to config.localizedTitle,
+                    Placeholder.TITLE to config.title,
+                    Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
+                    Placeholder.BODY to contentMap.getValue(config.markdownFilename).toHtml(),
+                    Placeholder.PAGE_BREAK_AFTER to if (index == sorted.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER,
+                    Placeholder.DIRECTION to config.direction(),
+                    Placeholder.HIDDEN to if (config.isLocalizedTitleSame()) "hidden" else ""
+                )
+            )
+        )
     }
 }
 
-class ArticleContentRenderer(
-    private val configs: List<SinglePassportMeta>,
-    private val contentMap: Map<String, String>,
-    private val articleTemplate: String,
-) {
-    fun render(): String = buildString {
-        val sorted = configs.sortedBy { it.languageCode }
-        sorted.forEachIndexed { index, config ->
-            appendLine(
-                articleTemplate.toFilledHtml(
-                    mapOf(
-                        Placeholder.LANGUAGE_CODE to config.languageCode,
-                        Placeholder.LOCALIZED_TITLE to config.localizedTitle,
-                        Placeholder.TITLE to config.title,
-                        Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
-                        Placeholder.BODY to contentMap.getValue(config.markdownFilename).toHtml(),
-                        Placeholder.PAGE_BREAK_AFTER to if (index == sorted.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER,
-                        Placeholder.DIRECTION to config.direction,
-                        Placeholder.HIDDEN to if (config.isLocalizedTitleSame) "hidden" else ""
-                    )
+fun renderIndexItems(configs: List<SinglePassportMeta>, indexTemplate: String): String = buildString {
+    configs.sortedBy { it.languageCode }.forEach { config ->
+        appendLine(
+            indexTemplate.toFilledHtml(
+                mapOf(
+                    Placeholder.LANGUAGE_CODE to config.languageCode,
+                    Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
+                    Placeholder.LOCALIZED_TITLE to config.localizedTitle,
+                    Placeholder.TITLE to config.title,
+                    Placeholder.HIDDEN to if (config.isLocalizedTitleSame()) "hidden" else ""
                 )
             )
-        }
-    }
-}
-
-class IndexContentRenderer(
-    private val configs: List<SinglePassportMeta>,
-    private val indexTemplate: String,
-) {
-    fun render(): String = buildString {
-        configs.sortedBy { it.languageCode }.forEach { config ->
-            appendLine(
-                indexTemplate.toFilledHtml(
-                    mapOf(
-                        Placeholder.LANGUAGE_CODE to config.languageCode,
-                        Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
-                        Placeholder.LOCALIZED_TITLE to config.localizedTitle,
-                        Placeholder.TITLE to config.title,
-                        Placeholder.HIDDEN to if (config.isLocalizedTitleSame) "hidden" else ""
-                    )
-                )
-            )
-        }
+        )
     }
 }
 
@@ -110,25 +100,25 @@ data class SinglePdfDocument(
         get() = mapOf(metaInfo.font.familyName to documentResource.fontMap.getValue(metaInfo.font.familyName))
 
     override val pdfFileName: String
-        get() = metaInfo.pdfFileName
+        get() = metaInfo.pdfFileName()
 }
 
 data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {
     fun languageFontStyles(): String =
-        FontStyleRenderer(documentResource.passportConfigs).render()
+        renderFontStyles(documentResource.passportConfigs)
 
     fun articleContents(): String =
-        ArticleContentRenderer(
+        renderArticlesContents(
             configs = documentResource.passportConfigs,
             contentMap = documentResource.contentMap,
             articleTemplate = documentResource.articleTemplate
-        ).render()
+        )
 
     fun indexItemsContent(): String =
-        IndexContentRenderer(
+        renderIndexItems(
             configs = documentResource.passportConfigs,
             indexTemplate = documentResource.indexTemplate
-        ).render()
+        )
 
     override val filledHtml: String
         get() = documentResource.htmlTemplate.toFilledHtml(toHtmlReplacements())

@@ -13,8 +13,9 @@ class FontMetaTest : StringSpec({
     }
 
     "should return language code in toCssClass for non-default FontMeta" {
-        val customFont = FontMeta(fileName = "NotoNaskhArabic-Regular.ttf", familyName = "Noto Naskh Arabic", direction = "rtl")
-        customFont.toCssClass("ar") shouldBe "ar"
+        with(FontMeta(fileName = "NotoNaskhArabic-Regular.ttf", familyName = "Noto Naskh Arabic", direction = "rtl")) {
+            toCssClass("ar") shouldBe "ar"
+        }
     }
 
     "should return 'left' when direction is ltr in toTextAlign" {
@@ -27,9 +28,7 @@ class FontMetaTest : StringSpec({
 
     "should serialize and deserialize FontMeta" {
         val font = FontMeta(
-            familyName = "Noto Sans",
-            fileName = "NotoSans-Regular.ttf",
-            direction = "ltr"
+            familyName = "Noto Sans", fileName = "NotoSans-Regular.ttf", direction = "ltr"
         )
 
         with(Json.encodeToString(font)) {

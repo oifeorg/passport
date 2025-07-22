@@ -6,14 +6,6 @@ import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 import java.time.Year
 
-
-fun PassportMeta.toReplacements(): Map<String, String> = mapOf(
-    Placeholder.LANG to languageCode,
-    Placeholder.HEADER_TITLE to if (isLocalizedTitleSame()) title else "$localizedTitle - $title",
-    Placeholder.FONT_FAMILY to font.familyName,
-    Placeholder.DIRECTION to direction()
-)
-
 fun FontMeta.toCssClass(languageCode: String): String = if (this == FontMeta()) "default" else languageCode
 
 fun FontMeta.toTextAlign(): String = if (this.direction == "ltr") "left" else "right"
@@ -35,8 +27,12 @@ private fun flavor() = GFMFlavourDescriptor()
 private fun SinglePassport.toPlaceholderMap(meta: PassportMeta): Map<String, String> = mapOf(
     Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).renderHtml(),
     Placeholder.VERSION to version,
-    Placeholder.YEAR to Year.now().toString()
-) + meta.toReplacements()
+    Placeholder.YEAR to Year.now().toString(),
+    Placeholder.LANG to meta.languageCode,
+    Placeholder.HEADER_TITLE to if (meta.isLocalizedTitleSame()) meta.title else "${meta.localizedTitle} - ${meta.title}",
+    Placeholder.FONT_FAMILY to meta.font.familyName,
+    Placeholder.DIRECTION to meta.direction()
+)
 
 private fun CombinedPassport.toPlaceholderMap(): Map<String, String> = mapOf(
     Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(

@@ -19,7 +19,7 @@ fun FontMeta.toCssClass(languageCode: String): String = if (this == FontMeta()) 
 fun FontMeta.toTextAlign(): String = if (this.direction == "ltr") "left" else "right"
 
 
-fun String.toHtml(): String {
+fun String.renderHtml(): String {
     val flavour = flavor()
     val tree = MarkdownParser(flavour).parse(IElementType("ROOT"), this)
     return HtmlGenerator(this, tree, flavour).generateHtml()
@@ -33,7 +33,7 @@ fun String.replacePlaceholders(replacements: Map<String, String>): String =
 private fun flavor() = GFMFlavourDescriptor()
 
 private fun SinglePassport.toPlaceholderMap(meta: PassportMeta): Map<String, String> = mapOf(
-    Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
+    Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).renderHtml(),
     Placeholder.VERSION to version,
     Placeholder.YEAR to Year.now().toString()
 ) + meta.toReplacements()
@@ -55,11 +55,11 @@ private fun CombinedPassport.toPlaceholderMap(): Map<String, String> = mapOf(
     Placeholder.LANG to "en"
 )
 
-fun SinglePassport.toHtml(meta: PassportMeta): String = htmlTemplate.replacePlaceholders(
+fun SinglePassport.renderHtml(meta: PassportMeta): String = htmlTemplate.replacePlaceholders(
     toPlaceholderMap(meta)
 )
 
-fun CombinedPassport.toHtml(): String = htmlTemplate.replacePlaceholders(
+fun CombinedPassport.renderHtml(): String = htmlTemplate.replacePlaceholders(
     toPlaceholderMap()
 )
 
@@ -92,7 +92,7 @@ fun renderArticleSections(
                     Placeholder.LOCALIZED_TITLE to config.localizedTitle,
                     Placeholder.TITLE to config.title,
                     Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
-                    Placeholder.BODY to contentMap.getValue(config.markdownFilename).toHtml(),
+                    Placeholder.BODY to contentMap.getValue(config.markdownFilename).renderHtml(),
                     Placeholder.PAGE_BREAK_AFTER to if (index == sorted.lastIndex) "" else Placeholder.PAGE_BREAK_AFTER,
                     Placeholder.DIRECTION to config.direction(),
                     Placeholder.HIDDEN to if (config.isLocalizedTitleSame()) "hidden" else ""

@@ -23,13 +23,13 @@ data class PdfDocumentInput(
 )
 
 fun SinglePassport.toPdfInput(meta: PassportMeta) = PdfDocumentInput(
-    filledHtml = toHtml(meta),
+    filledHtml = renderHtml(meta),
     fontMap = fontMap,
     pdfFileName = meta.pdfFileName()
 )
 
 fun CombinedPassport.toPdfInput() = PdfDocumentInput(
-    filledHtml = toHtml(),
+    filledHtml = renderHtml(),
     fontMap = fontMap,
     pdfFileName = Pdf.TEMP_COMBINED
 )

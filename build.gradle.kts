@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.janino)
 
     testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }
 
 tasks.test {

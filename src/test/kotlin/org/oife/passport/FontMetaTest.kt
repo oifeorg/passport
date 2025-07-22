@@ -2,6 +2,7 @@ package org.oife.passport
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.json.Json
 
 class FontMetaTest : StringSpec({
 
@@ -22,5 +23,17 @@ class FontMetaTest : StringSpec({
 
     "should return 'right' when direction is rtl in toTextAlign" {
         FontMeta(direction = "rtl").toTextAlign() shouldBe "right"
+    }
+
+    "should serialize and deserialize FontMeta" {
+        val font = FontMeta(
+            familyName = "Noto Sans",
+            fileName = "NotoSans-Regular.ttf",
+            direction = "ltr"
+        )
+
+        with(Json.encodeToString(font)) {
+            Json.decodeFromString<FontMeta>(this).shouldBe(font)
+        }
     }
 })

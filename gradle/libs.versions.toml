@@ -8,6 +8,7 @@ janino-version = "3.1.12"
 kotest-version = "5.9.1"
 coroutines-version = "1.10.2"
 kotlinx-serialization-version = "1.9.0"
+mockk-version = "1.14.5"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version"}
@@ -19,7 +20,6 @@ kotlinx-coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-version" }
 openhtmltopdf-pdfbox = { module = "io.github.openhtmltopdf:openhtmltopdf-pdfbox", version.ref = "openhtmltopdf-version" }
 openhtmltopdf-slf4j = { module = "io.github.openhtmltopdf:openhtmltopdf-slf4j", version.ref = "openhtmltopdf-version" }
-openhtmltopdf-svg = { module = "io.github.openhtmltopdf:openhtmltopdf-svg-support", version.ref = "openhtmltopdf-version" }
 markdown = { module = "org.jetbrains:markdown-jvm", version.ref = "jetbrains-markdown-version" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-version" }
@@ -27,3 +27,5 @@ logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", ve
 janino = { module = "org.codehaus.janino:janino", version.ref = "janino-version" }
 
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest-version" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk-version" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-version" }

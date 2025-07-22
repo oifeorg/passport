@@ -15,6 +15,7 @@ object Messages {
     val ResourceNotFound = StatusMessage("❌ Resource not found")
     val CombinedPdfGenerated = StatusMessage("✅ Combined PDF created")
     val PdfGenerated = StatusMessage("✅ PDF created")
+    val PdfDeleted = StatusMessage("✅ PDF deleted")
     val UnexpectedError = StatusMessage("❌ Unexpected error")
 }
 
@@ -43,4 +44,11 @@ object Template {
     const val PASSPORT_INDEX_ITEM = "/templates/passport-index-item.html"
     const val PASSPORT_ARTICLE_ITEM = "/templates/passport-article-item.html"
     const val PASSPORT_COMBINED = "/templates/passport-combined.html"
+}
+
+object Pdf {
+    const val TITLE_COVER = "title.pdf"
+    const val TITLE_BACK = "back.pdf"
+    const val ALL_PASSPORT_COMBINED = "all-passport-combined.pdf"
+    const val TEMP_COMBINED = "tmp-passport-combined.pdf"
 }

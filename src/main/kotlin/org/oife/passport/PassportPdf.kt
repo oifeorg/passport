@@ -30,7 +30,6 @@ fun CombinedPassport.toPdfInput() = PdfDocumentInput(
     filledHtml = renderHtml(), fontMap = fontMap, pdfFileName = Pdf.TEMP_COMBINED
 )
 
-
 suspend fun PdfDocumentInput.renderToPdf(
     outputPath: Path = outputDir.resolve(pdfFileName),
 ): Path = withContext(Dispatchers.IO) {
@@ -54,8 +53,7 @@ suspend fun CombinedPassport.generate(): Path {
                 loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
                 combined,
                 loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
-            ),
-            outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
+            ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
         ).also {
             logger.info(Messages.PdfGenerated(it.pathString))
         }

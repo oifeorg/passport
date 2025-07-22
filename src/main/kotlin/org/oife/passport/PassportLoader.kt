@@ -89,7 +89,7 @@ suspend fun loadResourceTempFile(path: String): Path =
         tempFile
     }
 
-suspend fun loadSinglePassport(htmlTemplatePath: String, version: String): SinglePassport = coroutineScope {
+suspend fun loadSinglePassport(version: String, htmlTemplatePath: String = Template.PASSPORT_SINGLE): SinglePassport = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
     val fontMapDeferred = async { loadFontSuppliers(passportConfigs) }

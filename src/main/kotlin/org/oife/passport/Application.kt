@@ -7,7 +7,7 @@ suspend fun main(args: Array<String>) {
     val version = args.firstOrNull() ?: "v1.0.0"
 
     runCatching {
-        loadSinglePassport(Template.PASSPORT_SINGLE, version).apply {
+        loadSinglePassport(version).apply {
             generateAll()
             toCombinedPassport().generate()
         }

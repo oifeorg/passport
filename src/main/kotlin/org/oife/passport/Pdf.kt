@@ -40,27 +40,26 @@ suspend fun renderToPdf(
 }
 
 suspend fun CombinedPassport.generate(): Path {
-    val tempCombinedPath =
-        renderToPdf(this.toRenderable()).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
+    val combined = renderToPdf(toRenderable()).also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
+
     val merged = mergePdfFilesToFile(
         parts = listOf(
             loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
-            tempCombinedPath,
-            loadResourceTempFile("/covers/${Pdf.TITLE_BACK}"),
+            combined,
+            loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
         ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
     ).also { logger.info(Messages.PdfGenerated(it.pathString)) }
-    Files.delete(tempCombinedPath).also { logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED)) }
+
+    Files.delete(combined)
+    logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
+
     return merged
 }
 
-suspend fun SinglePassport.generateAll(
-) {
-    this.passportConfigs.forEach {
-        renderToPdf(this.toRenderable(it)).also { path ->
-            logger.info(
-                Messages.PdfGenerated(path.pathString)
-            )
-        }
+suspend fun SinglePassport.generateAll() {
+    passportConfigs.forEach { meta ->
+        val path = renderToPdf(toRenderable(meta))
+        logger.info(Messages.PdfGenerated(path.pathString))
     }
 }
 
@@ -68,11 +67,9 @@ suspend fun mergePdfFilesToFile(
     parts: List<Path>,
     outputPath: Path,
 ): Path = withContext(Dispatchers.IO) {
-    val merger = PDFMergerUtility().apply {
+    PDFMergerUtility().apply {
         destinationFileName = outputPath.toString()
         parts.forEach { addSource(it.toFile()) }
-    }
-
-    merger.mergeDocuments(null)
+    }.mergeDocuments(null)
     outputPath
 }

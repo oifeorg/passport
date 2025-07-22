@@ -40,7 +40,7 @@ written in Markdown and stored in the [data](src/main/resources/data) folder.
 ## 🚀 Planned Features
 
 - [ ] Make the combined passport more beautiful with creating new front and back cover.
-- [ ] Page number in the index. The question is, if that is really needed. If yes, then we need to load all the
+- [ ] Page number in the index. The question is, if that is really needed? If yes, then we need to load all the
   passports in memory, find out the total page number of each language and implement calculated paging for the index.
 
 ## 🧪 Requirements

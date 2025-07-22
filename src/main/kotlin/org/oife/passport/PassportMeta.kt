@@ -27,3 +27,6 @@ fun PassportMeta.direction(): String =
 
 fun PassportMeta.isLocalizedTitleSame(): Boolean =
     title == localizedTitle
+
+fun PassportMeta.headerTitle(): String =
+    if (isLocalizedTitleSame()) title else "$localizedTitle - $title"

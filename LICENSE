@@ -1,9 +1,13 @@
-# Dual License Notice
+Dual License Notice
+====================
 
 This repository is dual-licensed:
 
-- Source code (`*.kt`, `.html`, etc.): Licensed under the Apache License, Version 2.0
-- Markdown content files (`src/main/resources/data/*.md`): © 2025 OIFE. All rights reserved. Not licensed for reuse.
+- Source code (`*.kt`, `*.html`, etc.): Licensed under the Apache License, Version 2.0 (see below).
+- Markdown content files (`src/main/resources/data/*.md`), cover PDF files (`covers/*.pdf`), and generated passport PDF files:
+  © 2025 OIFE. All rights reserved. Not licensed under Apache 2.0.
+
+You may not copy, modify, or redistribute these non-code files without prior written permission from OIFE.
 
 ------------------------------------------------------------------------
 

@@ -57,3 +57,14 @@ To generate the PDFs, run:
 # or with a version number 
 ./gradlew run --args=v1.10.0
 ```
+
+## 📝 License
+
+This repository is **dual-licensed**:
+
+- **Source code** (`*.kt`, `*.html`, etc.): Licensed under the [Apache License 2.0](LICENSE)
+- **Markdown content and cover PDF files** (`src/main/resources/data/` and subfolders): © 2025 OIFE. All rights reserved
+- **Generated passport PDF files** (available via GitHub Releases or published platforms): © 2025 OIFE. All rights reserved
+
+The Markdown content, cover PDFs, and generated passport PDFs are **not open source**.  
+They may **not** be copied, modified, redistributed, or reused without **explicit written permission** from [OIFE](https://oife.org).

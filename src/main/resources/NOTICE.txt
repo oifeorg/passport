@@ -1,0 +1,12 @@
+Copyright © 2025 Osteogenesis Imperfecta Federation Europe (OIFE).
+All rights reserved.
+
+This folder (`src/main/resources/`) and its subfolders contain the following protected materials:
+
+- Markdown files (`*.md`)
+- Cover PDF files (`covers/*.pdf`)
+- Any other supporting assets intended for document generation
+
+These files are the intellectual property of OIFE and are **not licensed** under the Apache License included with this repository.
+
+You may **not copy, modify, distribute, or reuse** any of these files, in whole or in part, without **prior written permission** from OIFE.

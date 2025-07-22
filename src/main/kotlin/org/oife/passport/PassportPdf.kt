@@ -31,6 +31,23 @@ suspend fun renderToPdf(
     outputPath
 }
 
+suspend fun renderToPdf(
+    document: RenderableData,
+    outputPath: Path = outputDir.resolve(document.pdfFileName),
+): Path = withContext(Dispatchers.IO) {
+    Files.newOutputStream(outputPath).use { out ->
+        PdfRendererBuilder().apply {
+            document.fontMap.forEach { (familyName, font) ->
+                useFont(font, familyName)
+            }
+            withHtmlContent(document.filledHtml, null)
+            toStream(out)
+        }.run()
+    }
+
+    outputPath
+}
+
 suspend fun generateCombinedPassport(combinedDocumentResource: CombinedDocumentResource): Path {
     val combinedPdfDocument = CombinedPdfDocument(combinedDocumentResource)
     val tempCombinedPath =
@@ -60,6 +77,18 @@ suspend fun generateSinglePassports(
         .forEach { doc ->
             renderToPdf(doc).also { logger.info(Messages.PdfGenerated(it.pathString)) }
         }
+}
+
+suspend fun generateSinglePassports2(
+    documentResource: DocumentResource
+) {
+    documentResource.passportConfigs.forEach {
+        renderToPdf(documentResource.toRenderable(it)).also { path ->
+            logger.info(
+                Messages.PdfGenerated(path.pathString)
+            )
+        }
+    }
 }
 
 suspend fun mergePdfFilesToFile(

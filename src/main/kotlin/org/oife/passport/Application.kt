@@ -8,7 +8,7 @@ suspend fun main(args: Array<String>) {
 
     runCatching {
         val singleDocumentResource = buildDocumentResource(Template.PASSPORT_SINGLE, version)
-        generateSinglePassports(singleDocumentResource)
+        generateSinglePassports2(singleDocumentResource)
 
         generateCombinedPassport(getCombinedDocumentResource(singleDocumentResource))
     }.onFailure {

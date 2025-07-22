@@ -8,6 +8,7 @@ import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 import java.io.InputStream
 import java.time.Year
+import kotlin.collections.Map
 
 
 fun String.toHtml(): String {
@@ -102,6 +103,16 @@ data class SinglePdfDocument(
     override val pdfFileName: String
         get() = metaInfo.pdfFileName()
 }
+
+fun DocumentResource.toRenderable(meta: SinglePassportMeta): RenderableData = RenderableData(
+    filledHtml = htmlTemplate.toFilledHtml( mapOf(
+        Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
+        Placeholder.VERSION to version,
+        Placeholder.YEAR to Year.now().toString()
+    ) + meta.toHtmlReplacements()),
+    fontMap = fontMap,
+    pdfFileName = meta.pdfFileName()
+)
 
 data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {
     fun languageFontStyles(): String =

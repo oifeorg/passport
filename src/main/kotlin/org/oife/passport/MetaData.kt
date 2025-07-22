@@ -1,6 +1,8 @@
 package org.oife.passport
 
+import com.openhtmltopdf.extend.FSSupplier
 import kotlinx.serialization.Serializable
+import java.io.InputStream
 
 
 @Serializable
@@ -17,6 +19,12 @@ data class FontMeta(
     val fileName: String = "NotoSans-Regular.ttf",
     val familyName: String = "Noto Sans",
     val direction: String = "ltr",
+)
+
+data class RenderableData(
+    val filledHtml: String,
+    val fontMap: Map<String, FSSupplier<InputStream>>,
+    val pdfFileName: String,
 )
 
 fun SinglePassportMeta.pdfFileName(): String =

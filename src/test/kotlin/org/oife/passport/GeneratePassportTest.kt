@@ -44,7 +44,7 @@ class GeneratePassportTest : StringSpec({
 
         val outputPath = createTempFile("test-passport-", ".pdf").apply { toFile().deleteOnExit() }
 
-        with(renderToPdf(singlePassport.toRenderable(meta), outputPath)) {
+        with(singlePassport.toRenderable(meta).renderToPdf(outputPath)) {
             shouldExist()
             fileSize() shouldBeGreaterThan 100L
             extension shouldBe "pdf"

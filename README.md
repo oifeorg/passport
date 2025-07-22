@@ -58,6 +58,19 @@ To generate the PDFs, run:
 ./gradlew run --args=v1.10.0
 ```
 
+## 🧩 Libraries and Dependencies
+
+This project uses a set of publicly available libraries, mostly open source, from trusted projects in the Kotlin and Java ecosystems, including:
+
+- JetBrains Markdown – for converting Markdown to HTML
+- OpenHTMLtoPDF – for rendering HTML to PDF
+- kotlinx.coroutines and kotlinx.serialization – for asynchronous programming and structured data
+- Kotest and MockK – for testing
+- Logback – for logging
+
+These libraries are used in accordance with their respective licenses (Apache 2.0, MIT, BSD, MPL, LGPL, or EPL).  
+See the [LICENSE](LICENSE) and project dependencies for more information.
+
 ## 📝 License
 
 This repository is **dual-licensed**:

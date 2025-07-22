@@ -104,14 +104,39 @@ data class SinglePdfDocument(
         get() = metaInfo.pdfFileName()
 }
 
-fun DocumentResource.toRenderable(meta: SinglePassportMeta): RenderableData = RenderableData(
-    filledHtml = htmlTemplate.toFilledHtml( mapOf(
-        Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
-        Placeholder.VERSION to version,
-        Placeholder.YEAR to Year.now().toString()
-    ) + meta.toHtmlReplacements()),
+fun DocumentResource.toRenderable(meta: SinglePassportMeta) = RenderableData(
+    filledHtml = htmlTemplate.toFilledHtml(
+        mapOf(
+            Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
+            Placeholder.VERSION to version,
+            Placeholder.YEAR to Year.now().toString()
+        ) + meta.toHtmlReplacements()
+    ),
     fontMap = fontMap,
     pdfFileName = meta.pdfFileName()
+)
+
+fun CombinedDocumentResource.toRenderable() = RenderableData(
+    filledHtml = htmlTemplate.toFilledHtml(
+        mapOf(
+            Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(
+                configs = passportConfigs,
+                indexTemplate = indexTemplate
+            ),
+            Placeholder.PASSPORT_ARTICLE_ITEMS to renderArticlesContents(
+                configs = passportConfigs,
+                contentMap = contentMap,
+                articleTemplate = articleTemplate
+            ),
+            Placeholder.LANGUAGE_FONT_STYLES to renderFontStyles(passportConfigs),
+            Placeholder.VERSION to version,
+            Placeholder.YEAR to Year.now().toString(),
+            Placeholder.HEADER_TITLE to "OIFE Passport combined",
+            Placeholder.LANG to "en"
+        )
+    ),
+    fontMap = fontMap,
+    pdfFileName = Pdf.TEMP_COMBINED
 )
 
 data class CombinedPdfDocument(val documentResource: CombinedDocumentResource) : RenderableDocument {

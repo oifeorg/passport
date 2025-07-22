@@ -29,7 +29,7 @@ class RenderToPdfTest : StringSpec({
 
         val outputPath = createTempFile("test-passport-", ".pdf").apply { toFile().deleteOnExit() }
 
-        with(renderToPdf(document, outputPath)) {
+        with(renderToPdf(document.documentResource.toRenderable(document.metaInfo), outputPath)) {
             shouldExist()
             fileSize() shouldBeGreaterThan 100L
             extension shouldBe "pdf"

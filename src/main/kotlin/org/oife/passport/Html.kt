@@ -97,7 +97,7 @@ data class SinglePdfDocument(
     }
 
     override val fontMap: Map<String, FSSupplier<InputStream>>
-        get() = mapOf(metaInfo.font.familyName to documentResource.fontMap.getValue(metaInfo.font.familyName))
+        get() = documentResource.fontMap
 
     override val pdfFileName: String
         get() = metaInfo.pdfFileName()

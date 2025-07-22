@@ -76,7 +76,7 @@ fun renderIndexItems(configs: List<SinglePassportMeta>, indexTemplate: String): 
     }
 }
 
-fun DocumentResource.toRenderable(meta: SinglePassportMeta) = RenderableData(
+fun DocumentResource.toRenderable(meta: SinglePassportMeta) = PdfDocumentInput(
     filledHtml = htmlTemplate.toFilledHtml(
         mapOf(
             Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
@@ -88,7 +88,7 @@ fun DocumentResource.toRenderable(meta: SinglePassportMeta) = RenderableData(
     pdfFileName = meta.pdfFileName()
 )
 
-fun CombinedDocumentResource.toRenderable() = RenderableData(
+fun CombinedDocumentResource.toRenderable() = PdfDocumentInput(
     filledHtml = htmlTemplate.toFilledHtml(
         mapOf(
             Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(

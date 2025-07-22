@@ -21,7 +21,7 @@ data class FontMeta(
     val direction: String = "ltr",
 )
 
-data class RenderableData(
+data class PdfDocumentInput(
     val filledHtml: String,
     val fontMap: Map<String, FSSupplier<InputStream>>,
     val pdfFileName: String,

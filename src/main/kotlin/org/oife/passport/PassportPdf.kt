@@ -15,7 +15,7 @@ val outputDir: Path = Paths.get(OUTPUT_DIR_NAME).also { Files.createDirectories(
 private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
 
 suspend fun renderToPdf(
-    document: RenderableData,
+    document: PdfDocumentInput,
     outputPath: Path = outputDir.resolve(document.pdfFileName),
 ): Path = withContext(Dispatchers.IO) {
     Files.newOutputStream(outputPath).use { out ->

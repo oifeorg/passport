@@ -6,17 +6,17 @@ import io.kotest.matchers.shouldBe
 class FromMarkdownToHtmlTest : StringSpec({
 
     "converts markdown header to h1" {
-        "# Hello".toHtml()
+        "# Hello".renderHtml()
             .trim() shouldBe "<h1>Hello</h1>"
     }
 
     "converts bold markdown to strong tag" {
-        "**bold**".toHtml()
+        "**bold**".renderHtml()
             .trim() shouldBe "<p><strong>bold</strong></p>"
     }
 
     "converts unordered list to HTML list" {
-        with("- One\n- Two".toHtml()) {
+        with("- One\n- Two".renderHtml()) {
             contains("<ul>") shouldBe true
             contains("<li>One</li>") shouldBe true
             contains("<li>Two</li>") shouldBe true

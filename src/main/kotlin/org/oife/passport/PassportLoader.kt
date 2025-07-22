@@ -14,39 +14,25 @@ import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger("ResourceLoader")
 
-data class DocumentResource(
+data class SinglePassport(
     val htmlTemplate: String,
-    val passportConfigs: List<SinglePassportMeta>,
+    val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
     val version: String
 )
 
-data class CombinedDocumentResource(
+data class CombinedPassport(
     val indexTemplate: String,
     val articleTemplate: String,
     val htmlTemplate: String,
-    val passportConfigs: List<SinglePassportMeta>,
+    val passportConfigs: List<PassportMeta>,
     val contentMap: Map<String, String>,
     val fontMap: Map<String, FSSupplier<InputStream>>,
     val version: String
 )
 
-fun DocumentResource.toCombined(
-    indexTemplate: String,
-    articleTemplate: String,
-    htmlTemplate: String,
-): CombinedDocumentResource = CombinedDocumentResource(
-    indexTemplate = indexTemplate,
-    articleTemplate = articleTemplate,
-    htmlTemplate = htmlTemplate,
-    passportConfigs = this.passportConfigs,
-    contentMap = this.contentMap,
-    fontMap = this.fontMap,
-    version = this.version
-)
-
-suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
+suspend fun loadFontSuppliers(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
         .distinctBy { it.familyName }
@@ -62,13 +48,13 @@ suspend fun fontMap(passports: List<SinglePassportMeta>): Map<String, FSSupplier
 }
 
 private val jsonFormat = Json { ignoreUnknownKeys = true }
-suspend fun loadPassportConfigs(): List<SinglePassportMeta> {
+suspend fun loadPassportConfigs(): List<PassportMeta> {
     val json = loadResourceContent("/passport-config.json")
     return jsonFormat
         .decodeFromString(json)
 }
 
-suspend fun passportContentMap(passports: List<SinglePassportMeta>): Map<String, String> = coroutineScope {
+suspend fun loadPassportContents(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
     passports.map { metadata ->
         async {
             val path = "/data/${metadata.markdownFilename}"
@@ -103,12 +89,12 @@ suspend fun loadResourceTempFile(path: String): Path =
         tempFile
     }
 
-suspend fun getDocumentResource(htmlTemplatePath: String, version: String): DocumentResource = coroutineScope {
+suspend fun loadSinglePassport(version: String, htmlTemplatePath: String = Template.PASSPORT_SINGLE): SinglePassport = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
-    val fontMapDeferred = async { fontMap(passportConfigs) }
-    val contentMapDeferred = async { passportContentMap(passportConfigs) }
-    DocumentResource(
+    val fontMapDeferred = async { loadFontSuppliers(passportConfigs) }
+    val contentMapDeferred = async { loadPassportContents(passportConfigs) }
+    SinglePassport(
         version = version,
         htmlTemplate = htmlTemplateDeferred.await(),
         passportConfigs = passportConfigs,
@@ -117,16 +103,18 @@ suspend fun getDocumentResource(htmlTemplatePath: String, version: String): Docu
     )
 }
 
-suspend fun getCombinedDocumentResource(
-    singleDocumentResource: DocumentResource
-): CombinedDocumentResource = coroutineScope {
+suspend fun SinglePassport.toCombinedPassport(): CombinedPassport = coroutineScope {
     val indexDeferred = async { loadResourceContent(Template.PASSPORT_INDEX_ITEM) }
     val articleDeferred = async { loadResourceContent(Template.PASSPORT_ARTICLE_ITEM) }
     val htmlDeferred = async { loadResourceContent(Template.PASSPORT_COMBINED) }
 
-    singleDocumentResource.toCombined(
+    CombinedPassport(
         indexTemplate = indexDeferred.await(),
         articleTemplate = articleDeferred.await(),
-        htmlTemplate = htmlDeferred.await()
+        htmlTemplate = htmlDeferred.await(),
+        passportConfigs = passportConfigs,
+        contentMap = contentMap,
+        fontMap = fontMap,
+        version = version
     )
 }

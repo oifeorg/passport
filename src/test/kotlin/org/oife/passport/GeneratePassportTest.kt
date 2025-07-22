@@ -1,32 +1,18 @@
 package org.oife.passport
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.file.shouldExist
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.unmockkAll
+import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.matchers.paths.shouldExist
+import io.kotest.matchers.shouldBe
 import kotlin.io.path.createTempFile
+import kotlin.io.path.extension
+import kotlin.io.path.fileSize
 
 class GeneratePassportTest : StringSpec({
 
-    val fakeOutputPath = createTempFile("rendered", ".pdf").apply {
-        toFile().writeBytes(dummyPdfContent())
-        toFile().deleteOnExit()
-    }
-
-    beforeTest {
-        mockkStatic(::renderToPdf)
-        coEvery { renderToPdf(any(), any()) } returns fakeOutputPath
-    }
-
-    afterTest {
-        unmockkAll()
-    }
-
     "should load covers from resources and produce final combined file" {
-        val combinedResource = CombinedDocumentResource(
+        val combinedPassport = CombinedPassport(
             passportConfigs = emptyList(),
             articleTemplate = "<hello></hello>",
             contentMap = emptyMap(),
@@ -36,21 +22,32 @@ class GeneratePassportTest : StringSpec({
             version = ""
         )
 
-        generateCombinedPassport(combinedResource).toFile().apply {
+        combinedPassport.generate().toFile().apply {
             shouldExist()
             length() shouldBeGreaterThan 500 // small real PDFs can be very small
         }
     }
 
-    "should generate a PDF for each passport config" {
-        val documentResource = DocumentResource(
-            htmlTemplate = "<hello></hello>",
-            passportConfigs = listOf(mockk<SinglePassportMeta>(relaxed = true)),
-            contentMap = emptyMap(),
-            fontMap = emptyMap(),
-            version = ""
+    "should render a valid PDF file for a document" {
+        val defaultFont = FontMeta()
+        val meta = PassportMeta(
+            markdownFilename = "test.md",
+            languageCode = "en",
+            title = "Test Document"
+        )
+        val singlePassport = SinglePassport(
+            "<html><body>{{passport-content}}</body></html>", emptyList(),
+            contentMap = mapOf("test.md" to "# Hello"),
+            fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
+            version = "v1.0.0",
         )
 
-        generateSinglePassports(documentResource)
+        val outputPath = createTempFile("test-passport-", ".pdf").apply { toFile().deleteOnExit() }
+
+        with(singlePassport.toPdfInput(meta).renderToPdf(outputPath)) {
+            shouldExist()
+            fileSize() shouldBeGreaterThan 100L
+            extension shouldBe "pdf"
+        }
     }
 })

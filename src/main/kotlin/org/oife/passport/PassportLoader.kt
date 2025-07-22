@@ -32,20 +32,6 @@ data class CombinedPassport(
     val version: String
 )
 
-fun SinglePassport.toCombined(
-    indexTemplate: String,
-    articleTemplate: String,
-    htmlTemplate: String,
-): CombinedPassport = CombinedPassport(
-    indexTemplate = indexTemplate,
-    articleTemplate = articleTemplate,
-    htmlTemplate = htmlTemplate,
-    passportConfigs = this.passportConfigs,
-    contentMap = this.contentMap,
-    fontMap = this.fontMap,
-    version = this.version
-)
-
 suspend fun fontMap(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
@@ -117,16 +103,18 @@ suspend fun loadSinglePassport(htmlTemplatePath: String, version: String): Singl
     )
 }
 
-suspend fun loadCombinedPassport(
-    singleDocumentResource: SinglePassport
-): CombinedPassport = coroutineScope {
+suspend fun SinglePassport.toCombinedPassport(): CombinedPassport = coroutineScope {
     val indexDeferred = async { loadResourceContent(Template.PASSPORT_INDEX_ITEM) }
     val articleDeferred = async { loadResourceContent(Template.PASSPORT_ARTICLE_ITEM) }
     val htmlDeferred = async { loadResourceContent(Template.PASSPORT_COMBINED) }
 
-    singleDocumentResource.toCombined(
+    CombinedPassport(
         indexTemplate = indexDeferred.await(),
         articleTemplate = articleDeferred.await(),
-        htmlTemplate = htmlDeferred.await()
+        htmlTemplate = htmlDeferred.await(),
+        passportConfigs = passportConfigs,
+        contentMap = contentMap,
+        fontMap = fontMap,
+        version = version
     )
 }

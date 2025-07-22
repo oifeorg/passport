@@ -18,6 +18,6 @@ class LoadResourcesTest : StringSpec({
     }
 
     "should load resources for combined passports without failing" {
-        loadCombinedPassport(loadSinglePassport(Template.PASSPORT_SINGLE, "v.1.0.0"))
+        loadSinglePassport(Template.PASSPORT_SINGLE, "v.1.0.0").toCombinedPassport()
     }
 })

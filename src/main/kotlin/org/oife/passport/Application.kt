@@ -10,7 +10,7 @@ suspend fun main(args: Array<String>) {
         val singlePassport = loadSinglePassport(Template.PASSPORT_SINGLE, version)
         singlePassport.generateAll()
 
-        val combinedPassport = loadCombinedPassport(singlePassport)
+        val combinedPassport = singlePassport.toCombinedPassport()
         combinedPassport.generate()
     }.onFailure {
         logger.error(Messages.UnexpectedError.toString(), it)

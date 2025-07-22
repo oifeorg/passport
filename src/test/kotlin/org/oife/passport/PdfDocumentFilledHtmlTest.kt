@@ -37,15 +37,13 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in combined passport HTML template" {
         val defaultFont = FontMeta()
-        val combinedPassport = loadCombinedPassport(
-            SinglePassport(
-                loadResourceContent(Template.PASSPORT_COMBINED),
-                listOf(meta),
-                contentMap = mapOf("test.md" to "# Hello"),
-                fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
-                version = "v1.0.0",
-            )
-        )
+        val combinedPassport = SinglePassport(
+            loadResourceContent(Template.PASSPORT_COMBINED),
+            listOf(meta),
+            contentMap = mapOf("test.md" to "# Hello"),
+            fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
+            version = "v1.0.0",
+        ).toCombinedPassport()
 
         with(combinedPassport.toRenderable().filledHtml) {
             shouldContain("lang=\"en\"")

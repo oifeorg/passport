@@ -22,6 +22,19 @@ data class PdfDocumentInput(
     val pdfFileName: String,
 )
 
+fun SinglePassport.toPdfInput(meta: PassportMeta) = PdfDocumentInput(
+    filledHtml = toHtml(meta),
+    fontMap = fontMap,
+    pdfFileName = meta.pdfFileName()
+)
+
+fun CombinedPassport.toPdfInput() = PdfDocumentInput(
+    filledHtml = toHtml(),
+    fontMap = fontMap,
+    pdfFileName = Pdf.TEMP_COMBINED
+)
+
+
 suspend fun PdfDocumentInput.renderToPdf(
     outputPath: Path = outputDir.resolve(pdfFileName)
 ): Path = withContext(Dispatchers.IO) {
@@ -38,7 +51,7 @@ suspend fun PdfDocumentInput.renderToPdf(
 }
 
 suspend fun CombinedPassport.generate(): Path {
-    val combined = toRenderable().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
+    val combined = toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 
     val merged = mergePdfFilesToFile(
         parts = listOf(
@@ -56,7 +69,7 @@ suspend fun CombinedPassport.generate(): Path {
 
 suspend fun SinglePassport.generateAll() {
     passportConfigs.forEach { meta ->
-        val path = toRenderable(meta).renderToPdf()
+        val path = toPdfInput(meta).renderToPdf()
         logger.info(Messages.PdfGenerated(path.pathString))
     }
 }

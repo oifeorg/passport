@@ -23,7 +23,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             version = "v1.0.0",
         )
 
-        with(singlePassport.toRenderable(meta).filledHtml) {
+        with(singlePassport.toPdfInput(meta).filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>My test - My Passport</title>")
@@ -45,7 +45,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             version = "v1.0.0",
         ).toCombinedPassport()
 
-        with(combinedPassport.toRenderable().filledHtml) {
+        with(combinedPassport.toPdfInput().filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>OIFE Passport combined</title>")

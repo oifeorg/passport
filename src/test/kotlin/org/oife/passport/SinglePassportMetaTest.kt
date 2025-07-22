@@ -22,7 +22,7 @@ class SinglePassportMetaTest : StringSpec({
     }
 
     "generates correct html replacements" {
-        meta.toHtmlReplacements().apply {
+        meta.toReplacements().apply {
             this[Placeholder.LANG] shouldBe "en"
             this[Placeholder.HEADER_TITLE] shouldBe "My test - OIFE Passport"
             this[Placeholder.FONT_FAMILY] shouldBe "Noto Sans"

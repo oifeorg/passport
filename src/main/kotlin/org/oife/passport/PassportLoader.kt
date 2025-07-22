@@ -32,7 +32,7 @@ data class CombinedPassport(
     val version: String
 )
 
-suspend fun fontMap(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
+suspend fun loadFontSuppliers(passports: List<PassportMeta>): Map<String, FSSupplier<InputStream>> = coroutineScope {
     passports
         .map { it.font }
         .distinctBy { it.familyName }
@@ -54,7 +54,7 @@ suspend fun loadPassportConfigs(): List<PassportMeta> {
         .decodeFromString(json)
 }
 
-suspend fun passportContentMap(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
+suspend fun loadPassportContents(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
     passports.map { metadata ->
         async {
             val path = "/data/${metadata.markdownFilename}"
@@ -92,8 +92,8 @@ suspend fun loadResourceTempFile(path: String): Path =
 suspend fun loadSinglePassport(htmlTemplatePath: String, version: String): SinglePassport = coroutineScope {
     val htmlTemplateDeferred = async { loadResourceContent(htmlTemplatePath) }
     val passportConfigs = loadPassportConfigs()
-    val fontMapDeferred = async { fontMap(passportConfigs) }
-    val contentMapDeferred = async { passportContentMap(passportConfigs) }
+    val fontMapDeferred = async { loadFontSuppliers(passportConfigs) }
+    val contentMapDeferred = async { loadPassportContents(passportConfigs) }
     SinglePassport(
         version = version,
         htmlTemplate = htmlTemplateDeferred.await(),

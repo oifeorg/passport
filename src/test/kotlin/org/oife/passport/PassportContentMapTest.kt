@@ -15,7 +15,7 @@ class PassportContentMapTest : StringSpec({
             PassportMeta("da-danish.md", "da", "Danish")
         )
 
-        with(passportContentMap(passports)) {
+        with(loadPassportContents(passports)) {
             keys shouldContainExactly setOf("en-english.md", "da-danish.md")
             getValue("en-english.md").length shouldBeGreaterThan 10
         }
@@ -27,7 +27,7 @@ class PassportContentMapTest : StringSpec({
         )
 
         shouldThrow<IllegalStateException> {
-            passportContentMap(passports)
+            loadPassportContents(passports)
         }.message shouldContain "missing-file.md"
     }
 })

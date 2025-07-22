@@ -1,14 +1,13 @@
 package org.oife.passport
 
 import org.intellij.markdown.IElementType
-import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 import java.time.Year
 
 
-fun PassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
+fun PassportMeta.toReplacements(): Map<String, String> = mapOf(
     Placeholder.LANG to languageCode,
     Placeholder.HEADER_TITLE to if (isLocalizedTitleSame()) title else "$localizedTitle - $title",
     Placeholder.FONT_FAMILY to font.familyName,
@@ -26,12 +25,43 @@ fun String.toHtml(): String {
     return HtmlGenerator(this, tree, flavour).generateHtml()
 }
 
-fun String.toFilledHtml(replacements: Map<String, String>): String =
+fun String.replacePlaceholders(replacements: Map<String, String>): String =
     replacements.entries.fold(this) { acc, (key, value) ->
         acc.replace("{{${key}}}", value)
     }
 
-private fun flavor(): CommonMarkFlavourDescriptor = GFMFlavourDescriptor()
+private fun flavor() = GFMFlavourDescriptor()
+
+private fun SinglePassport.toPlaceholderMap(meta: PassportMeta): Map<String, String> = mapOf(
+    Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
+    Placeholder.VERSION to version,
+    Placeholder.YEAR to Year.now().toString()
+) + meta.toReplacements()
+
+private fun CombinedPassport.toPlaceholderMap(): Map<String, String> = mapOf(
+    Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(
+        configs = passportConfigs,
+        indexTemplate = indexTemplate
+    ),
+    Placeholder.PASSPORT_ARTICLE_ITEMS to renderArticleSections(
+        configs = passportConfigs,
+        contentMap = contentMap,
+        articleTemplate = articleTemplate
+    ),
+    Placeholder.LANGUAGE_FONT_STYLES to renderFontStyles(passportConfigs),
+    Placeholder.VERSION to version,
+    Placeholder.YEAR to Year.now().toString(),
+    Placeholder.HEADER_TITLE to "OIFE Passport combined",
+    Placeholder.LANG to "en"
+)
+
+fun SinglePassport.toHtml(meta: PassportMeta): String = htmlTemplate.replacePlaceholders(
+    toPlaceholderMap(meta)
+)
+
+fun CombinedPassport.toHtml(): String = htmlTemplate.replacePlaceholders(
+    toPlaceholderMap()
+)
 
 fun renderFontStyles(passportConfigs: List<PassportMeta>): String = buildString {
     passportConfigs
@@ -48,7 +78,7 @@ fun renderFontStyles(passportConfigs: List<PassportMeta>): String = buildString 
         }
 }
 
-fun renderArticlesContents(
+fun renderArticleSections(
     configs: List<PassportMeta>,
     contentMap: Map<String, String>,
     articleTemplate: String,
@@ -56,7 +86,7 @@ fun renderArticlesContents(
     val sorted = configs.sortedBy { it.languageCode }
     sorted.forEachIndexed { index, config ->
         appendLine(
-            articleTemplate.toFilledHtml(
+            articleTemplate.replacePlaceholders(
                 mapOf(
                     Placeholder.LANGUAGE_CODE to config.languageCode,
                     Placeholder.LOCALIZED_TITLE to config.localizedTitle,
@@ -75,7 +105,7 @@ fun renderArticlesContents(
 fun renderIndexItems(configs: List<PassportMeta>, indexTemplate: String): String = buildString {
     configs.sortedBy { it.languageCode }.forEach { config ->
         appendLine(
-            indexTemplate.toFilledHtml(
+            indexTemplate.replacePlaceholders(
                 mapOf(
                     Placeholder.LANGUAGE_CODE to config.languageCode,
                     Placeholder.FONT_TYPE to config.font.toCssClass(config.languageCode),
@@ -88,37 +118,3 @@ fun renderIndexItems(configs: List<PassportMeta>, indexTemplate: String): String
     }
 }
 
-fun SinglePassport.toRenderable(meta: PassportMeta) = PdfDocumentInput(
-    filledHtml = htmlTemplate.toFilledHtml(
-        mapOf(
-            Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).toHtml(),
-            Placeholder.VERSION to version,
-            Placeholder.YEAR to Year.now().toString()
-        ) + meta.toHtmlReplacements()
-    ),
-    fontMap = fontMap,
-    pdfFileName = meta.pdfFileName()
-)
-
-fun CombinedPassport.toRenderable() = PdfDocumentInput(
-    filledHtml = htmlTemplate.toFilledHtml(
-        mapOf(
-            Placeholder.PASSPORT_INDEX_ITEMS to renderIndexItems(
-                configs = passportConfigs,
-                indexTemplate = indexTemplate
-            ),
-            Placeholder.PASSPORT_ARTICLE_ITEMS to renderArticlesContents(
-                configs = passportConfigs,
-                contentMap = contentMap,
-                articleTemplate = articleTemplate
-            ),
-            Placeholder.LANGUAGE_FONT_STYLES to renderFontStyles(passportConfigs),
-            Placeholder.VERSION to version,
-            Placeholder.YEAR to Year.now().toString(),
-            Placeholder.HEADER_TITLE to "OIFE Passport combined",
-            Placeholder.LANG to "en"
-        )
-    ),
-    fontMap = fontMap,
-    pdfFileName = Pdf.TEMP_COMBINED
-)

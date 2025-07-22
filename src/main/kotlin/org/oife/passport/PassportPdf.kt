@@ -55,8 +55,7 @@ suspend fun CombinedPassport.generate(): Path {
             loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
         ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
     ).also { logger.info(Messages.PdfGenerated(it.pathString)) }
-    Files.delete(combined)
-    logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
+    Files.delete(combined).also { logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED)) }
 
     return merged
 }

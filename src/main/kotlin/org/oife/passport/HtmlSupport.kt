@@ -8,6 +8,18 @@ import org.intellij.markdown.parser.MarkdownParser
 import java.time.Year
 
 
+fun PassportMeta.toHtmlReplacements(): Map<String, String> = mapOf(
+    Placeholder.LANG to languageCode,
+    Placeholder.HEADER_TITLE to if (isLocalizedTitleSame()) title else "$localizedTitle - $title",
+    Placeholder.FONT_FAMILY to font.familyName,
+    Placeholder.DIRECTION to direction()
+)
+
+fun FontMeta.toCssClass(languageCode: String): String = if (this == FontMeta()) "default" else languageCode
+
+fun FontMeta.toTextAlign(): String = if (this.direction == "ltr") "left" else "right"
+
+
 fun String.toHtml(): String {
     val flavour = flavor()
     val tree = MarkdownParser(flavour).parse(IElementType("ROOT"), this)

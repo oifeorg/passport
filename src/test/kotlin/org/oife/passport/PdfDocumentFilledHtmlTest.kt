@@ -6,7 +6,7 @@ import io.kotest.matchers.string.shouldNotContain
 
 class PdfDocumentFilledHtmlTest : StringSpec({
 
-    val passport = PassportMeta(
+    val meta = PassportMeta(
         markdownFilename = "test.md",
         languageCode = "en",
         title = "My Passport",
@@ -15,7 +15,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in single passport HTML template" {
         val defaultFont = FontMeta()
-        val documentResource = SinglePassport(
+        val singlePassport = SinglePassport(
             loadResourceContent(Template.PASSPORT_SINGLE),
             emptyList(),
             contentMap = mapOf("test.md" to "# Hello"),
@@ -23,7 +23,7 @@ class PdfDocumentFilledHtmlTest : StringSpec({
             version = "v1.0.0",
         )
 
-        with(documentResource.toRenderable(passport).filledHtml) {
+        with(singlePassport.toRenderable(meta).filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>My test - My Passport</title>")
@@ -37,17 +37,17 @@ class PdfDocumentFilledHtmlTest : StringSpec({
 
     "should correctly fill all placeholders in combined passport HTML template" {
         val defaultFont = FontMeta()
-        val documentResource = loadCombinedPassport(
+        val combinedPassport = loadCombinedPassport(
             SinglePassport(
                 loadResourceContent(Template.PASSPORT_COMBINED),
-                listOf(passport),
+                listOf(meta),
                 contentMap = mapOf("test.md" to "# Hello"),
                 fontMap = mapOf(defaultFont.familyName to loadTestFont(defaultFont)),
                 version = "v1.0.0",
             )
         )
 
-        with(documentResource.toRenderable().filledHtml) {
+        with(combinedPassport.toRenderable().filledHtml) {
             shouldContain("lang=\"en\"")
             shouldContain("dir=\"ltr\"")
             shouldContain("<title>OIFE Passport combined</title>")

@@ -9,7 +9,10 @@ suspend fun main(args: Array<String>) {
     runCatching {
         loadSinglePassport(version).apply {
             generateAll()
-            toCombinedPassport().generate()
+            toCombinedPassport().apply {
+                generate()
+                generateDownloadableList()
+            }
         }
     }.onFailure {
         logger.error(Messages.UnexpectedError.toString(), it)

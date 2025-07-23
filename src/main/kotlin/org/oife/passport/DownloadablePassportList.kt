@@ -15,16 +15,16 @@ private val logger = LoggerFactory.getLogger("DownloadablePassportListGenerator"
 
 private val jsonOutputFormat = Json { prettyPrint = true }
 
-private fun CombinedPassport.loadDownloadablePassports(): JsonArray = buildJsonArray {
+fun CombinedPassport.loadDownloadablePassports(): JsonArray = buildJsonArray {
     add(Pdf.ALL_PASSPORT_COMBINED)
     this@loadDownloadablePassports.passportConfigs.sortedBy { it.languageCode }.forEach {
         add(it.pdfFileName())
     }
 }
 
-fun CombinedPassport.generateDownloadableList(): Path? =
+fun CombinedPassport.generateDownloadableList(outputPath: Path = outputDir.resolve("passport-list.json")): Path =
     Files.writeString(
-        outputDir.resolve("passport-list.json"),
+        outputPath,
         jsonOutputFormat.encodeToString(JsonArray.serializer(), loadDownloadablePassports()),
         StandardOpenOption.CREATE,
         StandardOpenOption.TRUNCATE_EXISTING,

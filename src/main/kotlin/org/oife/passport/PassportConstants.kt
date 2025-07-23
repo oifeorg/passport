@@ -15,6 +15,7 @@ object Messages {
     val ResourceNotFound = StatusMessage("❌ Resource not found")
     val CombinedPdfGenerated = StatusMessage("✅ Combined PDF created")
     val PdfGenerated = StatusMessage("✅ PDF created")
+    val PassportListGenerated = StatusMessage("✅ PDF json list created")
     val PdfDeleted = StatusMessage("✅ PDF deleted")
     val UnexpectedError = StatusMessage("❌ Unexpected error")
 }

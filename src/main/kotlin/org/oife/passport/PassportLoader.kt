@@ -1,18 +1,14 @@
 package org.oife.passport
 
 import com.openhtmltopdf.extend.FSSupplier
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 
-private val logger = LoggerFactory.getLogger("ResourceLoader")
+private val logger = LoggerFactory.getLogger("PassportLoader")
 
 data class SinglePassport(
     val htmlTemplate: String,
@@ -42,9 +38,9 @@ suspend fun loadFontSuppliers(passports: List<PassportMeta>): Map<String, FSSupp
     }.awaitAll().toMap()
 }
 
-private val jsonFormat = Json { ignoreUnknownKeys = true }
+private val jsonInputFormat = Json { ignoreUnknownKeys = true }
 suspend fun loadPassportConfigs(): List<PassportMeta> =
-    jsonFormat.decodeFromString(loadResourceContent("/passport-config.json"))
+    jsonInputFormat.decodeFromString(loadResourceContent("/passport-config.json"))
 
 suspend fun loadPassportContents(passports: List<PassportMeta>): Map<String, String> = coroutineScope {
     passports.map { metadata ->

@@ -45,22 +45,27 @@ suspend fun PdfDocumentInput.renderToPdf(
     outputPath
 }
 
-suspend fun CombinedPassport.generate(): Path {
-    val combined = toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
-    return try {
+suspend fun CombinedPassport.generate(): Path = renderCombined().let { combined ->
+    try {
         mergePdfFilesToFile(
             parts = listOf(
                 loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
                 combined,
                 loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
-            ), outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
+            ),
+            outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
         ).also {
             logger.info(Messages.PdfGenerated(it.pathString))
         }
     } finally {
-        Files.deleteIfExists(combined).also { logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED)) }
+        Files.deleteIfExists(combined).also {
+            logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
+        }
     }
 }
+
+private suspend fun CombinedPassport.renderCombined(): Path =
+    toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 
 suspend fun SinglePassport.generateAll() {
     passportConfigs.forEach { meta ->

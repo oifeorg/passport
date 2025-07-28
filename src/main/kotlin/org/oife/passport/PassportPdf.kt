@@ -45,7 +45,7 @@ suspend fun PdfDocumentInput.renderToPdf(
     outputPath
 }
 
-suspend fun CombinedPassport.generate(): Path = renderCombined().let { combined ->
+suspend fun CombinedPassport.generate(): Path = render().let { combined ->
     try {
         mergePdfFilesToFile(
             parts = listOf(
@@ -64,7 +64,7 @@ suspend fun CombinedPassport.generate(): Path = renderCombined().let { combined 
     }
 }
 
-private suspend fun CombinedPassport.renderCombined(): Path =
+private suspend fun CombinedPassport.render(): Path =
     toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 
 suspend fun SinglePassport.generateAll() {

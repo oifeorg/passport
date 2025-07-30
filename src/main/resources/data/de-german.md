@@ -1,5 +1,5 @@
 Ich habe Osteogenesis imperfecta (OI, Glasknochen). Das bedeutet, dass meine Knochen leicht brechen. OI betrifft aber nicht nur die Knochen, sondern das gesamte Bindegewebe.
-Bitte, fragen Sie mich / meine Eltern/meine Begleiter, bevor Sie mich bewegen, transportieren, untersuchen oder behandeln. Folgen Sie meinen/deren Hinweisen, wie man mich sicher anfassen und bewegen kann.
+Bitte fragen Sie mich / meine Eltern/meine Begleiter, bevor Sie mich bewegen, transportieren, untersuchen oder behandeln. Folgen Sie meinen/deren Hinweisen, wie man mich sicher anfassen und bewegen kann.
 
 ## Wir möchten Sie an folgendes erinnern
 - Bei Osteogenesis imperfecta können Frakturen leicht oder sogar spontan entstehen.
@@ -12,7 +12,7 @@ Bitte, fragen Sie mich / meine Eltern/meine Begleiter, bevor Sie mich bewegen, t
 - Die Dosierung von Arznei- und Narkosemitteln sollte der Körpergröße und nicht dem Alter der Person entsprechend gewählt werden.
 - Zur Ruhigstellung sollten möglichst leichte Materialien bevorzugt werden.
 - Patienten mit OI sollten sobald als möglich mobilisiert werden.
-- Bitte, nehmen Sie Kontakt zum behandelnden Arzt auf, falls ein Krankenhausaufenthalt oder ein Eingriff nötig erscheinen.
+- Bitte nehmen Sie Kontakt zum behandelnden Arzt auf, falls ein Krankenhausaufenthalt oder ein Eingriff nötig erscheint.
 - Viele Patienten mit OI haben Hörprobleme.
 
 ## Röntgenuntersuchung

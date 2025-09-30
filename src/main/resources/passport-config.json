@@ -69,6 +69,12 @@
     "localizedTitle": "Hrvatski"
   },
   {
+    "markdownFilename": "hu-hungarian.md",
+    "languageCode": "hu",
+    "title": "Hungarian",
+    "localizedTitle": "Magyar"
+  },
+  {
     "markdownFilename": "it-italian.md",
     "languageCode": "it",
     "title": "Italian",

@@ -1,4 +1,5 @@
 version: 2
+
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
@@ -8,6 +9,7 @@ updates:
       default-days: 7
     commit-message:
       prefix: "chore(deps)"
+    open-pull-requests-limit: 15
     labels:
       - "dependencies"
 

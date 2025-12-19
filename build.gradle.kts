@@ -37,6 +37,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.named("check") {
+    dependsOn("ktlintCheck")
+}
+
 kotlin {
     jvmToolchain(21)
 }

@@ -12,48 +12,55 @@ import kotlinx.serialization.json.JsonArray
 import kotlin.io.path.createTempFile
 import kotlin.io.path.fileSize
 
-class DownloadablePassportListTest : StringSpec({
+class DownloadablePassportListTest :
+    StringSpec({
 
-    "should create json array with all pdf filenames including combined" {
+        "should create json array with all pdf filenames including combined" {
 
-        val meta1 = mockk<PassportMeta> {
-            every { languageCode } returns "de"
-            every { markdownFilename } returns "de-german.md"
+            val meta1 =
+                mockk<PassportMeta> {
+                    every { languageCode } returns "de"
+                    every { markdownFilename } returns "de-german.md"
+                }
+
+            val meta2 =
+                mockk<PassportMeta> {
+                    every { languageCode } returns "en"
+                    every { markdownFilename } returns "en-english.md"
+                }
+
+            val passport =
+                mockk<CombinedPassport> {
+                    every { passportConfigs } returns listOf(meta1, meta2)
+                }
+
+            passport.loadDownloadablePassports() shouldBe
+                JsonArray(
+                    listOf(
+                        Pdf.ALL_PASSPORT_COMBINED,
+                        meta1.pdfFileName(),
+                        meta2.pdfFileName(),
+                    ).map { kotlinx.serialization.json.JsonPrimitive(it) },
+                )
         }
 
-        val meta2 = mockk<PassportMeta> {
-            every { languageCode } returns "en"
-            every { markdownFilename } returns "en-english.md"
-        }
+        "should write passport-list.json to output dir" {
+            val outputPath = createTempFile("passport-list", ".json").apply { toFile().deleteOnExit() }
+            val meta =
+                mockk<PassportMeta> {
+                    every { languageCode } returns "en"
+                    every { markdownFilename } returns "en-english.md"
+                }
+            val passport =
+                mockk<CombinedPassport> {
+                    every { passportConfigs } returns listOf(meta)
+                }
 
-        val passport = mockk<CombinedPassport> {
-            every { passportConfigs } returns listOf(meta1, meta2)
+            passport.generateDownloadableList(outputPath).apply {
+                shouldExist()
+                fileSize() shouldBeGreaterThan 50L
+                fileName.toString() shouldStartWith "passport-list"
+                fileName.toString() shouldEndWith "json"
+            }
         }
-
-        passport.loadDownloadablePassports() shouldBe JsonArray(
-            listOf(
-                Pdf.ALL_PASSPORT_COMBINED,
-                meta1.pdfFileName(),
-                meta2.pdfFileName()
-            ).map { kotlinx.serialization.json.JsonPrimitive(it) }
-        )
-    }
-
-    "should write passport-list.json to output dir" {
-        val outputPath = createTempFile("passport-list", ".json").apply { toFile().deleteOnExit() }
-        val meta = mockk<PassportMeta> {
-            every { languageCode } returns "en"
-            every { markdownFilename } returns "en-english.md"
-        }
-        val passport = mockk<CombinedPassport> {
-            every { passportConfigs } returns listOf(meta)
-        }
-
-        passport.generateDownloadableList(outputPath).apply {
-            shouldExist()
-            fileSize() shouldBeGreaterThan 50L
-            fileName.toString() shouldStartWith  "passport-list"
-            fileName.toString() shouldEndWith "json"
-        }
-    }
-})
+    })

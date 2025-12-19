@@ -2,7 +2,6 @@ package org.oife.passport
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class PassportMeta(
     val markdownFilename: String,
@@ -19,14 +18,10 @@ data class FontMeta(
     val direction: String = "ltr",
 )
 
-fun PassportMeta.pdfFileName(): String =
-    markdownFilename.removeSuffix(".md") + ".pdf"
+fun PassportMeta.pdfFileName(): String = markdownFilename.removeSuffix(".md") + ".pdf"
 
-fun PassportMeta.direction(): String =
-    font.direction
+fun PassportMeta.direction(): String = font.direction
 
-fun PassportMeta.isLocalizedTitleSame(): Boolean =
-    title == localizedTitle
+fun PassportMeta.isLocalizedTitleSame(): Boolean = title == localizedTitle
 
-fun PassportMeta.headerTitle(): String =
-    if (isLocalizedTitleSame()) title else "$localizedTitle - $title"
+fun PassportMeta.headerTitle(): String = if (isLocalizedTitleSame()) title else "$localizedTitle - $title"

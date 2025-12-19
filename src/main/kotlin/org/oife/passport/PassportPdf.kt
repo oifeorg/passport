@@ -22,47 +22,55 @@ data class PdfDocumentInput(
     val pdfFileName: String,
 )
 
-fun SinglePassport.toPdfInput(meta: PassportMeta) = PdfDocumentInput(
-    filledHtml = renderHtml(meta), fontMap = fontMap, pdfFileName = meta.pdfFileName()
-)
+fun SinglePassport.toPdfInput(meta: PassportMeta) =
+    PdfDocumentInput(
+        filledHtml = renderHtml(meta),
+        fontMap = fontMap,
+        pdfFileName = meta.pdfFileName(),
+    )
 
-fun CombinedPassport.toPdfInput() = PdfDocumentInput(
-    filledHtml = renderHtml(), fontMap = fontMap, pdfFileName = Pdf.TEMP_COMBINED
-)
+fun CombinedPassport.toPdfInput() =
+    PdfDocumentInput(
+        filledHtml = renderHtml(),
+        fontMap = fontMap,
+        pdfFileName = Pdf.TEMP_COMBINED,
+    )
 
-suspend fun PdfDocumentInput.renderToPdf(
-    outputPath: Path = outputDir.resolve(pdfFileName),
-): Path = withContext(Dispatchers.IO) {
-    Files.newOutputStream(outputPath).use { out ->
-        PdfRendererBuilder().apply {
-            fontMap.forEach { (familyName, font) ->
-                useFont(font, familyName)
+suspend fun PdfDocumentInput.renderToPdf(outputPath: Path = outputDir.resolve(pdfFileName)): Path =
+    withContext(Dispatchers.IO) {
+        Files.newOutputStream(outputPath).use { out ->
+            PdfRendererBuilder()
+                .apply {
+                    fontMap.forEach { (familyName, font) ->
+                        useFont(font, familyName)
+                    }
+                    withHtmlContent(filledHtml, null)
+                    toStream(out)
+                }.run()
+        }
+        outputPath
+    }
+
+suspend fun CombinedPassport.generate(): Path =
+    render().let { combined ->
+        try {
+            mergePdfFilesToFile(
+                parts =
+                    listOf(
+                        loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
+                        combined,
+                        loadResourceTempFile("/covers/${Pdf.TITLE_BACK}"),
+                    ),
+                outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED),
+            ).also {
+                logger.info(Messages.PdfGenerated(it.pathString))
             }
-            withHtmlContent(filledHtml, null)
-            toStream(out)
-        }.run()
-    }
-    outputPath
-}
-
-suspend fun CombinedPassport.generate(): Path = render().let { combined ->
-    try {
-        mergePdfFilesToFile(
-            parts = listOf(
-                loadResourceTempFile("/covers/${Pdf.TITLE_COVER}"),
-                combined,
-                loadResourceTempFile("/covers/${Pdf.TITLE_BACK}")
-            ),
-            outputPath = outputDir.resolve(Pdf.ALL_PASSPORT_COMBINED)
-        ).also {
-            logger.info(Messages.PdfGenerated(it.pathString))
-        }
-    } finally {
-        Files.deleteIfExists(combined).also {
-            logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
+        } finally {
+            Files.deleteIfExists(combined).also {
+                logger.info(Messages.PdfDeleted(Pdf.TEMP_COMBINED))
+            }
         }
     }
-}
 
 private suspend fun CombinedPassport.render(): Path =
     toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
@@ -76,10 +84,12 @@ suspend fun SinglePassport.generateAll() {
 suspend fun mergePdfFilesToFile(
     parts: List<Path>,
     outputPath: Path,
-): Path = withContext(Dispatchers.IO) {
-    PDFMergerUtility().apply {
-        destinationFileName = outputPath.toString()
-        parts.forEach { addSource(it.toFile()) }
-    }.mergeDocuments(null)
-    outputPath
-}
+): Path =
+    withContext(Dispatchers.IO) {
+        PDFMergerUtility()
+            .apply {
+                destinationFileName = outputPath.toString()
+                parts.forEach { addSource(it.toFile()) }
+            }.mergeDocuments(null)
+        outputPath
+    }

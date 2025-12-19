@@ -3,7 +3,7 @@ package org.oife.passport
 import com.openhtmltopdf.extend.FSSupplier
 import java.io.InputStream
 
-internal const val testMarkdownFile = "test.md"
+internal const val TEST_MARKDOWN_FILE = "test.md"
 
 suspend fun loadTestFont(font: FontMeta): FSSupplier<InputStream> {
     val path = "/fonts/${font.fileName}"
@@ -11,11 +11,11 @@ suspend fun loadTestFont(font: FontMeta): FSSupplier<InputStream> {
     return FSSupplier { bytes.inputStream() }
 }
 
-
-fun dummyPdfContent(): ByteArray = """
+fun dummyPdfContent(): ByteArray =
+    """
     %PDF-1.4
     1 0 obj <</Type /Catalog /Pages 2 0 R>> endobj
     2 0 obj <</Type /Pages /Kids [3 0 R] /Count 1>> endobj
     3 0 obj <</Type /Page /Parent 2 0 R /MediaBox [0 0 200 200]>> endobj
     trailer <</Root 1 0 R>> %%EOF
-""".trimIndent().toByteArray()
+    """.trimIndent().toByteArray()

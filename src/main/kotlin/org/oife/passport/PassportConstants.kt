@@ -4,9 +4,13 @@ import java.nio.file.Path
 import kotlin.io.path.pathString
 
 @JvmInline
-value class StatusMessage(private val title: String) {
+value class StatusMessage(
+    private val title: String,
+) {
     operator fun invoke(path: Path) = "$title → ${path.pathString}"
+
     operator fun invoke(detail: String) = "$title: $detail"
+
     override fun toString(): String = title
 }
 

@@ -1,5 +1,5 @@
 [versions]
-kotlin-version = "2.2.21"
+kotlin-version = "2.3.0"
 openhtmltopdf-version = "1.1.37"
 jetbrains-markdown-version = "0.7.3"
 logback-version = "1.5.28"

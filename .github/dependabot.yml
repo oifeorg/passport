@@ -12,6 +12,8 @@ updates:
     open-pull-requests-limit: 15
     labels:
       - "dependencies"
+    auto-merge: true
+    auto-merge-type: "minor"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -23,3 +25,5 @@ updates:
       prefix: "chore(ci)"
     labels:
       - "github-actions"
+    auto-merge: true
+    auto-merge-type: "minor"

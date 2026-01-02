@@ -5,6 +5,7 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
+import yearProvider
 import java.time.Year
 
 fun FontMeta.toCssClass(languageCode: String): String = if (this == FontMeta()) "default" else languageCode
@@ -48,7 +49,7 @@ private fun CombinedPassport.toPlaceholderMap(): Map<String, String> =
             ),
         Placeholder.LANGUAGE_FONT_STYLES to renderFontStyles(passportConfigs),
         Placeholder.VERSION to version,
-        Placeholder.YEAR to Year.now().toString(),
+        Placeholder.YEAR to yearProvider.currentYear(),
         Placeholder.HEADER_TITLE to "OIFE Passport combined",
         Placeholder.LANG to "en",
     )

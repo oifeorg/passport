@@ -3,6 +3,7 @@ package org.oife.passport
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
+import yearProvider
 
 class PdfDocumentFilledHtmlTest :
     StringSpec({
@@ -54,7 +55,7 @@ class PdfDocumentFilledHtmlTest :
                 shouldContain("dir=\"ltr\"")
                 shouldContain("<title>OIFE Passport combined</title>")
                 shouldContain(".lang-default")
-                shouldContain("© OIFE 2025 v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+                shouldContain("© OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
                 shouldContain("<h1>Hello</h1>")
                 shouldNotContain("{{")
                 shouldNotContain("}}")

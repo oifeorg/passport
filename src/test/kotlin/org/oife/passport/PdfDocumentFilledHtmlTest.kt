@@ -32,7 +32,7 @@ class PdfDocumentFilledHtmlTest :
                 shouldContain("dir=\"ltr\"")
                 shouldContain("<title>My test - My Passport</title>")
                 shouldContain("font-family: Noto Sans")
-                shouldContain("© OIFE 2025 v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
                 shouldContain("<h1>Hello</h1>")
                 shouldNotContain("{{")
                 shouldNotContain("}}")
@@ -55,7 +55,7 @@ class PdfDocumentFilledHtmlTest :
                 shouldContain("dir=\"ltr\"")
                 shouldContain("<title>OIFE Passport combined</title>")
                 shouldContain(".lang-default")
-                shouldContain("© OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
                 shouldContain("<h1>Hello</h1>")
                 shouldNotContain("{{")
                 shouldNotContain("}}")

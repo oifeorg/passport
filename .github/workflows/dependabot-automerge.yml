@@ -10,14 +10,16 @@ permissions:
 
 jobs:
   automerge:
-    name: Enable auto-merge (Dependabot)
     runs-on: ubuntu-latest
-
-    # Only for Dependabot PRs, and only when not a draft
     if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false
 
     steps:
-      - name: Enable GitHub auto-merge (squash)
+      - name: Fetch Dependabot metadata
+        id: meta
+        uses: dependabot/fetch-metadata@8c29d5f49e696e102a5bb0925c8c50c9b2defaf8 # v2.0.0
+
+      - name: Enable auto-merge for minor and patch updates
+        if: steps.meta.outputs.update-type == 'version-update:semver-minor' || steps.meta.outputs.update-type == 'version-update:semver-patch'
         run: gh pr merge --squash --auto "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

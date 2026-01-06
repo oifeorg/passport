@@ -1,0 +1,23 @@
+name: Auto-merge Dependabot
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    name: Enable auto-merge (Dependabot)
+    runs-on: ubuntu-latest
+
+    # Only for Dependabot PRs, and only when not a draft
+    if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false
+
+    steps:
+      - name: Enable GitHub auto-merge (squash)
+        run: gh pr merge --squash --auto "${{ github.event.pull_request.number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

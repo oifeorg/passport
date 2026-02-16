@@ -32,8 +32,6 @@ dependencies {
     testImplementation(libs.kotest.runner)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
-    // Only temporary, until mockk gets supported bytebuddy included https://github.com/mockk/mockk/issues/1434
-    testImplementation(libs.bytebuddy)
 }
 
 tasks.test {

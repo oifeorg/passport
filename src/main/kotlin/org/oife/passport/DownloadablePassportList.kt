@@ -12,21 +12,22 @@ import kotlin.io.path.pathString
 
 private val logger = LoggerFactory.getLogger("DownloadablePassportListGenerator")
 
-
 private val jsonOutputFormat = Json { prettyPrint = true }
 
-fun CombinedPassport.loadDownloadablePassports(): JsonArray = buildJsonArray {
-    add(Pdf.ALL_PASSPORT_COMBINED)
-    this@loadDownloadablePassports.passportConfigs.sortedBy { it.languageCode }.forEach {
-        add(it.pdfFileName())
+fun CombinedPassport.loadDownloadablePassports(): JsonArray =
+    buildJsonArray {
+        add(Pdf.ALL_PASSPORT_COMBINED)
+        this@loadDownloadablePassports.passportConfigs.sortedBy { it.languageCode }.forEach {
+            add(it.pdfFileName())
+        }
     }
-}
 
 fun CombinedPassport.generateDownloadableList(outputPath: Path = outputDir.resolve("passport-list.json")): Path =
-    Files.writeString(
-        outputPath,
-        jsonOutputFormat.encodeToString(JsonArray.serializer(), loadDownloadablePassports()),
-        StandardOpenOption.CREATE,
-        StandardOpenOption.TRUNCATE_EXISTING,
-        StandardOpenOption.WRITE
-    ).also { logger.info(Messages.PassportListGenerated(it.pathString)) }
+    Files
+        .writeString(
+            outputPath,
+            jsonOutputFormat.encodeToString(JsonArray.serializer(), loadDownloadablePassports()),
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING,
+            StandardOpenOption.WRITE,
+        ).also { logger.info(Messages.PassportListGenerated(it.pathString)) }

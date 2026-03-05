@@ -15,17 +15,20 @@ class PassportMetaTest :
             )
 
         "returns correct pdf file name" {
-            meta.pdfFileName() shouldBe "test.pdf"
+            meta.fileName shouldBe "test.pdf"
         }
 
-        "uses correct direction based on rtl flag" {
+        "returns rtl direction for rtl font" {
             PassportMeta(
                 "a.md",
                 "ar",
                 "Arabic",
                 font = FontMeta("SomethingElse", "Noto Something", direction = "rtl"),
-            ).direction() shouldBe
+            ).direction shouldBe
                 "rtl"
-            PassportMeta("b.md", "en", "English").direction() shouldBe "ltr"
+        }
+
+        "returns ltr direction by default" {
+            PassportMeta("b.md", "en", "English").direction shouldBe "ltr"
         }
     })

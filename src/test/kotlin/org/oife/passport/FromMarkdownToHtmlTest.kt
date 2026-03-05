@@ -2,6 +2,7 @@ package org.oife.passport
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 
 class FromMarkdownToHtmlTest :
     StringSpec({
@@ -20,9 +21,9 @@ class FromMarkdownToHtmlTest :
 
         "converts unordered list to HTML list" {
             with("- One\n- Two".renderHtml()) {
-                contains("<ul>") shouldBe true
-                contains("<li>One</li>") shouldBe true
-                contains("<li>Two</li>") shouldBe true
+                shouldContain("<ul>")
+                shouldContain("<li>One</li>")
+                shouldContain("<li>Two</li>")
             }
         }
     })

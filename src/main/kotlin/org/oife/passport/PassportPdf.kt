@@ -9,11 +9,16 @@ import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
+import kotlin.io.path.Path
 import kotlin.io.path.pathString
 
 const val OUTPUT_DIR_NAME = "generated"
-val outputDir: Path = Paths.get(OUTPUT_DIR_NAME).also { Files.createDirectories(it) }
+val outputDir: Path = Path(OUTPUT_DIR_NAME)
+
+fun ensureOutputDirectoryExists() {
+    Files.createDirectories(outputDir)
+}
+
 private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
 
 data class PdfDocumentInput(

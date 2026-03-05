@@ -8,13 +8,14 @@ suspend fun main(args: Array<String>) {
     val version = args.firstOrNull() ?: "v1.0.0"
 
     runCatching {
-        loadSinglePassport(version).apply {
-            generateAll()
-            toCombinedPassport().apply {
-                generate()
-                generateDownloadableList()
+        ensureOutputDirectoryExists()
+        loadSinglePassport(version)
+            .also { it.generateAll() }
+            .toCombinedPassport()
+            .also {
+                it.generate()
+                it.generateDownloadableList()
             }
-        }
     }.onFailure {
         logger.error(Messages.UnexpectedError.toString(), it)
     }

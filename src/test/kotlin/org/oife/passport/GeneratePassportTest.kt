@@ -13,6 +13,7 @@ class GeneratePassportTest :
     StringSpec({
 
         "should load covers from resources and produce final combined file" {
+            ensureOutputDirectoryExists()
             val combinedPassport =
                 CombinedPassport(
                     passportConfigs = emptyList(),

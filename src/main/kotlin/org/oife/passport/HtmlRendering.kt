@@ -5,8 +5,6 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
-import yearProvider
-import java.time.Year
 
 fun FontMeta.toCssClass(languageCode: String): String = if (this == FontMeta()) "default" else languageCode
 
@@ -27,7 +25,7 @@ private fun SinglePassport.toPlaceholderMap(meta: PassportMeta): Map<String, Str
     mapOf(
         Placeholder.PASSPORT_CONTENT to contentMap.getValue(meta.markdownFilename).renderHtml(),
         Placeholder.VERSION to version,
-        Placeholder.YEAR to Year.now().toString(),
+        Placeholder.YEAR to yearProvider.currentYear(),
         Placeholder.LANG to meta.languageCode,
         Placeholder.HEADER_TITLE to meta.headerTitle,
         Placeholder.FONT_FAMILY to meta.font.familyName,

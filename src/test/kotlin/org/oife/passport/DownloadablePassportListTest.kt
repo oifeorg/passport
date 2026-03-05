@@ -1,6 +1,6 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.paths.shouldExist
 import io.kotest.matchers.shouldBe
@@ -13,9 +13,9 @@ import kotlin.io.path.createTempFile
 import kotlin.io.path.fileSize
 
 class DownloadablePassportListTest :
-    StringSpec({
+    ShouldSpec({
 
-        "should create json array with all pdf filenames including combined" {
+        should("create json array with all pdf filenames including combined") {
             val meta1 = PassportMeta(markdownFilename = "de-german.md", languageCode = "de", title = "German")
             val meta2 = PassportMeta(markdownFilename = "en-english.md", languageCode = "en", title = "English")
 
@@ -34,7 +34,7 @@ class DownloadablePassportListTest :
                 )
         }
 
-        "should write passport-list.json to output dir" {
+        should("write passport-list.json to output dir") {
             val outputPath = createTempFile("passport-list", ".json").apply { toFile().deleteOnExit() }
             val meta = PassportMeta(markdownFilename = "en-english.md", languageCode = "en", title = "English")
             val passport =

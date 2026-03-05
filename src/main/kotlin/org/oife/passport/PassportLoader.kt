@@ -71,7 +71,7 @@ private suspend fun <T> loadResource(
         } ?: throw IllegalStateException(Messages.ResourceNotFound(path))
     }
 
-suspend fun loadResourceContent(path: String): String = loadResource(path) { it.bufferedReader().use { reader -> reader.readText() } }
+suspend fun loadResourceContent(path: String): String = loadResource(path) { it.bufferedReader().readText() }
 
 suspend fun loadResourceBytes(path: String): ByteArray = loadResource(path) { it.readBytes() }
 

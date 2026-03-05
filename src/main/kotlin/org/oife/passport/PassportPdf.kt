@@ -3,6 +3,9 @@ package org.oife.passport
 import com.openhtmltopdf.extend.FSSupplier
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.apache.pdfbox.multipdf.PDFMergerUtility
 import org.slf4j.LoggerFactory
@@ -81,8 +84,13 @@ private suspend fun CombinedPassport.render(): Path =
     toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 
 suspend fun SinglePassport.generateAll() {
-    passportConfigs.forEach { meta ->
-        toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
+    coroutineScope {
+        passportConfigs
+            .map { meta ->
+                async {
+                    toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
+                }
+            }.awaitAll()
     }
 }
 

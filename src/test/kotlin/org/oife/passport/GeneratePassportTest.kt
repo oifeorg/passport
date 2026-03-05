@@ -1,6 +1,6 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.file.shouldExist
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.paths.shouldExist
@@ -10,9 +10,9 @@ import kotlin.io.path.extension
 import kotlin.io.path.fileSize
 
 class GeneratePassportTest :
-    StringSpec({
+    ShouldSpec({
 
-        "should load covers from resources and produce final combined file" {
+        should("load covers from resources and produce final combined file") {
             ensureOutputDirectoryExists()
             val combinedPassport =
                 CombinedPassport(
@@ -31,7 +31,7 @@ class GeneratePassportTest :
             }
         }
 
-        "should render a valid PDF file for a document" {
+        should("render a valid PDF file for a document") {
             val defaultFont = FontMeta()
             val meta =
                 PassportMeta(

@@ -1,15 +1,15 @@
 package org.oife.passport
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.string.shouldContain
 
 class PassportContentMapTest :
-    StringSpec({
+    ShouldSpec({
 
-        "should load markdown content into map" {
+        should("load markdown content into map") {
             val passports =
                 listOf(
                     PassportMeta("en-english.md", "en", "English"),
@@ -22,7 +22,7 @@ class PassportContentMapTest :
             }
         }
 
-        "should fail if markdown file is missing" {
+        should("fail if markdown file is missing") {
             val passports =
                 listOf(
                     PassportMeta("missing-file.md", "xx", "Missing"),

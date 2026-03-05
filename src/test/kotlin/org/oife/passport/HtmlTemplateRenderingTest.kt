@@ -1,11 +1,11 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
 
 class HtmlTemplateRenderingTest :
-    StringSpec({
+    ShouldSpec({
 
         val meta =
             PassportMeta(
@@ -15,7 +15,7 @@ class HtmlTemplateRenderingTest :
                 localizedTitle = "My test",
             )
 
-        "should correctly fill all placeholders in single passport HTML template" {
+        should("correctly fill all placeholders in single passport HTML template") {
             val defaultFont = FontMeta()
             val singlePassport =
                 SinglePassport(
@@ -38,7 +38,7 @@ class HtmlTemplateRenderingTest :
             }
         }
 
-        "should correctly fill all placeholders in combined passport HTML template" {
+        should("correctly fill all placeholders in combined passport HTML template") {
             val defaultFont = FontMeta()
             val combinedPassport =
                 SinglePassport(

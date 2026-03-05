@@ -1,14 +1,14 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.file.shouldExist
 import kotlin.io.path.createTempFile
 
 class MergePdfFilesTest :
-    StringSpec({
+    ShouldSpec({
 
-        "should merge given PDF files into a single output path" {
+        should("merge given PDF files into a single output path") {
             val part1 =
                 createTempFile().apply {
                     toFile().writeBytes(dummyPdfContent())

@@ -116,7 +116,7 @@
     "markdownFilename": "pl-polish.md",
     "languageCode": "pl",
     "title": "Polish",
-    "localizedTitle": "Polsk"
+    "localizedTitle": "Polski"
   },
   {
     "markdownFilename": "pt-portuguese.md",
@@ -139,8 +139,8 @@
   {
     "markdownFilename": "sl-slovenian.md",
     "languageCode": "sl",
-    "title": "Slovensko",
-    "localizedTitle": "Slovenian"
+    "title": "Slovenian",
+    "localizedTitle": "Slovensko"
   },
   {
     "markdownFilename": "sv-swedish.md",

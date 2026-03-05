@@ -16,18 +16,8 @@ class DownloadablePassportListTest :
     StringSpec({
 
         "should create json array with all pdf filenames including combined" {
-
-            val meta1 =
-                mockk<PassportMeta> {
-                    every { languageCode } returns "de"
-                    every { markdownFilename } returns "de-german.md"
-                }
-
-            val meta2 =
-                mockk<PassportMeta> {
-                    every { languageCode } returns "en"
-                    every { markdownFilename } returns "en-english.md"
-                }
+            val meta1 = PassportMeta(markdownFilename = "de-german.md", languageCode = "de", title = "German")
+            val meta2 = PassportMeta(markdownFilename = "en-english.md", languageCode = "en", title = "English")
 
             val passport =
                 mockk<CombinedPassport> {
@@ -38,19 +28,15 @@ class DownloadablePassportListTest :
                 JsonArray(
                     listOf(
                         Pdf.ALL_PASSPORT_COMBINED,
-                        meta1.pdfFileName(),
-                        meta2.pdfFileName(),
+                        meta1.fileName,
+                        meta2.fileName,
                     ).map { kotlinx.serialization.json.JsonPrimitive(it) },
                 )
         }
 
         "should write passport-list.json to output dir" {
             val outputPath = createTempFile("passport-list", ".json").apply { toFile().deleteOnExit() }
-            val meta =
-                mockk<PassportMeta> {
-                    every { languageCode } returns "en"
-                    every { markdownFilename } returns "en-english.md"
-                }
+            val meta = PassportMeta(markdownFilename = "en-english.md", languageCode = "en", title = "English")
             val passport =
                 mockk<CombinedPassport> {
                     every { passportConfigs } returns listOf(meta)

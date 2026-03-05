@@ -29,9 +29,9 @@ private fun SinglePassport.toPlaceholderMap(meta: PassportMeta): Map<String, Str
         Placeholder.VERSION to version,
         Placeholder.YEAR to Year.now().toString(),
         Placeholder.LANG to meta.languageCode,
-        Placeholder.HEADER_TITLE to meta.headerTitle(),
+        Placeholder.HEADER_TITLE to meta.headerTitle,
         Placeholder.FONT_FAMILY to meta.font.familyName,
-        Placeholder.DIRECTION to meta.direction(),
+        Placeholder.DIRECTION to meta.direction,
     )
 
 private fun CombinedPassport.toPlaceholderMap(): Map<String, String> =
@@ -64,7 +64,7 @@ fun CombinedPassport.renderHtml(): String =
         toPlaceholderMap(),
     )
 
-fun PassportMeta.hiddenClass(): String = if (isLocalizedTitleSame()) "hidden" else ""
+fun PassportMeta.hiddenClass(): String = if (this.isLocalizedTitleSame) "hidden" else ""
 
 fun PassportMeta.toCssStyleBlock(): String =
     """
@@ -88,7 +88,7 @@ fun PassportMeta.toArticleHtml(
             Placeholder.FONT_TYPE to font.toCssClass(languageCode),
             Placeholder.BODY to content.renderHtml(),
             Placeholder.PAGE_BREAK_AFTER to if (isLast) "" else Placeholder.PAGE_BREAK_AFTER,
-            Placeholder.DIRECTION to direction(),
+            Placeholder.DIRECTION to direction,
             Placeholder.HIDDEN to hiddenClass(),
         ),
     )

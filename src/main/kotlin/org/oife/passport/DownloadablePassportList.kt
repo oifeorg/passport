@@ -18,7 +18,7 @@ fun CombinedPassport.loadDownloadablePassports(): JsonArray =
     buildJsonArray {
         add(Pdf.ALL_PASSPORT_COMBINED)
         this@loadDownloadablePassports.passportConfigs.sortedBy { it.languageCode }.forEach {
-            add(it.pdfFileName())
+            add(it.fileName)
         }
     }
 

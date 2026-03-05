@@ -26,7 +26,7 @@ fun SinglePassport.toPdfInput(meta: PassportMeta) =
     PdfDocumentInput(
         filledHtml = renderHtml(meta),
         fontMap = fontMap,
-        pdfFileName = meta.pdfFileName(),
+        pdfFileName = meta.fileName,
     )
 
 fun CombinedPassport.toPdfInput() =

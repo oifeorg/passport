@@ -9,7 +9,7 @@ kotest-version = "6.1.6"
 coroutines-version = "1.10.2"
 kotlinx-serialization-version = "1.10.0"
 mockk-version = "1.14.9"
-ktlint-version = "14.0.1"
+ktlint-version = "14.2.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

@@ -32,7 +32,7 @@ jobs:
           distribution: temurin
 
       - name: ⚙️ Set up Gradle cache
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
 
       - name: 📑 Generate PDFs
         run: ./gradlew run --args="${{ github.event.release.tag_name }}"
@@ -52,13 +52,13 @@ jobs:
           cp -r src/main/resources/pages/* publish/
 
       - name: ⚙️ Setup GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: 🆙 Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: 'publish'
 
       - name: 🌍 Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

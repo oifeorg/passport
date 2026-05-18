@@ -1,19 +1,19 @@
 [versions]
-kotlin-version = "2.3.0"
+kotlin-version = "2.3.21"
 openhtmltopdf-version = "1.1.37"
 jetbrains-markdown-version = "0.7.3"
-logback-version = "1.5.28"
+logback-version = "1.5.32"
 logback-encoder-version = "9.0"
 janino-version = "3.1.12"
-kotest-version = "6.1.3"
+kotest-version = "6.1.11"
 coroutines-version = "1.10.2"
-kotlinx-serialization-version = "1.9.0"
+kotlinx-serialization-version = "1.11.0"
 mockk-version = "1.14.9"
-ktlint-version = "14.0.1"
+ktlint-version = "14.2.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization-version" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-version" }
 
 [libraries]

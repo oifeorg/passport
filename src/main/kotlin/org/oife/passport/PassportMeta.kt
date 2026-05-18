@@ -9,7 +9,12 @@ data class PassportMeta(
     val title: String,
     val localizedTitle: String = "",
     val font: FontMeta = FontMeta(),
-)
+) {
+    val fileName: String get() = markdownFilename.removeSuffix(".md") + ".pdf"
+    val direction: String get() = font.direction
+    val isLocalizedTitleSame: Boolean get() = title == localizedTitle
+    val headerTitle: String get() = if (isLocalizedTitleSame) title else "$localizedTitle - $title"
+}
 
 @Serializable
 data class FontMeta(
@@ -17,11 +22,3 @@ data class FontMeta(
     val familyName: String = "Noto Sans",
     val direction: String = "ltr",
 )
-
-fun PassportMeta.pdfFileName(): String = markdownFilename.removeSuffix(".md") + ".pdf"
-
-fun PassportMeta.direction(): String = font.direction
-
-fun PassportMeta.isLocalizedTitleSame(): Boolean = title == localizedTitle
-
-fun PassportMeta.headerTitle(): String = if (isLocalizedTitleSame()) title else "$localizedTitle - $title"

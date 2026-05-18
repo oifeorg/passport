@@ -3,17 +3,25 @@ package org.oife.passport
 import com.openhtmltopdf.extend.FSSupplier
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.apache.pdfbox.multipdf.PDFMergerUtility
 import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
+import kotlin.io.path.Path
 import kotlin.io.path.pathString
 
 const val OUTPUT_DIR_NAME = "generated"
-val outputDir: Path = Paths.get(OUTPUT_DIR_NAME).also { Files.createDirectories(it) }
+val outputDir: Path = Path(OUTPUT_DIR_NAME)
+
+fun ensureOutputDirectoryExists() {
+    Files.createDirectories(outputDir)
+}
+
 private val logger = LoggerFactory.getLogger("PassportPdfGenerator")
 
 data class PdfDocumentInput(
@@ -26,7 +34,7 @@ fun SinglePassport.toPdfInput(meta: PassportMeta) =
     PdfDocumentInput(
         filledHtml = renderHtml(meta),
         fontMap = fontMap,
-        pdfFileName = meta.pdfFileName(),
+        pdfFileName = meta.fileName,
     )
 
 fun CombinedPassport.toPdfInput() =
@@ -76,8 +84,13 @@ private suspend fun CombinedPassport.render(): Path =
     toPdfInput().renderToPdf().also { logger.info(Messages.CombinedPdfGenerated(it.pathString)) }
 
 suspend fun SinglePassport.generateAll() {
-    passportConfigs.forEach { meta ->
-        toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
+    coroutineScope {
+        passportConfigs
+            .map { meta ->
+                async {
+                    toPdfInput(meta).renderToPdf().also { logger.info(Messages.PdfGenerated(it.pathString)) }
+                }
+            }.awaitAll()
     }
 }
 

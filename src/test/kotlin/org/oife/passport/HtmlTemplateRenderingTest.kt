@@ -1,12 +1,11 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
-import yearProvider
 
-class PdfDocumentFilledHtmlTest :
-    StringSpec({
+class HtmlTemplateRenderingTest :
+    ShouldSpec({
 
         val meta =
             PassportMeta(
@@ -16,7 +15,7 @@ class PdfDocumentFilledHtmlTest :
                 localizedTitle = "My test",
             )
 
-        "should correctly fill all placeholders in single passport HTML template" {
+        should("correctly fill all placeholders in single passport HTML template") {
             val defaultFont = FontMeta()
             val singlePassport =
                 SinglePassport(
@@ -32,14 +31,14 @@ class PdfDocumentFilledHtmlTest :
                 shouldContain("dir=\"ltr\"")
                 shouldContain("<title>My test - My Passport</title>")
                 shouldContain("font-family: Noto Sans")
-                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0")
                 shouldContain("<h1>Hello</h1>")
                 shouldNotContain("{{")
                 shouldNotContain("}}")
             }
         }
 
-        "should correctly fill all placeholders in combined passport HTML template" {
+        should("correctly fill all placeholders in combined passport HTML template") {
             val defaultFont = FontMeta()
             val combinedPassport =
                 SinglePassport(
@@ -55,7 +54,7 @@ class PdfDocumentFilledHtmlTest :
                 shouldContain("dir=\"ltr\"")
                 shouldContain("<title>OIFE Passport combined</title>")
                 shouldContain(".lang-default")
-                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0") // Assumes year is hardcoded in your `toHtmlReplacements()`
+                shouldContain("©OIFE ${yearProvider.currentYear()} v1.0.0")
                 shouldContain("<h1>Hello</h1>")
                 shouldNotContain("{{")
                 shouldNotContain("}}")

@@ -1,0 +1,18 @@
+[tools]
+java = "25"
+
+[tasks.build]
+description = "Build the project"
+run = "./gradlew build"
+
+[tasks.test]
+description = "Run tests"
+run = "./gradlew test"
+
+[tasks.execute]
+description = "Run the application"
+run = "./gradlew run"
+
+[tasks.verify]
+description = "Run checks and tests"
+run = "./gradlew check && ./gradlew test"

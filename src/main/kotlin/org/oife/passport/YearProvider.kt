@@ -1,3 +1,5 @@
+package org.oife.passport
+
 interface YearProvider {
     fun currentYear(): String
 }

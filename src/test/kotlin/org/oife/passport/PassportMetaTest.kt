@@ -1,10 +1,10 @@
 package org.oife.passport
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 
 class PassportMetaTest :
-    StringSpec({
+    ShouldSpec({
 
         val meta =
             PassportMeta(
@@ -14,18 +14,21 @@ class PassportMetaTest :
                 localizedTitle = "My test",
             )
 
-        "returns correct pdf file name" {
-            meta.pdfFileName() shouldBe "test.pdf"
+        should("return correct pdf file name") {
+            meta.fileName shouldBe "test.pdf"
         }
 
-        "uses correct direction based on rtl flag" {
+        should("return rtl direction for rtl font") {
             PassportMeta(
                 "a.md",
                 "ar",
                 "Arabic",
                 font = FontMeta("SomethingElse", "Noto Something", direction = "rtl"),
-            ).direction() shouldBe
+            ).direction shouldBe
                 "rtl"
-            PassportMeta("b.md", "en", "English").direction() shouldBe "ltr"
+        }
+
+        should("return ltr direction by default") {
+            PassportMeta("b.md", "en", "English").direction shouldBe "ltr"
         }
     })

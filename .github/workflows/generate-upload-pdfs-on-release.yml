@@ -32,7 +32,7 @@ jobs:
           distribution: temurin
 
       - name: ⚙️ Set up Gradle cache
-        uses: gradle/actions/setup-gradle@v6.1.1
+        uses: gradle/actions/setup-gradle@v6.2.0
 
       - name: 📑 Generate PDFs
         run: ./gradlew run --args="${{ github.event.release.tag_name }}"

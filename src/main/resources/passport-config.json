@@ -185,5 +185,11 @@
     "languageCode": "lv",
     "title": "Latvian",
     "localizedTitle": "Latviešu"
+  },
+  {
+    "markdownFilename": "vi-vietnamese.md",
+    "languageCode": "vi",
+    "title": "Vietnamese",
+    "localizedTitle": "Tiếng Việt"
   }
 ]
